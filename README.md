@@ -66,4 +66,125 @@
 
    1.仿照教务系统查询成绩
 
-   2.
+## 三、前端接口
+
+1. 校建管理
+
+   1. 学生管理
+
+      1. 查询学生
+
+         **请求格式：**
+
+         ```json
+         { 
+             "studentID": "xxxx",   // 学号
+             "studentName": "xxxx", // 姓名
+             "grade": "xxxx",       // 年级
+             "major": "xxxx",       // 专业
+             "degreelevel": "xxxx", // 学位等级
+             "pageIndex": 1,        // 当前请求的页码
+             "pageSize": 30         // 当前请求的页面条目数量
+         }
+         ```
+
+         前五个条目为筛选条件，若某个筛选条件为空，则忽略该筛选条件，例如如果所有筛选条件为空，则获取所有用户。
+
+         **返回格式：**
+
+         ```json
+         {
+             "code": 0,    // 0 表示当前请求无问题
+             "message": "OK", // 没问题时的回复
+             /* 重要信息 */
+             "response": {
+                 "total": 302,   // 满足要求的条目个数，例如有302个条目
+                 "pageIndex": 2, // 当前查询的页码（用于确认）
+                 "tableData": [  // 存放表格条目信息的数组
+                     {
+                         "studentName" : "xxxx", // 学生姓名
+                         "studentID": "xxxx",    // 学号
+                         "identifier": "xxxx",   // 身份证号
+                         "dormitory": "xxxx",    // 宿舍
+                         "address": "xxxx",      // 家庭地址
+                         "teleno": "xxxx",       // 电话
+                         "birthday": "xxxx",     // 出生日期
+                         "sex": "xxxx",          // 性别
+                         "grade": "xxxx",        // 年级
+                         "major": "xxxx",        // 专业
+                         "majordepartment": "xxxx", // 主修院系
+                         "minordepartment": "xxxx", // 辅修院系
+                         "degreelevel": "xxxx",  // 学位等级
+                         "credit": 23,          // 已修学分
+                     },
+                     ...
+                 ]
+             }
+         }
+         ```
+
+         如果请求出错，则返回
+
+         > 查询到空数据**不属于**错误。
+         >
+         > **注：在以下任何请求中，若请求出错则都沿用该返回格式。**
+
+         ```json
+         {
+             "code": 1, // 1 表示出错
+             "message": "<error message>" // 这里存放需要展示给用户看的错误信息
+         }
+         ```
+
+      2. 删除学生
+
+         **请求格式：**
+
+         ```json
+         {
+             "studentID": "xxxx",   // 学号
+         }
+         ```
+
+         **返回格式：**
+
+         ```json
+         {
+             "code": 0,       // 0 表示当前请求无问题
+             "message": "OK", // 没问题时的回复
+             "response": null // 这里为空，因为没有需要返回的
+         }
+         ```
+
+      3. 修改 & 增加学生信息（两个接口，沿用相同的请求格式）
+
+         **请求格式：**
+
+         ```json
+         {
+             "studentName" : "xxxx", // 学生姓名
+             "studentID": "xxxx",    // 学号
+             "identifier": "xxxx",   // 身份证号
+             "dormitory": "xxxx",    // 宿舍
+             "address": "xxxx",      // 家庭地址
+             "teleno": "xxxx",       // 电话
+             "birthday": "xxxx",     // 出生日期
+             "sex": "xxxx",          // 性别
+             "grade": "xxxx",        // 年级
+             "major": "xxxx",        // 专业
+             "majordepartment": "xxxx", // 主修院系
+             "minordepartment": "xxxx", // 辅修院系
+             "degreelevel": "xxxx",  // 学位等级
+             /* 注，不可添加学生的已修学分，该学分应该由后端计算生成，而非人工填写 */
+         }
+         ```
+
+         **返回格式：**
+
+         ```json
+         {
+             "code": 0,       // 0 表示当前请求无问题
+             "message": "OK", // 没问题时的回复
+             "response": null // 这里为空，因为没有需要返回的
+         }
+         ```
