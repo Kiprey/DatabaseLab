@@ -19,7 +19,7 @@ const constantRoutes = [
   {
     path: '/login',
     name: 'Login',
-    hidden: true,
+    hidden: false,
     component: () => import('@/views/login/index'),
     meta: { title: '登录' }
   },
@@ -41,7 +41,7 @@ const constantRoutes = [
     component: Layout,
     name: 'UserPage',
     meta: {
-      title: '用户管理',
+      title: '校建管理',
       icon: 'users'
     },
     children: [
@@ -73,95 +73,95 @@ const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/exam',
-    component: Layout,
-    name: 'ExamPage',
-    meta: {
-      title: '卷题管理',
-      icon: 'exam'
-    },
-    children: [
-      {
-        path: 'paper/list',
-        component: () => import('@/views/exam/paper/list'),
-        name: 'ExamPaperPageList',
-        meta: { title: '试卷列表', noCache: true }
-      },
-      {
-        path: 'paper/edit',
-        component: () => import('@/views/exam/paper/edit'),
-        name: 'ExamPaperEdit',
-        meta: { title: '试卷编辑', noCache: true, activeMenu: '/exam/paper/list' },
-        hidden: true
-      },
-      {
-        path: 'question/list',
-        component: () => import('@/views/exam/question/list'),
-        name: 'ExamQuestionPageList',
-        meta: { title: '题目列表', noCache: true }
-      },
-      {
-        path: 'question/edit/singleChoice',
-        component: () => import('@/views/exam/question/edit/single-choice'),
-        name: 'singleChoicePage',
-        meta: { title: '单选题编辑', noCache: true, activeMenu: '/exam/question/list' },
-        hidden: true
-      },
-      {
-        path: 'question/edit/multipleChoice',
-        component: () => import('@/views/exam/question/edit/multiple-choice'),
-        name: 'multipleChoicePage',
-        meta: { title: '多选题编辑', noCache: true, activeMenu: '/exam/question/list' },
-        hidden: true
-      },
-      {
-        path: 'question/edit/trueFalse',
-        component: () => import('@/views/exam/question/edit/true-false'),
-        name: 'trueFalsePage',
-        meta: { title: '判断题编辑', noCache: true, activeMenu: '/exam/question/list' },
-        hidden: true
-      },
-      {
-        path: 'question/edit/gapFilling',
-        component: () => import('@/views/exam/question/edit/gap-filling'),
-        name: 'gapFillingPage',
-        meta: { title: '填空题编辑', noCache: true, activeMenu: '/exam/question/list' },
-        hidden: true
-      },
-      {
-        path: 'question/edit/shortAnswer',
-        component: () => import('@/views/exam/question/edit/short-answer'),
-        name: 'shortAnswerPage',
-        meta: { title: '简答题编辑', noCache: true, activeMenu: '/exam/question/list' },
-        hidden: true
-      }
-    ]
-  },
-  {
-    path: '/task',
-    component: Layout,
-    name: 'TaskPage',
-    meta: {
-      title: '任务管理',
-      icon: 'task'
-    },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/task/list'),
-        name: 'TaskListPage',
-        meta: { title: '任务列表', noCache: true }
-      },
-      {
-        path: 'edit',
-        component: () => import('@/views/task/edit'),
-        name: 'TaskEditPage',
-        meta: { title: '任务创建', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/exam',
+  //   component: Layout,
+  //   name: 'ExamPage',
+  //   meta: {
+  //     title: '卷题管理',
+  //     icon: 'exam'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'paper/list',
+  //       component: () => import('@/views/exam/paper/list'),
+  //       name: 'ExamPaperPageList',
+  //       meta: { title: '试卷列表', noCache: true }
+  //     },
+  //     {
+  //       path: 'paper/edit',
+  //       component: () => import('@/views/exam/paper/edit'),
+  //       name: 'ExamPaperEdit',
+  //       meta: { title: '试卷编辑', noCache: true, activeMenu: '/exam/paper/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'question/list',
+  //       component: () => import('@/views/exam/question/list'),
+  //       name: 'ExamQuestionPageList',
+  //       meta: { title: '题目列表', noCache: true }
+  //     },
+  //     {
+  //       path: 'question/edit/singleChoice',
+  //       component: () => import('@/views/exam/question/edit/single-choice'),
+  //       name: 'singleChoicePage',
+  //       meta: { title: '单选题编辑', noCache: true, activeMenu: '/exam/question/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'question/edit/multipleChoice',
+  //       component: () => import('@/views/exam/question/edit/multiple-choice'),
+  //       name: 'multipleChoicePage',
+  //       meta: { title: '多选题编辑', noCache: true, activeMenu: '/exam/question/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'question/edit/trueFalse',
+  //       component: () => import('@/views/exam/question/edit/true-false'),
+  //       name: 'trueFalsePage',
+  //       meta: { title: '判断题编辑', noCache: true, activeMenu: '/exam/question/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'question/edit/gapFilling',
+  //       component: () => import('@/views/exam/question/edit/gap-filling'),
+  //       name: 'gapFillingPage',
+  //       meta: { title: '填空题编辑', noCache: true, activeMenu: '/exam/question/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'question/edit/shortAnswer',
+  //       component: () => import('@/views/exam/question/edit/short-answer'),
+  //       name: 'shortAnswerPage',
+  //       meta: { title: '简答题编辑', noCache: true, activeMenu: '/exam/question/list' },
+  //       hidden: true
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/task',
+  //   component: Layout,
+  //   name: 'TaskPage',
+  //   meta: {
+  //     title: '任务管理',
+  //     icon: 'task'
+  //   },
+  //   alwaysShow: true,
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/task/list'),
+  //       name: 'TaskListPage',
+  //       meta: { title: '任务列表', noCache: true }
+  //     },
+  //     {
+  //       path: 'edit',
+  //       component: () => import('@/views/task/edit'),
+  //       name: 'TaskEditPage',
+  //       meta: { title: '任务创建', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/education',
     component: Layout,
@@ -205,48 +205,48 @@ const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/message',
-    component: Layout,
-    name: 'MessagePage',
-    meta: {
-      title: '消息中心',
-      icon: 'message'
-    },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/message/list'),
-        name: 'MessageListPage',
-        meta: { title: '消息列表', noCache: true }
-      },
-      {
-        path: 'send',
-        component: () => import('@/views/message/send'),
-        name: 'MessageSendPage',
-        meta: { title: '消息发送', noCache: true }
-      }
-    ]
-  },
-  {
-    path: '/log',
-    component: Layout,
-    name: 'LogPage',
-    meta: {
-      title: '日志中心',
-      icon: 'log'
-    },
-    alwaysShow: true,
-    children: [
-      {
-        path: 'user/list',
-        component: () => import('@/views/log/list'),
-        name: 'LogUserPage',
-        meta: { title: '用户日志', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/message',
+  //   component: Layout,
+  //   name: 'MessagePage',
+  //   meta: {
+  //     title: '消息中心',
+  //     icon: 'message'
+  //   },
+  //   alwaysShow: true,
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/message/list'),
+  //       name: 'MessageListPage',
+  //       meta: { title: '消息列表', noCache: true }
+  //     },
+  //     {
+  //       path: 'send',
+  //       component: () => import('@/views/message/send'),
+  //       name: 'MessageSendPage',
+  //       meta: { title: '消息发送', noCache: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/log',
+  //   component: Layout,
+  //   name: 'LogPage',
+  //   meta: {
+  //     title: '日志中心',
+  //     icon: 'log'
+  //   },
+  //   alwaysShow: true,
+  //   children: [
+  //     {
+  //       path: 'user/list',
+  //       component: () => import('@/views/log/list'),
+  //       name: 'LogUserPage',
+  //       meta: { title: '用户日志', noCache: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/profile',
     component: Layout,
