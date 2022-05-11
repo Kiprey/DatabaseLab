@@ -1,155 +1,154 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022-05-11 18:31:55                          */
+/* Created on:     2022-05-11 21:56:39                          */
 /*==============================================================*/
 
 
-drop table if exists 专业;
+drop table if exists Class;
 
-drop table if exists 学生;
+drop table if exists Course;
 
-drop table if exists 学生选课;
+drop table if exists CourseClass;
 
-drop table if exists 开课课程;
+drop table if exists Faculty;
 
-drop table if exists 教师;
+drop table if exists Major;
 
-drop table if exists 班级;
+drop table if exists Student;
 
-drop table if exists 课程;
+drop table if exists StudentCourse;
 
-drop table if exists 院系;
+drop table if exists Teacher;
 
 /*==============================================================*/
-/* Table: 专业                                                    */
+/* Table: Class                                                 */
 /*==============================================================*/
-create table 专业
+create table Class
 (
-   专业名称                 varchar(20) not null,
-   学位等级                 varchar(20) not null,
-   院系代码                 varchar(20) not null,
-   毕业学分                 varchar(20),
-   primary key (专业名称, 学位等级)
+   className            varchar(20) not null,
+   majorCode            varchar(20) not null,
+   primary key (className)
 );
 
 /*==============================================================*/
-/* Table: 学生                                                    */
+/* Table: Course                                                */
 /*==============================================================*/
-create table 学生
+create table Course
 (
-   姓名                   varchar(20) not null,
-   学号                   varchar(20) not null,
-   班级名称                 varchar(20) not null,
-   身份证号                 varchar(20),
-   宿舍                   varchar(20),
-   家庭地址                 varchar(100),
-   电话                   varchar(20),
-   出生日期                 date,
-   性别                   varchar(20),
-   年级                   varchar(20) not null,
-   已修学分                 int not null,
-   primary key (学号)
+   courseName           varchar(20) not null,
+   courseNature         varchar(20),
+   courseCategory       varchar(20),
+   courseID             varchar(20) not null,
+   facultyCode          varchar(20) not null,
+   courseHours          int,
+   credit               int not null,
+   primary key (courseID)
 );
 
 /*==============================================================*/
-/* Table: 学生选课                                                  */
+/* Table: CourseClass                                           */
 /*==============================================================*/
-create table 学生选课
+create table CourseClass
 (
-   开课号                  varchar(20) not null,
-   学号                   varchar(20) not null,
-   成绩                   int,
-   primary key (开课号, 学号)
+   courseClassID        varchar(20) not null,
+   courseID             varchar(20),
+   teacherID            varchar(20) not null,
+   courseClassTime      varchar(20),
+   courseClassAddress   varchar(20),
+   courseClassWeek      varchar(20),
+   primary key (courseClassID)
 );
 
 /*==============================================================*/
-/* Table: 开课课程                                                  */
+/* Table: Faculty                                               */
 /*==============================================================*/
-create table 开课课程
+create table Faculty
 (
-   开课号                  varchar(20) not null,
-   课程编号                 varchar(20),
-   教师编号                 varchar(20) not null,
-   开课时间                 varchar(20),
-   开课地点                 varchar(20),
-   开课周                  varchar(20),
-   primary key (开课号)
+   facultyName          varchar(20) not null,
+   facultyCode          varchar(20) not null,
+   facultyAddress       varchar(20),
+   facultyTeleno        varchar(20),
+   primary key (facultyCode)
 );
 
 /*==============================================================*/
-/* Table: 教师                                                    */
+/* Table: Major                                                 */
 /*==============================================================*/
-create table 教师
+create table Major
 (
-   教师姓名                 varchar(20) not null,
-   教师编号                 varchar(20) not null,
-   院系代码                 varchar(20) not null,
-   primary key (教师编号)
+   majorName            varchar(20) not null,
+   majorCode            varchar(20) not null,
+   facultyCode          varchar(20) not null,
+   degreeLevel          varchar(20) not null,
+   graduationCredits    varchar(20) not null,
+   primary key (majorCode)
 );
 
 /*==============================================================*/
-/* Table: 班级                                                    */
+/* Table: Student                                               */
 /*==============================================================*/
-create table 班级
+create table Student
 (
-   班级名称                 varchar(20) not null,
-   专业名称                 varchar(20) not null,
-   学位等级                 varchar(20) not null,
-   年级                   varchar(20),
-   primary key (班级名称)
+   studentName          varchar(20) not null,
+   studentID            varchar(20) not null,
+   className            varchar(20) not null,
+   identifier           varchar(20),
+   dormitory            varchar(20),
+   address              varchar(100),
+   teleno               varchar(20),
+   birthday             date,
+   sex                  varchar(20),
+   grade                varchar(20) not null,
+   completedCredits     int not null,
+   primary key (studentID)
 );
 
 /*==============================================================*/
-/* Table: 课程                                                    */
+/* Table: StudentCourse                                         */
 /*==============================================================*/
-create table 课程
+create table StudentCourse
 (
-   课程名                  varchar(20) not null,
-   课程性质                 varchar(20),
-   课程类别                 varchar(20),
-   课程编号                 varchar(20) not null,
-   院系代码                 varchar(20) not null,
-   学时                   int,
-   学分                   int not null,
-   primary key (课程编号)
+   courseClassID        varchar(20) not null,
+   studentID            varchar(20) not null,
+   score                int,
+   primary key (courseClassID, studentID)
 );
 
 /*==============================================================*/
-/* Table: 院系                                                    */
+/* Table: Teacher                                               */
 /*==============================================================*/
-create table 院系
+create table Teacher
 (
-   院系名称                 varchar(20) not null,
-   院系代码                 varchar(20) not null,
-   办公地点                 varchar(20),
-   电话                   varchar(20),
-   primary key (院系代码)
+   teacherName          varchar(20) not null,
+   teacherID            varchar(20) not null,
+   facultyCode          varchar(20) not null,
+   primary key (teacherID)
 );
 
-alter table 专业 add constraint FK_专业_院系 foreign key (院系代码)
-      references 院系 (院系代码) on delete restrict on update restrict;
+alter table Class add constraint FK_Class_Major foreign key (majorCode)
+      references Major (majorCode) on delete restrict on update restrict;
 
-alter table 学生 add constraint FK_学生_班级 foreign key (班级名称)
-      references 班级 (班级名称) on delete restrict on update restrict;
+alter table Course add constraint FK_CourseFaculty foreign key (facultyCode)
+      references Faculty (facultyCode) on delete restrict on update restrict;
 
-alter table 学生选课 add constraint FK_学生选课 foreign key (学号)
-      references 学生 (学号) on delete restrict on update restrict;
+alter table CourseClass add constraint FK_CourseOffer foreign key (courseID)
+      references Course (courseID) on delete restrict on update restrict;
 
-alter table 学生选课 add constraint FK_学生选课2 foreign key (开课号)
-      references 开课课程 (开课号) on delete restrict on update restrict;
+alter table CourseClass add constraint FK_TeacherTeaching foreign key (teacherID)
+      references Teacher (teacherID) on delete restrict on update restrict;
 
-alter table 开课课程 add constraint FK_教师授课 foreign key (教师编号)
-      references 教师 (教师编号) on delete restrict on update restrict;
+alter table Major add constraint FK_Major_Faculty foreign key (facultyCode)
+      references Faculty (facultyCode) on delete restrict on update restrict;
 
-alter table 开课课程 add constraint FK_课程开课 foreign key (课程编号)
-      references 课程 (课程编号) on delete restrict on update restrict;
+alter table Student add constraint FK_StudentClass foreign key (className)
+      references Class (className) on delete restrict on update restrict;
 
-alter table 教师 add constraint FK_教师从属 foreign key (院系代码)
-      references 院系 (院系代码) on delete restrict on update restrict;
+alter table StudentCourse add constraint FK_StudentCourse foreign key (studentID)
+      references Student (studentID) on delete restrict on update restrict;
 
-alter table 班级 add constraint FK_班级_专业 foreign key (专业名称, 学位等级)
-      references 专业 (专业名称, 学位等级) on delete restrict on update restrict;
+alter table StudentCourse add constraint FK_StudentCourse2 foreign key (courseClassID)
+      references CourseClass (courseClassID) on delete restrict on update restrict;
 
-alter table 课程 add constraint FK_课程从属 foreign key (院系代码)
-      references 院系 (院系代码) on delete restrict on update restrict;
+alter table Teacher add constraint FK_TeacherFaculty foreign key (facultyCode)
+      references Faculty (facultyCode) on delete restrict on update restrict;
 
