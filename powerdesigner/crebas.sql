@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022-05-11 21:56:39                          */
+/* Created on:     2022-05-11 23:06:04                          */
 /*==============================================================*/
 
 
@@ -36,11 +36,11 @@ create table Class
 create table Course
 (
    courseName           varchar(20) not null,
-   courseNature         varchar(20),
-   courseCategory       varchar(20),
+   courseNature         varchar(20) not null,
+   courseCategory       varchar(20) not null,
    courseID             varchar(20) not null,
    facultyCode          varchar(20) not null,
-   courseHours          int,
+   courseHours          int not null,
    credit               int not null,
    primary key (courseID)
 );
@@ -51,7 +51,7 @@ create table Course
 create table CourseClass
 (
    courseClassID        varchar(20) not null,
-   courseID             varchar(20),
+   courseID             varchar(20) not null,
    teacherID            varchar(20) not null,
    courseClassTime      varchar(20),
    courseClassAddress   varchar(20),
@@ -98,8 +98,8 @@ create table Student
    teleno               varchar(20),
    birthday             date,
    sex                  varchar(20),
-   grade                varchar(20) not null,
-   completedCredits     int not null,
+   grade                varchar(20),
+   completedCredits     int,
    primary key (studentID)
 );
 

@@ -2,7 +2,6 @@ package com.lab.backend.controller;
 
 
 import com.lab.backend.domain.User;
-import com.lab.backend.service.UserSersive;
 import com.lab.backend.utils.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     @Resource
-    private UserSersive userSersive;
+    private com.lab.backend.service.userSersive userSersive;
 
     @PostMapping("/delete")
     public Result<User> deleteController(@RequestParam("username") String username){

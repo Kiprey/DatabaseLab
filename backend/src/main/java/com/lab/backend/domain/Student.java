@@ -4,45 +4,125 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name="学生")
+@Table(name="Student")
 @Entity
 public class Student {
-    private String name;
+    private String studentName;
     @Id
-    private String sno;
-    private String cno;
+    private String studentID;
+    private String className;
+    private String identifier;
+    private String dormitory;
+    private String address;
+    private String teleno;
+    private String birthday;
+    private String sex;
+    private String grade;
+    private String completedCredits;
 
     public Student() {
 
     }
 
-    public String getName() {
-        return name;
+    public Student(String studentName, String studentID, String className, String identifier, String dormitory, String address, String teleno, String birthday, String sex, String grade, String completedCredits) {
+        this.studentName = studentName;
+        this.studentID = studentID;
+        this.className = className;
+        this.identifier = identifier;
+        this.dormitory = dormitory;
+        this.address = address;
+        this.teleno = teleno;
+        this.birthday = birthday;
+        this.sex = sex;
+        this.grade = grade;
+        this.completedCredits = completedCredits;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public String getSno() {
-        return sno;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public void setSno(String sno) {
-        this.sno = sno;
+    public String getStudentID() {
+        return studentID;
     }
 
-    public String getCno() {
-        return cno;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
-    public void setCno(String cno) {
-        this.cno = cno;
+    public String getClassName() {
+        return className;
     }
 
-    public Student(String name, String sno, String cno) {
-        this.name = name;
-        this.sno = sno;
-        this.cno = cno;
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getDormitory() {
+        return dormitory;
+    }
+
+    public void setDormitory(String dormitory) {
+        this.dormitory = dormitory;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getTeleno() {
+        return teleno;
+    }
+
+    public void setTeleno(String teleno) {
+        this.teleno = teleno;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getCompletedCredits() {
+        return completedCredits;
+    }
+
+    public void setCompletedCredits(String completedCredits) {
+        this.completedCredits = completedCredits;
     }
 }

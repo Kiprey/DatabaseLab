@@ -15,43 +15,86 @@ public class StudentDao {
     private JdbcTemplate jdbcTemplate;
 
     /**
-     * 新增
+     * 插入
+     * @param student student实体
+     * @return student实体
      */
     public Student insert(Student student) {
-        String sql="insert into student values (?,?,?)";
-        jdbcTemplate.update(sql, student.getName(),student.getSno(),student.getCno());
+        String sql="insert into student values (?,?,?,?,?,?,?,?,?,?,?)";
+        jdbcTemplate.update(sql,
+                student.getStudentName(),
+                student.getStudentID(),
+                student.getClassName(),
+                student.getIdentifier(),
+                student.getDormitory(),
+                student.getAddress(),
+                student.getTeleno(),
+                student.getBirthday(),
+                student.getSex(),
+                student.getGrade(),
+                student.getCompletedCredits());
         return student;
     }
 
     /**
      * 删除
      */
-    public void delete(String name) {
-        String sql="delete from student where name = ?";
-        jdbcTemplate.update(sql, name);
+    public void delete(String studentID) {
+        String sql="delete from student where studentID = ?";
+        jdbcTemplate.update(sql, studentID);
     }
 
     /**
      * 更新
      */
     public void update(Student student) {
-        String sql="UPDATE student SET name=?, sno=?, cno=? WHERE name=?";
-        jdbcTemplate.update(sql, student.getName(),student.getCno(),student.getSno(),student.getName());
+        String sql="UPDATE student SET " +
+                "studentName=?, " +
+                "className=?, " +
+                "identifier=?, " +
+                "dormitory=?, " +
+                "address=?," +
+                "teleno=?," +
+                "teleno=?," +
+                "birthday=?," +
+                "sex=?," +
+                "grade=?," +
+                "WHERE studentId=?";
+        jdbcTemplate.update(sql,
+                student.getStudentName(),
+                student.getStudentID(),
+                student.getClassName(),
+                student.getStudentID(),
+                student.getDormitory(),
+                student.getAddress(),
+                student.getTeleno(),
+                student.getBirthday(),
+                student.getSex(),
+                student.getGrade(),
+                student.getCompletedCredits());
     }
 
     /**
      * 按username查询
      */
     public List<Student> getByUsername(String username) {
-        String sql="select * from student where username=?";
+        String sql="select * from student where studentName=?";
         return jdbcTemplate.query(sql, new RowMapper<Student>() {
             @Override
             public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Student student = new Student();
-                student.setName(rs.getString("姓名"));
-                student.setCno(rs.getString("班级名称"));
-                student.setSno(rs.getString("学生学号"));
-                return student;
+                return new Student(
+                        rs.getString("studentName"),
+                        rs.getString("studentID"),
+                        rs.getString("className"),
+                        rs.getString("identifier"),
+                        rs.getString("dormitory"),
+                        rs.getString("address"),
+                        rs.getString("teleno"),
+                        rs.getString("birthday"),
+                        rs.getString("sex"),
+                        rs.getString("grade"),
+                        rs.getString("completedCredits")
+                        );
             }
         },username);
     }
@@ -64,11 +107,19 @@ public class StudentDao {
         return jdbcTemplate.query(sql, new RowMapper<Student>() {
             @Override
             public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Student student = new Student();
-                student.setName(rs.getString("姓名"));
-                student.setSno(rs.getString("学生学号"));
-                student.setCno(rs.getString("班级名称"));
-                return student;
+                return new Student(
+                        rs.getString("studentName"),
+                        rs.getString("studentID"),
+                        rs.getString("className"),
+                        rs.getString("identifier"),
+                        rs.getString("dormitory"),
+                        rs.getString("address"),
+                        rs.getString("teleno"),
+                        rs.getString("birthday"),
+                        rs.getString("sex"),
+                        rs.getString("grade"),
+                        rs.getString("completedCredits")
+                );
             }
         });
     }

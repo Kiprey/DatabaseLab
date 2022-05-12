@@ -3,13 +3,13 @@ package com.lab.backend.service.impl;
 import com.lab.backend.domain.User;
 import com.lab.backend.repository.PersonDao;
 import com.lab.backend.repository.UserDao;
-import com.lab.backend.service.UserSersive;
+import com.lab.backend.service.userSersive;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 @Service
-public class UserServiceImpl implements UserSersive {
+public class UserServiceImpl implements userSersive {
     @Resource
     private PersonDao personDao;
     @Resource

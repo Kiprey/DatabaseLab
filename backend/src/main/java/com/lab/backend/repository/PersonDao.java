@@ -15,7 +15,9 @@ public class PersonDao {
     private JdbcTemplate jdbcTemplate;
 
     /**
-     * 新增
+     * 插入
+     * @param person person实体
+     * @return person实体
      */
     public Person insert(Person person) {
         String sql="insert into person values (?,?,?,?)";
