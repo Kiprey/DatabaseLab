@@ -187,3 +187,203 @@
              "response": null // 这里为空，因为没有需要返回的
          }
          ```
+
+## 四、后端接口实现
+
+### 校建管理
+
+#### 1.院系管理
+
+##### 插入
+
+post http://localhost:8081/faculty/insert
+
+![image-20220513124959110](README/image-20220513124959110.png)
+
+请求格式：
+
+```json
+{
+    "facultyName": "环境工程学院",  		//not null
+    "facultyCode": "0003",				//not null
+    "facultyAddress": "湖南大学环境院",
+    "facultyTeleno": "8801xxx"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "facultyName": "环境工程学院",
+        "facultyCode": "0003",
+        "facultyAddress": "湖南大学环境院",
+        "facultyTeleno": "8801xxx"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录已存在，插入失败！",
+    "data": null
+}
+```
+
+##### 更新
+
+post http://localhost:8081/faculty/update
+
+![image-20220513125057064](README/image-20220513125057064.png)
+
+请求格式：
+
+```json
+{
+    "facultyName": "土木工程学院",			//not null
+    "facultyCode": "0002",					//not null
+    "facultyAddress": "湖南大学土木院x",	
+    "facultyTeleno": "88010003"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "facultyName": "土木工程学院",
+        "facultyCode": "0002",
+        "facultyAddress": "湖南大学土木院x",
+        "facultyTeleno": "88010003"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录不存在，无法更新！",
+    "data": null
+}
+```
+
+##### 删除
+
+post http://localhost:8081/faculty/delete?facultyCode=0003
+
+![image-20220513125131225](README/image-20220513125131225.png)
+
+请求格式：
+
+```json
+{
+    "params":{
+        "facultyCode": "0003",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": null
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录不存在，删除失败！",
+    "data": null
+}
+```
+
+##### 全部查询
+
+get http://localhost:8081/faculty/list
+
+![image-20220513125242460](README/image-20220513125242460.png)
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "列表查看成功！",
+    "data": [
+        {
+            "facultyName": "信息科学与工程学院",
+            "facultyCode": "0001",
+            "facultyAddress": "湖南大学信科院",
+            "facultyTeleno": "123456"
+        },
+        {
+            "facultyName": "土木工程学院",
+            "facultyCode": "0002",
+            "facultyAddress": "湖南大学土木院x",
+            "facultyTeleno": "88010003"
+        },
+        {
+            "facultyName": "环境工程学院",
+            "facultyCode": "00031",
+            "facultyAddress": "",
+            "facultyTeleno": "8801xxx"
+        }
+    ]
+}
+//列表为空时失败  
+{
+    "code": "1",
+    "msg": "当前列表为空！",
+    "data": null
+}
+```
+
+##### 按name查询
+
+get http://localhost:8081/faculty/query?facultyName=信息科学与工程学院
+
+![image-20220513125831849](README/image-20220513125831849.png)
+
+请求格式：
+
+```json
+{
+    "params":{
+        "facultyName": "信息科学与工程学院",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "facultyName": "信息科学与工程学院",
+            "facultyCode": "0001",
+            "facultyAddress": "湖南大学信科院",
+            "facultyTeleno": "123456"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "message": "查询失败，信息科学与工程学院1不存在",
+    "data": null
+}
+```
+

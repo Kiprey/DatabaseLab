@@ -18,21 +18,20 @@ public class FacultyDao {
     
     /**
      * 插入
-     * @param faculty faculty实体
-     * @return faculty实体
+     * @param faculty 院系实体
      */
-    public Faculty insert(Faculty faculty) {
+    public void insert(Faculty faculty) {
         String sql="insert into faculty values (?,?,?,?)";
         jdbcTemplate.update(sql,
                 faculty.getFacultyName(),
                 faculty.getFacultyCode(),
                 faculty.getFacultyAddress(),
                 faculty.getFacultyTeleno());
-        return faculty;
     }
 
     /**
      * 删除
+     * @param facultyCode 院系代码
      */
     public void delete(String facultyCode) {
         String sql="delete from Faculty where facultyCode = ?";
@@ -41,25 +40,21 @@ public class FacultyDao {
 
     /**
      * 更新
+     * @param faculty 院系实体
      */
     public void update(Faculty faculty) {
-        String sql="UPDATE faculty SET " +
-                "facultyName=?, " +
-                "facultyCode=?, " +
-                "facultyAddress=?, " +
-                "facultyTeleno=?, " +
-                "WHERE facultyId=?";
+        String sql="UPDATE faculty SET facultyName=?,facultyAddress=?, facultyTeleno=? WHERE facultyCode=?";
         jdbcTemplate.update(sql,
                 faculty.getFacultyName(),
-                faculty.getFacultyCode(),
                 faculty.getFacultyAddress(),
-                faculty.getFacultyTeleno());
+                faculty.getFacultyTeleno(),
+                faculty.getFacultyCode());
     }
 
     /**
-     * 按username查询
+     * 按Name查询
      */
-    public List<Faculty> getByUsername(String username) {
+    public List<Faculty> getByName(String name) {
         String sql="select * from faculty where facultyName=?";
         return jdbcTemplate.query(sql, new RowMapper<Faculty>() {
             @Override
@@ -71,14 +66,14 @@ public class FacultyDao {
                         rs.getString("facultyTeleno")
                 );
             }
-        },username);
+        },name);
     }
 
     /**
-     * 列表查看
+     * 按Code查询
      */
-    public List<Faculty> getList() {
-        String sql="select * from faculty";
+    public List<Faculty> getByCode(String code) {
+        String sql="select * from faculty where facultyCode=?";
         return jdbcTemplate.query(sql, new RowMapper<Faculty>() {
             @Override
             public Faculty mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -89,6 +84,19 @@ public class FacultyDao {
                         rs.getString("facultyTeleno")
                 );
             }
-        });
+        },code);
+    }
+
+    /**
+     * 列表查看
+     */
+    public List<Faculty> getList() {
+        String sql="select * from faculty";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Faculty(
+                rs.getString("facultyName"),
+                rs.getString("facultyCode"),
+                rs.getString("facultyAddress"),
+                rs.getString("facultyTeleno")
+        ));
     }
 }

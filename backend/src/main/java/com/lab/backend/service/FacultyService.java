@@ -7,6 +7,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public interface FacultyService {
-    int insert(Faculty faculty);
+    boolean insert(Faculty faculty);
+
+    boolean delete(String facultyCode);
+
+    boolean update(Faculty faculty);
+
     List<Faculty> getList();
+
+    List<Faculty> getListByName(String name);
 }
