@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022-05-11 23:06:04                          */
+/* Created on:     2022/5/14 16:48:40                           */
 /*==============================================================*/
 
 
@@ -126,29 +126,29 @@ create table Teacher
 );
 
 alter table Class add constraint FK_Class_Major foreign key (majorCode)
-      references Major (majorCode) on delete restrict on update restrict;
+      references Major (majorCode) on delete restrict on update cascade;
 
 alter table Course add constraint FK_CourseFaculty foreign key (facultyCode)
-      references Faculty (facultyCode) on delete restrict on update restrict;
+      references Faculty (facultyCode) on delete restrict on update cascade;
 
 alter table CourseClass add constraint FK_CourseOffer foreign key (courseID)
-      references Course (courseID) on delete restrict on update restrict;
+      references Course (courseID) on delete restrict on update cascade;
 
 alter table CourseClass add constraint FK_TeacherTeaching foreign key (teacherID)
-      references Teacher (teacherID) on delete restrict on update restrict;
+      references Teacher (teacherID) on delete restrict on update cascade;
 
 alter table Major add constraint FK_Major_Faculty foreign key (facultyCode)
-      references Faculty (facultyCode) on delete restrict on update restrict;
+      references Faculty (facultyCode) on delete restrict on update cascade;
 
 alter table Student add constraint FK_StudentClass foreign key (className)
-      references Class (className) on delete restrict on update restrict;
+      references Class (className) on delete restrict on update cascade;
 
 alter table StudentCourse add constraint FK_StudentCourse foreign key (studentID)
-      references Student (studentID) on delete restrict on update restrict;
+      references Student (studentID) on delete restrict on update cascade;
 
 alter table StudentCourse add constraint FK_StudentCourse2 foreign key (courseClassID)
-      references CourseClass (courseClassID) on delete restrict on update restrict;
+      references CourseClass (courseClassID) on delete restrict on update cascade;
 
 alter table Teacher add constraint FK_TeacherFaculty foreign key (facultyCode)
-      references Faculty (facultyCode) on delete restrict on update restrict;
+      references Faculty (facultyCode) on delete restrict on update cascade;
 
