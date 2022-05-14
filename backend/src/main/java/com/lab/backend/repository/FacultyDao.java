@@ -3,11 +3,9 @@ package com.lab.backend.repository;
 import com.lab.backend.domain.Faculty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -52,41 +50,33 @@ public class FacultyDao {
     }
 
     /**
-     * 按Name查询
-     */
-    public List<Faculty> getByName(String name) {
-        String sql="select * from faculty where facultyName=?";
-        return jdbcTemplate.query(sql, new RowMapper<Faculty>() {
-            @Override
-            public Faculty mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Faculty(
-                        rs.getString("facultyName"),
-                        rs.getString("facultyCode"),
-                        rs.getString("facultyAddress"),
-                        rs.getString("facultyTeleno")
-                );
-            }
-        },name);
-    }
-
-    /**
      * 按Code查询
      */
     public List<Faculty> getByCode(String code) {
         String sql="select * from faculty where facultyCode=?";
-        return jdbcTemplate.query(sql, new RowMapper<Faculty>() {
-            @Override
-            public Faculty mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Faculty(
-                        rs.getString("facultyName"),
-                        rs.getString("facultyCode"),
-                        rs.getString("facultyAddress"),
-                        rs.getString("facultyTeleno")
-                );
-            }
-        },code);
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Faculty(
+                rs.getString("facultyName"),
+                rs.getString("facultyCode"),
+                rs.getString("facultyAddress"),
+                rs.getString("facultyTeleno")
+        ),code);
     }
 
+    /**
+     * 按某一个属性查询
+     * @param attribute 要查询的属性
+     * @param name 要查询的属性值
+     * @return 查询结果
+     */
+    public List<Faculty> getByAttribute(String attribute,String name) {
+        String sql="select * from faculty where "+attribute+"=?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Faculty(
+                rs.getString("facultyName"),
+                rs.getString("facultyCode"),
+                rs.getString("facultyAddress"),
+                rs.getString("facultyTeleno")
+        ),name);
+    }
     /**
      * 列表查看
      */

@@ -3,6 +3,7 @@ package com.lab.backend.service.impl;
 import com.lab.backend.domain.Faculty;
 import com.lab.backend.repository.FacultyDao;
 import com.lab.backend.service.FacultyService;
+import com.lab.backend.service.MajorService;
 import org.springframework.stereotype.Service;
 
 
@@ -12,7 +13,8 @@ import java.util.List;
 public class FacultyServiceImpl  implements FacultyService {
     @Resource
     private FacultyDao facultyDao;
-
+    @Resource
+    private MajorService majorService;
     /**
      * 插入
      * @param faculty 院系实体
@@ -30,19 +32,25 @@ public class FacultyServiceImpl  implements FacultyService {
         }
     }
     /**
-     * 插入
-     * @param facultyCode 院系代码
+     * 删除
+     * @param faculty 院系代码
      * @return int 0成功,1失败
      */
     @Override
-    public boolean delete(String facultyCode) {
-        int num=facultyDao.getByCode(facultyCode).size();
+    public int delete(Faculty faculty) {
+        int num=facultyDao.getByCode(faculty.getFacultyCode()).size();
+        int majorNum=majorService.getListByFacultyName(faculty.getFacultyName()).size();
         if(num!=0){
-            facultyDao.delete(facultyCode);
-            return true;
+            if(majorNum==0){
+                facultyDao.delete(faculty.getFacultyCode());
+                return 0;
+            }
+            else{
+                return 1;//该院系下专业非空，无法删除
+            }
         }
         else {
-            return false;
+            return 2;//院系不存在
         }
     }
     /**
@@ -78,6 +86,6 @@ public class FacultyServiceImpl  implements FacultyService {
      */
     @Override
     public List<Faculty> getListByName(String name){
-        return facultyDao.getByName(name);
+        return facultyDao.getByAttribute("facultyName",name);
     }
 }

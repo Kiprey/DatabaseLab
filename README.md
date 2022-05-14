@@ -274,17 +274,18 @@ post http://localhost:8081/faculty/update
 
 ##### 删除
 
-post http://localhost:8081/faculty/delete?facultyCode=0003
+post http://localhost:8081/faculty/delete
 
-![image-20220513125131225](README/image-20220513125131225.png)
+![image-20220514170010279](README/image-20220514170010279.png)
 
 请求格式：
 
 ```json
 {
-    "params":{
-        "facultyCode": "0003",
-    }
+    "facultyName": "信息科学与工程学院",
+    "facultyCode": "0001",
+    "facultyAddress": "湖南大学信科院",
+    "facultyTeleno": "8801002"
 }
 ```
 
@@ -295,12 +296,17 @@ post http://localhost:8081/faculty/delete?facultyCode=0003
 {
     "code": "0",
     "message": "成功",
-    "data": null
+    "data": {
+        "facultyName": "信息科学与工程学院",
+        "facultyCode": "0001",
+        "facultyAddress": "湖南大学信科院",
+        "facultyTeleno": "8801002"
+    }
 }
 //失败
 {
     "code": "1",
-    "message": "当前记录不存在，删除失败！",
+    "message": "该院系下专业非空，无法删除",
     "data": null
 }
 ```
@@ -383,6 +389,259 @@ get http://localhost:8081/faculty/query?facultyName=信息科学与工程学院
 {
     "code": "1",
     "message": "查询失败，信息科学与工程学院1不存在",
+    "data": null
+}
+```
+
+#### 2.专业管理
+
+##### 插入
+
+post http://localhost:8081/major/insert
+
+![image-20220514152852295](README/image-20220514152852295.png)
+
+请求格式：
+
+```json
+{
+    "majorName": "计算机科学与技术",
+    "majorCode": "080901",
+    "facultyCode": "0001",
+    "degreeLevel": "本科",
+    "graduationCredits":"60"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "majorName": "计算机科学与技术",
+        "majorCode": "080901",
+        "facultyCode": "0001",
+        "degreeLevel": "本科",
+        "graduationCredits": "60"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录已存在，插入失败！",
+    "data": null
+}
+{
+    "code": "1",
+    "message": "院系不存在，无法插入！",
+    "data": null
+}
+```
+
+
+
+##### 更新
+
+post http://localhost:8081/major/update
+
+![image-20220514153535171](README/image-20220514153535171.png)
+
+请求格式：
+
+```json
+{
+    "majorName": "计算机科学与技术",
+    "majorCode": "080901",
+    "facultyCode": "0001",
+    "degreeLevel": "本科",
+    "graduationCredits":"71"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "majorName": "计算机科学与技术",
+        "majorCode": "080901",
+        "facultyCode": "0001",
+        "degreeLevel": "本科",
+        "graduationCredits": "71"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录不存在，无法更新！",
+    "data": null
+}
+{
+    "code": "1",
+    "message": "院系不存在，无法更新！",
+    "data": null
+}
+```
+
+
+
+##### 删除
+
+post http://localhost:8081/major/delete?majorCode=080901
+
+![image-20220514153502559](README/image-20220514153502559.png)
+
+请求格式：
+
+```json
+{
+    "params":{
+        "majorCode": "080901",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": "080901"
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录不存在，删除失败！",
+    "data": null
+}
+```
+
+
+
+##### 全部查询
+
+get http://localhost:8081/major/list
+
+![image-20220514153628572](README/image-20220514153628572.png)
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "列表查看成功！",
+    "data": [
+        {
+            "majorName": "计算机科学与技术",
+            "majorCode": "080901",
+            "facultyCode": "0001",
+            "degreeLevel": "本科",
+            "graduationCredits": "71"
+        },
+        {
+            "majorName": "信息安全",
+            "majorCode": "080904K",
+            "facultyCode": "0001",
+            "degreeLevel": "本科",
+            "graduationCredits": "60"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "msg": "当前列表为空！",
+    "data": null
+
+```
+
+##### 按专业name查询
+
+get http://localhost:8081/major/query?majorName=信息安全
+
+![image-20220514153744662](README/image-20220514153744662.png)
+
+请求格式：
+
+```json
+{
+    "params":{
+        "majorName": "信息安全",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "majorName": "信息安全",
+            "majorCode": "080904K",
+            "facultyCode": "0001",
+            "degreeLevel": "本科",
+            "graduationCredits": "60"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "message": "查询失败，信息安全1不存在",
+    "data": null
+}
+```
+
+##### 按院系name查询
+
+get http://localhost:8081/major/query?majorName=信息安全
+
+![image-20220514162246633](README/image-20220514162246633.png)
+
+请求格式：
+
+```json
+{
+    "params":{
+        "facultyName": "土木工程学院",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "majorName": "建筑工程",
+            "majorCode": "080401",
+            "facultyCode": "0002",
+            "degreeLevel": "本科",
+            "graduationCredits": "63"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "message": "查询失败，建筑工程1不存在",
     "data": null
 }
 ```

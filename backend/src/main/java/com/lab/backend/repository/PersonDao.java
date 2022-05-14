@@ -46,16 +46,13 @@ public class PersonDao {
      */
     public List<Person> getByUsername(String username) {
         String sql="select * from person where username=?";
-        return jdbcTemplate.query(sql, new RowMapper<Person>() {
-            @Override
-            public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Person person = new Person();
-                person.setUsername(rs.getString("username"));
-                person.setName(rs.getString("name"));
-                person.setAge(rs.getInt("age"));
-                person.setTeleno(rs.getString("teleno"));
-                return person;
-            }
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Person person = new Person();
+            person.setUsername(rs.getString("username"));
+            person.setName(rs.getString("name"));
+            person.setAge(rs.getInt("age"));
+            person.setTeleno(rs.getString("teleno"));
+            return person;
         },username);
     }
 
@@ -64,16 +61,13 @@ public class PersonDao {
      */
     public List<Person> getList() {
         String sql="select * from person";
-        return jdbcTemplate.query(sql, new RowMapper<Person>() {
-            @Override
-            public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Person person = new Person();
-                person.setUsername(rs.getString("username"));
-                person.setName(rs.getString("name"));
-                person.setAge(rs.getInt("age"));
-                person.setTeleno(rs.getString("teleno"));
-                return person;
-            }
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Person person = new Person();
+            person.setUsername(rs.getString("username"));
+            person.setName(rs.getString("name"));
+            person.setAge(rs.getInt("age"));
+            person.setTeleno(rs.getString("teleno"));
+            return person;
         });
     }
 }

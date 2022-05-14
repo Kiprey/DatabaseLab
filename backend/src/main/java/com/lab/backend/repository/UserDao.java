@@ -45,14 +45,11 @@ public class UserDao {
      */
     public List<User> getByUsername(String username) {
         String sql="select * from users where username=?";
-        return jdbcTemplate.query(sql, new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                User user = new User();
-                user.setUsername(rs.getString("username"));
-                user.setPass(rs.getString("pass"));
-                return user;
-            }
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            User user = new User();
+            user.setUsername(rs.getString("username"));
+            user.setPass(rs.getString("pass"));
+            return user;
         },username);
     }
 
@@ -61,14 +58,11 @@ public class UserDao {
      */
     public List<User> getList() {
         String sql="select * from users";
-        return jdbcTemplate.query(sql, new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                User user = new User();
-                user.setUsername(rs.getString("username"));
-                user.setPass(rs.getString("pass"));
-                return user;
-            }
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            User user = new User();
+            user.setUsername(rs.getString("username"));
+            user.setPass(rs.getString("pass"));
+            return user;
         });
     }
 }
