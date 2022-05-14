@@ -8,7 +8,7 @@ public interface TeacherService {
     int insert(Teacher teacher);
 
     int delete(String teacherID);
-//    int deleteByFaculty(String facultyCode);
+//  int deleteByFaculty(String facultyCode);
 
     int update(Teacher teacher);
 

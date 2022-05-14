@@ -648,7 +648,7 @@ get http://localhost:8081/major/query?majorName=信息安全
 
 ### 教师管理
 
-#### 1.教师授课管理
+#### 1.教师授课管理（CourseClass）
 
 #### 2.录入教师管理
 
