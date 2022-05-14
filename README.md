@@ -646,3 +646,239 @@ get http://localhost:8081/major/query?majorName=信息安全
 }
 ```
 
+### 教师管理
+
+#### 1.教师授课管理
+
+#### 2.录入教师管理
+
+##### 插入
+
+post http://localhost:8081/teacher/insert
+
+请求格式：
+
+```json
+{
+    "teacherName":"张三",
+    "teacherID":"0001",
+    "facultyCode":"1"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "teacherName": "张三",
+        "teacherID": "0001",
+        "facultyCode": "1"
+    }
+}
+
+//失败：对应院系不存在
+{
+    "code": "1",
+    "message": "对应院系不存在，插入失败！",
+    "data": null
+}
+
+//失败：当前记录已存在
+{
+    "code": "2",
+    "message": "当前记录已存在，插入失败！",
+    "data": null
+}
+```
+
+##### 更新
+
+post http://localhost:8081/teacher/update
+
+
+
+请求格式：
+
+```json
+{
+    "teacherName":"李四",
+    "teacherID":"0001",
+    "facultyCode":"1"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "teacherName": "李四",
+        "teacherID": "0001",
+        "facultyCode": "1"
+    }
+}
+
+//失败：对应院系不存在
+{
+    "code": "1",
+    "message": "对应院系不存在，插入失败！",
+    "data": null
+}
+
+//失败：当前记录已存在
+{
+    "code": "2",
+    "message": "当前记录已存在，插入失败！",
+    "data": null
+}
+```
+
+##### 删除（按ID）
+
+##### 全部查询
+
+get http://localhost:8081/teacher/list
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "列表查看成功！",
+    "data": [
+        {
+            "teacherName": "李四",
+            "teacherID": "0001",
+            "facultyCode": "1"
+        },
+        {
+            "teacherName": "王五",
+            "teacherID": "0002",
+            "facultyCode": "1"
+        }
+    ]
+}
+
+//列表为空
+{
+    "code": "1",
+    "message": "当前列表为空！",
+    "data": null
+}
+```
+
+##### 按ID查询
+
+get http://localhost:8081/teacher/queryByID?teacherID=0001
+
+请求格式：
+
+```
+?teacherID=0001
+```
+
+返回格式：
+
+```json
+//查询成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "teacherName": "李四",
+            "teacherID": "0001",
+            "facultyCode": "1"
+        }
+    ]
+}
+
+//查询失败
+{
+    "code": "1",
+    "message": "查询失败，0003不存在",
+    "data": null
+}
+```
+
+##### 按name查询
+
+get http://localhost:8081/teacher/queryByName?teacherName=李四
+
+请求格式：
+
+```
+?teacherName=李四
+```
+
+返回格式： 
+
+```json
+//查询成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "teacherName": "李四",
+            "teacherID": "0001",
+            "facultyCode": "1"
+        }
+    ]
+}
+
+//查询失败
+{
+    "code": "1",
+    "message": "查询失败，张三不存在",
+    "data": null
+}
+```
+
+##### 按院系代码查询
+
+get http://localhost:8081/teacher/queryByFaculty?facultyCode=1
+
+请求格式：
+
+```
+?facultyCode=1
+```
+
+返回格式：
+
+```json
+//查询成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "teacherName": "李四",
+            "teacherID": "0001",
+            "facultyCode": "1"
+        },
+        {
+            "teacherName": "王五",
+            "teacherID": "0002",
+            "facultyCode": "1"
+        }
+    ]
+}
+
+//查询失败
+{
+    "code": "1",
+    "message": "查询失败，院系2不存在",
+    "data": null
+}
+```
+
