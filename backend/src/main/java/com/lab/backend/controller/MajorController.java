@@ -42,8 +42,12 @@ public class MajorController {
     }
     @PostMapping("/delete")
     public Result<String> updateController(@RequestParam String majorCode){
-        if(majorService.delete(majorCode)){
+        int r=majorService.delete(majorCode);
+        if(r==0){
             return Result.success(majorCode);
+        }
+        else if(r==1){
+            return Result.error("1","该专业下班级非空，无法删除！");
         }
         else{
             return Result.error("1","当前记录不存在，删除失败！");

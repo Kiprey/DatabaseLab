@@ -33,16 +33,16 @@ public class FacultyServiceImpl  implements FacultyService {
     }
     /**
      * 删除
-     * @param faculty 院系代码
+     * @param facultyCode 院系代码
      * @return int 0成功,1失败
      */
     @Override
-    public int delete(Faculty faculty) {
-        int num=facultyDao.getByCode(faculty.getFacultyCode()).size();
-        int majorNum=majorService.getListByFacultyName(faculty.getFacultyName()).size();
+    public int delete(String facultyCode) {
+        int num=facultyDao.getByCode(facultyCode).size();
+        int majorNum=majorService.getListByFacultyCode(facultyCode).size();
         if(num!=0){
             if(majorNum==0){
-                facultyDao.delete(faculty.getFacultyCode());
+                facultyDao.delete(facultyCode);
                 return 0;
             }
             else{

@@ -33,10 +33,10 @@ public class FacultyController {
         }
     }
     @PostMapping("/delete")
-    public Result<Faculty> updateController(@RequestBody Faculty faculty){
-        int r=facultyService.delete(faculty);
+    public Result<String> updateController(@RequestParam String facultyCode){
+        int r=facultyService.delete(facultyCode);
         if(r==0){
-            return Result.success(faculty);
+            return Result.success(facultyCode);
         }
         else if(r==1){
             return Result.error("1","该院系下专业非空，无法删除");

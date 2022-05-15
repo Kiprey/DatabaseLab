@@ -8,7 +8,7 @@ import java.util.List;
 public interface MajorService {
     int insert(Major major);
 
-    boolean delete(String majorCode);
+    int delete(String majorCode);
 
     int update(Major major);
 
@@ -17,4 +17,6 @@ public interface MajorService {
     List<Major> getListByName(String name);
 
     List<Major> getListByFacultyName(String facultyName);
+
+    List<Major> getListByFacultyCode(String facultyCode);
 }
