@@ -15,11 +15,11 @@ public class StudentCourseController {
     private StudentCourseService studentCourseService;
     @PostMapping("/insert")
     public Result<StudentCourse> insertController(@RequestBody StudentCourse studentCourse){
-        if(studentCourseService.insert(studentCourse)==1){
+        if(studentCourseService.insert(studentCourse)==0){
             return Result.success(studentCourse);
         }
         else{
-            return Result.error("1","当前记录已存在，插入失败！");
+            return Result.error("1","插入失败！");
         }
     }
     @PostMapping("/update")
@@ -32,13 +32,10 @@ public class StudentCourseController {
         }
     }
     @PostMapping("/delete")
-    public Result<String> updateController(@RequestBody String courseID){
+    public Result<String> updateController(@RequestParam String courseID){
         int r=studentCourseService.delete(courseID);
-        if(r==0){
+        if(r==1){
             return Result.success(courseID);
-        }
-        else if(r==1){
-            return Result.error("1","该院系下专业非空，无法删除");
         }
         else{
             return Result.error("1","当前记录不存在，删除失败！");

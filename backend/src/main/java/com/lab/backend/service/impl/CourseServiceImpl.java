@@ -37,7 +37,7 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 根据课程id删除课程
      * @param courseID 课程id值
-     * @return 返回值为1，删除成功；返回值为0，没有找到要删除的课程，删除失败
+     * @return 返回值为1，删除成功；返回值为0，删除失败
      */
     @Override
     public int delete(String courseID){
@@ -60,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
         int num = courseDao.getByCode(course.getCourseID()).size();
         if ((facultyDao.getByCode(course.getFacultyCode()).size() == 0)) {
             return 1;
-        } else if (num==0) {
+        } else if (num!=0) {
             courseDao.update(course);
             return 0;
         } else {

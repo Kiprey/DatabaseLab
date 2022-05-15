@@ -15,7 +15,7 @@ public class CourseController {
     private CourseService courseService;
     @PostMapping("/insert")
     public Result<Course> insertController(@RequestBody Course course){
-        if(courseService.insert(course)==1){
+        if(courseService.insert(course)==0){
             return Result.success(course);
         }
         else{
@@ -24,7 +24,7 @@ public class CourseController {
     }
     @PostMapping("/update")
     public Result<Course> deleteController(@RequestBody Course course){
-        if(courseService.update(course)==1){
+        if(courseService.update(course)==0){
             return Result.success(course);
         }
         else{
@@ -32,16 +32,16 @@ public class CourseController {
         }
     }
     @PostMapping("/delete")
-    public Result<String> updateController(@RequestBody String courseID){
+    public Result<String> updateController(@RequestParam String courseID){
         int r=courseService.delete(courseID);
-        if(r==0){
+        if(r==1){
             return Result.success(courseID);
         }
-        else if(r==1){
-            return Result.error("1","该院系下专业非空，无法删除");
+        else if(r==0){
+            return Result.error("0","记录不存在");
         }
         else{
-            return Result.error("1","当前记录不存在，删除失败！");
+            return Result.error("0","当前记录不存在，删除失败！");
         }
     }
     @GetMapping("/list")
