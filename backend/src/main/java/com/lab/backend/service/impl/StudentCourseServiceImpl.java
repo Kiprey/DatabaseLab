@@ -21,7 +21,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     public int insert(StudentCourse studentcourse){
         int num = studentcourseDao.getByCode(studentcourse.getCourseClassID()).size();
-        if(studentDao.getByUsername(studentcourse.getStudentID()).size() == 0 || num==0){
+        if(studentDao.getByID(studentcourse.getStudentID()).size() == 0 || num==0){
             return 1;
         }
         else{
@@ -42,7 +42,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     public int update(StudentCourse studentcourse){
         int num = studentcourseDao.getByCode(studentcourse.getCourseClassID()).size();
-        if(studentDao.getByUsername(studentcourse.getStudentID()).size() == 0 || num == 0){
+        if(studentDao.getByID(studentcourse.getStudentID()).size() == 0 || num == 0){
             return 0;
         }
         else{
