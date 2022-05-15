@@ -1,13 +1,11 @@
 package com.lab.backend.repository;
 
+import com.lab.backend.domain.Major;
 import com.lab.backend.domain.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 @Repository
 public class StudentDao {
@@ -58,7 +56,7 @@ public class StudentDao {
                 "teleno=?," +
                 "birthday=?," +
                 "sex=?," +
-                "grade=?," +
+                "grade=? " +
                 "WHERE studentId=?";
         jdbcTemplate.update(sql,
                 student.getStudentName(),
@@ -75,52 +73,64 @@ public class StudentDao {
     }
 
     /**
-     * 按username查询
+     * 按某一个属性查询
+     * @param attribute 要查询的属性
+     * @param value 要查询的属性值
+     * @return 查询结果
      */
-    public List<Student> getByUsername(String username) {
-        String sql="select * from student where studentName=?";
-        return jdbcTemplate.query(sql, new RowMapper<Student>() {
-            @Override
-            public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Student(
-                        rs.getString("studentName"),
-                        rs.getString("studentID"),
-                        rs.getString("className"),
-                        rs.getString("identifier"),
-                        rs.getString("dormitory"),
-                        rs.getString("address"),
-                        rs.getString("teleno"),
-                        rs.getString("birthday"),
-                        rs.getString("sex"),
-                        rs.getString("grade"),
-                        rs.getString("completedCredits")
-                        );
-            }
-        },username);
+    public List<Student> getByAttribute(String attribute, String value) {
+        String sql="select * from student where "+attribute+"=?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
+                rs.getString("studentName"),
+                rs.getString("studentID"),
+                rs.getString("className"),
+                rs.getString("identifier"),
+                rs.getString("dormitory"),
+                rs.getString("address"),
+                rs.getString("teleno"),
+                rs.getString("birthday"),
+                rs.getString("sex"),
+                rs.getString("grade"),
+                rs.getString("completedCredits")
+        ),value);
     }
 
+    /**
+     * 按Code查询
+     */
+    public List<Student> getByID(String ID) {
+        String sql="select * from student where studentID=?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
+                rs.getString("studentName"),
+                rs.getString("studentID"),
+                rs.getString("className"),
+                rs.getString("identifier"),
+                rs.getString("dormitory"),
+                rs.getString("address"),
+                rs.getString("teleno"),
+                rs.getString("birthday"),
+                rs.getString("sex"),
+                rs.getString("grade"),
+                rs.getString("completedCredits")
+        ),ID);
+    }
     /**
      * 查询student列表
      */
     public List<Student> getList() {
         String sql="select * from student";
-        return jdbcTemplate.query(sql, new RowMapper<Student>() {
-            @Override
-            public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Student(
-                        rs.getString("studentName"),
-                        rs.getString("studentID"),
-                        rs.getString("className"),
-                        rs.getString("identifier"),
-                        rs.getString("dormitory"),
-                        rs.getString("address"),
-                        rs.getString("teleno"),
-                        rs.getString("birthday"),
-                        rs.getString("sex"),
-                        rs.getString("grade"),
-                        rs.getString("completedCredits")
-                );
-            }
-        });
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
+                rs.getString("studentName"),
+                rs.getString("studentID"),
+                rs.getString("className"),
+                rs.getString("identifier"),
+                rs.getString("dormitory"),
+                rs.getString("address"),
+                rs.getString("teleno"),
+                rs.getString("birthday"),
+                rs.getString("sex"),
+                rs.getString("grade"),
+                rs.getString("completedCredits")
+        ));
     }
 }

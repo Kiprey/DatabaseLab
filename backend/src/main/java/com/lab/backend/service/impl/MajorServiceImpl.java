@@ -5,6 +5,7 @@ import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.Major;
 import com.lab.backend.repository.FacultyDao;
 import com.lab.backend.repository.MajorDao;
+import com.lab.backend.service.ClassService;
 import com.lab.backend.service.MajorService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ public class MajorServiceImpl implements MajorService {
     private MajorDao majorDao;
     @Resource
     private FacultyDao facultyDao;
-
+    @Resource
+    private ClassService classService;
     /**
      * 插入
      * @param major 专业实体
@@ -46,14 +48,20 @@ public class MajorServiceImpl implements MajorService {
      * @return int 0成功,1失败
      */
     @Override
-    public boolean delete(String majorCode) {
+    public int delete(String majorCode) {
         int num=majorDao.getByCode(majorCode).size();
+        int classNum=classService.getListByMajorCode(majorCode).size();
         if(num!=0){
-            majorDao.delete(majorCode);
-            return true;
+            if(classNum==0){
+                majorDao.delete(majorCode);
+                return 0;
+            }
+            else {
+                return 1;//该专业下班级非空，无法删除
+            }
         }
         else {
-            return false;
+            return 2;//专业不存在，无法删除
         }
     }
     /**
@@ -113,5 +121,14 @@ public class MajorServiceImpl implements MajorService {
         else {
             return new ArrayList<>();
         }
+    }
+    /**
+     * 按院系代码查询
+     * @param facultyCode 院系代码
+     * @return result list
+     */
+    @Override
+    public  List<Major> getListByFacultyCode(String facultyCode){
+        return majorDao.getByAttribute("facultyCode",facultyCode);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface FacultyService {
     boolean insert(Faculty faculty);
 
-    int delete(Faculty faculty);
+    int delete(String facultyCode);
 
     boolean update(Faculty faculty);
 

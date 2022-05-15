@@ -198,8 +198,6 @@
 
 post http://localhost:8081/faculty/insert
 
-![image-20220513124959110](README/image-20220513124959110.png)
-
 请求格式：
 
 ```json
@@ -236,8 +234,6 @@ post http://localhost:8081/faculty/insert
 ##### 更新
 
 post http://localhost:8081/faculty/update
-
-![image-20220513125057064](README/image-20220513125057064.png)
 
 请求格式：
 
@@ -276,8 +272,6 @@ post http://localhost:8081/faculty/update
 
 post http://localhost:8081/faculty/delete
 
-![image-20220514170010279](README/image-20220514170010279.png)
-
 请求格式：
 
 ```json
@@ -314,8 +308,6 @@ post http://localhost:8081/faculty/delete
 ##### 全部查询
 
 get http://localhost:8081/faculty/list
-
-![image-20220513125242460](README/image-20220513125242460.png)
 
 返回格式：
 
@@ -357,8 +349,6 @@ get http://localhost:8081/faculty/list
 
 get http://localhost:8081/faculty/query?facultyName=信息科学与工程学院
 
-![image-20220513125831849](README/image-20220513125831849.png)
-
 请求格式：
 
 ```json
@@ -399,17 +389,22 @@ get http://localhost:8081/faculty/query?facultyName=信息科学与工程学院
 
 post http://localhost:8081/major/insert
 
-![image-20220514152852295](README/image-20220514152852295.png)
-
 请求格式：
 
 ```json
 {
-    "majorName": "计算机科学与技术",
-    "majorCode": "080901",
+    "majorName": "计算机科学与技术",    //not null
+    "majorCode": "080901",			 //not null
+    "facultyCode": "0001",			 //not null
+    "degreeLevel": "本科",			//not null
+    "graduationCredits":"60"		  //not null
+}
+{
+    "majorName": "信息安全 ",
+    "majorCode": "080904",
     "facultyCode": "0001",
     "degreeLevel": "本科",
-    "graduationCredits":"60"
+    "graduationCredits":"61"
 }
 ```
 
@@ -446,8 +441,6 @@ post http://localhost:8081/major/insert
 ##### 更新
 
 post http://localhost:8081/major/update
-
-![image-20220514153535171](README/image-20220514153535171.png)
 
 请求格式：
 
@@ -495,8 +488,6 @@ post http://localhost:8081/major/update
 
 post http://localhost:8081/major/delete?majorCode=080901
 
-![image-20220514153502559](README/image-20220514153502559.png)
-
 请求格式：
 
 ```json
@@ -530,7 +521,7 @@ post http://localhost:8081/major/delete?majorCode=080901
 
 get http://localhost:8081/major/list
 
-![image-20220514153628572](README/image-20220514153628572.png)
+
 
 返回格式：
 
@@ -568,7 +559,7 @@ get http://localhost:8081/major/list
 
 get http://localhost:8081/major/query?majorName=信息安全
 
-![image-20220514153744662](README/image-20220514153744662.png)
+
 
 请求格式：
 
@@ -609,8 +600,6 @@ get http://localhost:8081/major/query?majorName=信息安全
 
 get http://localhost:8081/major/query?majorName=信息安全
 
-![image-20220514162246633](README/image-20220514162246633.png)
-
 请求格式：
 
 ```json
@@ -645,6 +634,500 @@ get http://localhost:8081/major/query?majorName=信息安全
     "data": null
 }
 ```
+
+#### 3.班级管理
+
+##### 插入
+
+post http://localhost:8081/class/insert
+
+请求格式：
+
+```json
+{
+    "className": "信安1901",		//not null
+    "majorCode": "080904"		 //not null
+}
+
+{
+    "className": "计科1901",
+    "majorCode": "080901"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "className": "计科1901",
+        "majorCode": "080901"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "对应专业不存在，无法插入！",
+    "data": null
+}
+{
+    "code": "1",
+    "message": "当前记录已存在，插入失败！",
+    "data": null
+}
+```
+
+##### 更新
+
+post http://localhost:8081/class/update
+
+请求格式：
+
+```json
+{
+    "className": "计科1901",
+    "majorCode": "080901"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "className": "计科1901",
+        "majorCode": "080901"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "对应专业不存在，无法更新！",
+    "data": null
+}
+{
+    "code": "1",
+    "message": "当前记录不存在，无法更新！",
+    "data": null
+}
+```
+
+
+
+##### 删除
+
+post http://localhost:8081/class/delete?className=080901
+
+请求格式：
+
+```json
+{
+    "params":{
+        "className": "信安1901",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": "计科1901"
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录不存在，删除失败！",
+    "data": null
+}
+```
+
+
+
+##### 全部查询
+
+get http://localhost:8081/class/list
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "列表查看成功！",
+    "data": [
+        {
+            "className": "计科1901",
+            "majorCode": "080901"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "msg": "当前列表为空！",
+    "data": null
+
+```
+
+##### 按班级name查询
+
+get http://localhost:8081/major/query?majorName=信息安全
+
+请求格式：
+
+```json
+{
+    "params":{
+        "className": "信安1901",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "className": "计科1901",
+            "majorCode": "080901"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "message": "查询失败，信安1901不存在",
+    "data": null
+}
+```
+
+##### 按专业name查询
+
+get http://localhost:8081/major/query?majorName=信息安全
+
+】
+
+请求格式：
+
+```json
+{
+    "params":{
+        "majorName": "计算机科学与技术",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "className": "计科1901",
+            "majorCode": "080901"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "message": "查询失败，计算机科学与技术1不存在",
+    "data": null
+}
+```
+
+#### 4.学生管理
+
+##### 插入
+
+post http://localhost:8081/student/insert
+
+请求格式：
+
+```json
+{
+    "studentName": "小王",		//not null
+    "studentID": "02",			 //not null
+    "className": "信安1901",		//not null
+    "identifier": "33068120010103050690",
+    "dormitory": "天马学生公寓",
+    "address": "湖南大写天马学生公寓三区506",
+    "teleno": "13534348989",
+    "birthday": "2001-01-03",
+    "sex": "男",
+    "grade": "19",
+    "completedCredits": 23
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "studentName": "小王",
+        "studentID": "02",
+        "className": "信安1901",
+        "identifier": "33068120010103050690",
+        "dormitory": "天马学生公寓",
+        "address": "湖南大写天马学生公寓三区506",
+        "teleno": "13534348989",
+        "birthday": "2001-01-03",
+        "sex": "男",
+        "grade": "19",
+        "completedCredits": "23"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "班级不存在，无法插入！",
+    "data": null
+}
+{
+    "code": "1",
+    "message": "当前记录已存在，插入失败！",
+    "data": null
+}
+```
+
+##### 更新
+
+post http://localhost:8081/student/update
+
+请求格式：
+
+```json
+{
+    "studentName": "小王",
+    "studentID": "02",
+    "className": "信安1901",
+    "identifier": "33068120010103050690",
+    "dormitory": "天马学生公寓",
+    "address": "湖南大写天马学生公寓三区506",
+    "teleno": "13534348989",
+    "birthday": "2001-01-04",
+    "sex": "男",
+    "grade": "19",
+    "completedCredits": 23
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "studentName": "小王",
+        "studentID": "02",
+        "className": "信安1901",
+        "identifier": "33068120010103050690",
+        "dormitory": "天马学生公寓",
+        "address": "湖南大写天马学生公寓三区506",
+        "teleno": "13534348989",
+        "birthday": "2001-01-04",
+        "sex": "男",
+        "grade": "19",
+        "completedCredits": "23"
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "班级不存在，无法更新！",
+    "data": null
+}
+{
+    "code": "1",
+    "message": "当前记录不存在，无法更新！",
+    "data": null
+}
+```
+
+
+
+##### 删除
+
+post http://localhost:8081/student/delete?studentID=021
+
+请求格式：
+
+```json
+{
+    "params":{
+        "studentID": "02",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": "02"
+}
+//失败
+{
+    "code": "1",
+    "message": "当前记录不存在，删除失败！",
+    "data": null
+}
+```
+
+
+
+##### 全部查询
+
+get http://localhost:8081/student/list
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "列表查看成功！",
+    "data": [
+        {
+            "studentName": "小王",
+            "studentID": "02",
+            "className": "信安1901",
+            "identifier": "33068120010103050690",
+            "dormitory": "天马学生公寓",
+            "address": "湖南大写天马学生公寓三区506",
+            "teleno": "13534348989",
+            "birthday": "2001-01-03",
+            "sex": "男",
+            "grade": "19",
+            "completedCredits": "23"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "msg": "当前列表为空！",
+    "data": null
+
+```
+
+##### 按学生name查询
+
+get http://localhost:8081/student/query?studentName=小王
+
+请求格式：
+
+```json
+{
+    "params":{
+        "studentName": "小王",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "studentName": "小王",
+            "studentID": "02",
+            "className": "信安1901",
+            "identifier": "33068120010103050690",
+            "dormitory": "天马学生公寓",
+            "address": "湖南大写天马学生公寓三区506",
+            "teleno": "13534348989",
+            "birthday": "2001-01-03",
+            "sex": "男",
+            "grade": "19",
+            "completedCredits": "23"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "message": "查询失败，小王1不存在",
+    "data": null
+}
+```
+
+##### 按班级name查询
+
+get http://localhost:8081/student/queryClass?className=信安1901
+
+请求格式：
+
+```json
+{
+    "params":{
+        "className": "信安1901",
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "studentName": "小王",
+            "studentID": "02",
+            "className": "信安1901",
+            "identifier": "33068120010103050690",
+            "dormitory": "天马学生公寓",
+            "address": "湖南大写天马学生公寓三区506",
+            "teleno": "13534348989",
+            "birthday": "2001-01-03",
+            "sex": "男",
+            "grade": "19",
+            "completedCredits": "23"
+        }
+    ]
+}
+//失败
+{
+    "code": "1",
+    "message": "查询失败，信安19011不存在",
+    "data": null
+}
+```
+
+
 
 ### 教师管理
 

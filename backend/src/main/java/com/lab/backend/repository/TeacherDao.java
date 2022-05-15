@@ -54,15 +54,10 @@ public class TeacherDao {
      */
     public List<Teacher> getByName(String name) {
         String sql="select * from Teacher where teacherName=?";
-        return jdbcTemplate.query(sql, new RowMapper<Teacher>() {
-            @Override
-            public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Teacher(
-                        rs.getString("teacherName"),
-                        rs.getString("teacherID"),
-                        rs.getString("facultyCode"));
-            }
-        },name);
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
+                rs.getString("teacherName"),
+                rs.getString("teacherID"),
+                rs.getString("facultyCode")),name);
     }
 
     /**
@@ -70,15 +65,10 @@ public class TeacherDao {
      */
     public List<Teacher> getByID(String ID) {
         String sql="select * from Teacher where teacherID=?";
-        return jdbcTemplate.query(sql, new RowMapper<Teacher>() {
-            @Override
-            public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Teacher(
-                        rs.getString("teacherName"),
-                        rs.getString("teacherID"),
-                        rs.getString("facultyCode"));
-            }
-        },ID);
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
+                rs.getString("teacherName"),
+                rs.getString("teacherID"),
+                rs.getString("facultyCode")),ID);
     }
 
     /**
@@ -86,15 +76,10 @@ public class TeacherDao {
      */
     public List<Teacher> getByFaculty(String facultyCode) {
         String sql="select * from Teacher where facultyCode=?";
-        return jdbcTemplate.query(sql, new RowMapper<Teacher>() {
-            @Override
-            public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new Teacher(
-                        rs.getString("teacherName"),
-                        rs.getString("teacherID"),
-                        rs.getString("facultyCode"));
-            }
-        },facultyCode);
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
+                rs.getString("teacherName"),
+                rs.getString("teacherID"),
+                rs.getString("facultyCode")),facultyCode);
     }
 
     /**

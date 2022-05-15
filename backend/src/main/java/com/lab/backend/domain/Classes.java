@@ -6,15 +6,15 @@ import javax.persistence.Table;
 
 @Table(name = "Class")
 @Entity
-public class Class {
+public class Classes {
     @Id
     private String className;
     private String majorCode;
 
-    public Class() {
+    public Classes() {
     }
 
-    public Class(String className, String majorCode) {
+    public Classes(String className, String majorCode) {
         this.className = className;
         this.majorCode = majorCode;
     }
