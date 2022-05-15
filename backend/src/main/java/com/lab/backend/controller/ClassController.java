@@ -47,9 +47,9 @@ public class ClassController {
         if(r==0){
             return Result.success(className);
         }
-//        else if(r==1){
-//            return Result.error("1","该专业下班级非空，无法删除！");
-//        }
+        else if(r==1){
+            return Result.error("1","该班级下学生非空，无法删除！");
+        }
         else{
             return Result.error("1","当前记录不存在，删除失败！");
         }

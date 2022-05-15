@@ -122,6 +122,11 @@ public class MajorServiceImpl implements MajorService {
             return new ArrayList<>();
         }
     }
+    /**
+     * 按院系代码查询
+     * @param facultyCode 院系代码
+     * @return result list
+     */
     @Override
     public  List<Major> getListByFacultyCode(String facultyCode){
         return majorDao.getByAttribute("facultyCode",facultyCode);

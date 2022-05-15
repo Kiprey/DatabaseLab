@@ -4,6 +4,7 @@ import com.lab.backend.domain.Classes;
 import com.lab.backend.domain.Major;
 import com.lab.backend.repository.ClassDao;
 import com.lab.backend.repository.MajorDao;
+import com.lab.backend.repository.StudentDao;
 import com.lab.backend.service.ClassService;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class ClassServiceImpl implements ClassService {
     private ClassDao classDao;
     @Resource
     private MajorDao majorDao;
+    @Resource
+    private StudentDao studentDao;
     /**
      * 插入
      * @param classes 班级实体
@@ -47,12 +50,18 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public int delete(String className) {
         int num=classDao.getByName(className).size();
+        int studentNum=studentDao.getByAttribute("className",className).size();
         if(num!=0){
-            classDao.delete(className);
-            return 0;
+            if(studentNum==0){
+                classDao.delete(className);
+                return 0;
+            }
+            else {
+                return 1;//该班级下学生非空，无法删除
+            }
         }
         else {
-            return 1;
+            return 1;//学生不存在，无法删除
         }
     }
     /**
