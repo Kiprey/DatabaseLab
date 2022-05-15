@@ -393,11 +393,11 @@ post http://localhost:8081/major/insert
 
 ```json
 {
-    "majorName": "计算机科学与技术",
-    "majorCode": "080901",
-    "facultyCode": "0001",
-    "degreeLevel": "本科",
-    "graduationCredits":"60"
+    "majorName": "计算机科学与技术",    //not null
+    "majorCode": "080901",			 //not null
+    "facultyCode": "0001",			 //not null
+    "degreeLevel": "本科",			//not null
+    "graduationCredits":"60"		  //not null
 }
 {
     "majorName": "信息安全 ",
@@ -645,8 +645,8 @@ post http://localhost:8081/class/insert
 
 ```json
 {
-    "className": "信安1901",
-    "majorCode": "080904"
+    "className": "信安1901",		//not null
+    "majorCode": "080904"		 //not null
 }
 
 {
@@ -863,13 +863,17 @@ post http://localhost:8081/student/insert
 
 ```json
 {
-    "className": "信安1901",
-    "majorCode": "080904"
-}
-
-{
-    "className": "计科1901",
-    "majorCode": "080901"
+    "studentName": "小王",		//not null
+    "studentID": "02",			 //not null
+    "className": "信安1901",		//not null
+    "identifier": "33068120010103050690",
+    "dormitory": "天马学生公寓",
+    "address": "湖南大写天马学生公寓三区506",
+    "teleno": "13534348989",
+    "birthday": "2001-01-03",
+    "sex": "男",
+    "grade": "19",
+    "completedCredits": 23
 }
 ```
 
