@@ -4,12 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name="course")
+@Table(name="Course")
 @Entity
 public class Course {
     private String courseName;
     private String courseNature;
     private String courseCategory;
+    @Id
     private String courseID;
     private String facultyCode;
     private int courseHours;

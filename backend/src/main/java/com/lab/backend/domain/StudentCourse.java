@@ -4,9 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name="studentcourse")
+@Table(name="StudentCourse")
 @Entity
 public class StudentCourse {
+    @Id
     private String courseClassID;
     private String studentID;
     private int score;
