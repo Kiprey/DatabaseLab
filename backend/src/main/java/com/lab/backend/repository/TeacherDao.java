@@ -1,5 +1,6 @@
 package com.lab.backend.repository;
 
+import com.lab.backend.domain.CourseClass;
 import com.lab.backend.domain.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,10 +19,11 @@ public class TeacherDao {
 
     /**
      * 插入
+     *
      * @param teacher 教师实体
      */
     public void insert(Teacher teacher) {
-        String sql="insert into Teacher values (?,?,?)";
+        String sql = "insert into Teacher values (?,?,?)";
         jdbcTemplate.update(sql,
                 teacher.getTeacherName(),
                 teacher.getTeacherID(),
@@ -30,19 +32,21 @@ public class TeacherDao {
 
     /**
      * 删除
+     *
      * @param teacherID 教师编号
      */
     public void delete(String teacherID) {
-        String sql="delete from Teacher where teacherID = ?";
-        jdbcTemplate.update(sql,teacherID);
+        String sql = "delete from Teacher where teacherID = ?";
+        jdbcTemplate.update(sql, teacherID);
     }
 
     /**
      * 更新
+     *
      * @param teacher 教师实体
      */
     public void update(Teacher teacher) {
-        String sql="UPDATE Teacher SET teacherName=?,facultyCode=? WHERE teacherID=?";
+        String sql = "UPDATE Teacher SET teacherName=?,facultyCode=? WHERE teacherID=?";
         jdbcTemplate.update(sql,
                 teacher.getTeacherName(),
                 teacher.getFacultyCode(),
@@ -50,43 +54,45 @@ public class TeacherDao {
     }
 
     /**
-     * 按Name查询
+     * 多条件查询
+     *
+     * @param teacher 教师实体
      */
-    public List<Teacher> getByName(String name) {
-        String sql="select * from Teacher where teacherName=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
-                rs.getString("teacherName"),
-                rs.getString("teacherID"),
-                rs.getString("facultyCode")),name);
-    }
+    public List<Teacher> query(Teacher teacher) {
+        String sql = "select * from Teacher where";
+        boolean addAnd = false;
+        if (teacher.getTeacherName() != null) {
+            if (addAnd) sql += " and";
+            else addAnd = true;
+            sql += " teacherName=" + teacher.getTeacherName();
 
-    /**
-     * 按ID查询
-     */
-    public List<Teacher> getByID(String ID) {
-        String sql="select * from Teacher where teacherID=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
-                rs.getString("teacherName"),
-                rs.getString("teacherID"),
-                rs.getString("facultyCode")),ID);
-    }
-
-    /**
-     * 按院系查询
-     */
-    public List<Teacher> getByFaculty(String facultyCode) {
-        String sql="select * from Teacher where facultyCode=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
-                rs.getString("teacherName"),
-                rs.getString("teacherID"),
-                rs.getString("facultyCode")),facultyCode);
+        }
+        if (teacher.getTeacherID() != null) {
+            if (addAnd) sql += " and";
+            else addAnd = true;
+            sql += " teacherID=" + teacher.getTeacherID();
+        }
+        if (teacher.getFacultyCode() != null) {
+            if (addAnd) sql += " and";
+            else addAnd = true;
+            sql += " facultyCode=" + teacher.getFacultyCode();
+        }
+        return jdbcTemplate.query(sql, new RowMapper<Teacher>() {
+            @Override
+            public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new Teacher(
+                        rs.getString("teacherName"),
+                        rs.getString("teacherID"),
+                        rs.getString("facultyCode"));
+            }
+        });
     }
 
     /**
      * 列表查看
      */
     public List<Teacher> getList() {
-        String sql="select * from teacher";
+        String sql = "select * from teacher";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
                 rs.getString("teacherName"),
                 rs.getString("teacherID"),

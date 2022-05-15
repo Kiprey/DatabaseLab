@@ -43,9 +43,9 @@ public class TeacherController {
     @PostMapping("/delete")
     public Result<String> deleteController(@RequestParam String teacherID) {
         int result = teacherService.delete(teacherID);
-        if (result == 1) {
+        if (result == 0) {
             return Result.success(teacherID);
-        } else if (result == 2) {
+        } else if (result == 1) {
             return Result.error("1", "对应课程班级非空，删除失败！");
         } else {
             return Result.error("2", "当前教师不存在，删除失败！");
@@ -62,33 +62,13 @@ public class TeacherController {
         }
     }
 
-    @GetMapping("/queryByName")
-    public Result<List<Teacher>> queryByNameController(@RequestParam String teacherName) {
-        List<Teacher> list = teacherService.getByName(teacherName);
+    @GetMapping("/query")
+    public Result<List<Teacher>> queryByNameController(@RequestBody Teacher teacher) {
+        List<Teacher> list = teacherService.query(teacher);
         if (!list.isEmpty()) {
             return Result.success(list, "查询成功");
         } else {
-            return Result.error("1", "查询失败，" + teacherName + "不存在");
-        }
-    }
-
-    @GetMapping("/queryByID")
-    public Result<List<Teacher>> queryByIDController(@RequestParam String teacherID) {
-        List<Teacher> list = teacherService.getByID(teacherID);
-        if (!list.isEmpty()) {
-            return Result.success(list, "查询成功");
-        } else {
-            return Result.error("1", "查询失败，" + teacherID + "不存在");
-        }
-    }
-
-    @GetMapping("/queryByFaculty")
-    public Result<List<Teacher>> queryByFacultyController(@RequestParam String facultyCode) {
-        List<Teacher> list = teacherService.getByFaculty(facultyCode);
-        if (!list.isEmpty()) {
-            return Result.success(list, "查询成功");
-        } else {
-            return Result.error("1", "查询失败，院系" + facultyCode + "不存在");
+            return Result.error("1", "查询失败，结果为空");
         }
     }
 }

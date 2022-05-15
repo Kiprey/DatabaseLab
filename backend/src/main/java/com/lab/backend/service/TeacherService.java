@@ -12,11 +12,7 @@ public interface TeacherService {
 
     int update(Teacher teacher);
 
-    List<Teacher> getByName(String name);
-
-    List<Teacher> getByID(String ID);
-
-    List<Teacher> getByFaculty(String facultyCode);
+    List<Teacher> query(Teacher teacher);
 
     List<Teacher> getList();
 
