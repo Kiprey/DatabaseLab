@@ -13,8 +13,8 @@ public interface TeacherService {
     int update(Teacher teacher);
 
     List<Teacher> query(Teacher teacher);
-
-    List<Teacher> getList();
+//
+//    List<Teacher> getList();
 
 
 }

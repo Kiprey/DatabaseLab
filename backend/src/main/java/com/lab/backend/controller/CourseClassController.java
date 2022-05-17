@@ -29,23 +29,22 @@ public class CourseClassController {
 //    public Result<String> deleteController(@RequestParam String teacherID) {
 //    }
 
-    @GetMapping("/list")
-    public Result<List<CourseClass>> listController() {
-        List<CourseClass> list = courseClassService.getList();
-        if (!list.isEmpty()) {
-            return Result.success(list, "列表查看成功！");
-        } else {
-            return Result.error("1", "当前列表为空！");
-        }
-    }
-
     @GetMapping("/query")
     public Result<List<CourseClass>> queryByNameController(@RequestBody CourseClass courseClass) {
         List<CourseClass> list = courseClassService.query(courseClass);
         if (!list.isEmpty()) {
             return Result.success(list, "查询成功");
         } else {
-            return Result.error("1", "查询失败，结果为空" );
+            return Result.error("1", "查询失败，结果为空");
         }
     }
+//    @GetMapping("/list")
+//    public Result<List<CourseClass>> listController() {
+//        List<CourseClass> list = courseClassService.getList();
+//        if (!list.isEmpty()) {
+//            return Result.success(list, "列表查看成功！");
+//        } else {
+//            return Result.error("1", "当前列表为空！");
+//        }
+//    }
 }

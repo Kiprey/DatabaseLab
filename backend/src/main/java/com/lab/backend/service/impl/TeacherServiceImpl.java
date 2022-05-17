@@ -87,7 +87,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     /**
-     * 多条件查询
+     * 查询
      *
      * @param teacher 教师实体：查询条件
      * @return result list
@@ -97,13 +97,13 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherDao.query(teacher);
     }
 
-    /**
-     * 全部查询
-     *
-     * @return result list
-     */
-    @Override
-    public List<Teacher> getList() {
-        return teacherDao.getList();
-    }
+//    /**
+//     * 全部查询
+//     *
+//     * @return result list
+//     */
+//    @Override
+//    public List<Teacher> getList() {
+//        return teacherDao.getList();
+//    }
 }

@@ -17,12 +17,11 @@ public class TeacherController {
     @PostMapping("/insert")
     public Result<Teacher> insertController(@RequestBody Teacher teacher) {
         int result = teacherService.insert(teacher);
-        if (result==0) {
+        if (result == 0) {
             return Result.success(teacher);
-        } else if(result==1){
+        } else if (result == 1) {
             return Result.error("1", "对应院系不存在，插入失败！");
-        }
-        else {
+        } else {
             return Result.error("2", "当前记录已存在，插入失败！");
         }
     }
@@ -30,12 +29,11 @@ public class TeacherController {
     @PostMapping("/update")
     public Result<Teacher> updateController(@RequestBody Teacher teacher) {
         int result = teacherService.update(teacher);
-        if (result==0) {
+        if (result == 0) {
             return Result.success(teacher);
-        } else if(result==1){
+        } else if (result == 1) {
             return Result.error("1", "对应院系不存在，更新失败！");
-        }
-        else {
+        } else {
             return Result.error("2", "当前记录不存在，更新失败！");
         }
     }
@@ -52,16 +50,6 @@ public class TeacherController {
         }
     }
 
-    @GetMapping("/list")
-    public Result<List<Teacher>> listController() {
-        List<Teacher> list = teacherService.getList();
-        if (!list.isEmpty()) {
-            return Result.success(list, "列表查看成功！");
-        } else {
-            return Result.error("1", "当前列表为空！");
-        }
-    }
-
     @GetMapping("/query")
     public Result<List<Teacher>> queryByNameController(@RequestBody Teacher teacher) {
         List<Teacher> list = teacherService.query(teacher);
@@ -72,3 +60,13 @@ public class TeacherController {
         }
     }
 }
+
+//    @GetMapping("/list")
+//    public Result<List<Teacher>> listController() {
+//        List<Teacher> list = teacherService.getList();
+//        if (!list.isEmpty()) {
+//            return Result.success(list, "列表查看成功！");
+//        } else {
+//            return Result.error("1", "当前列表为空！");
+//        }
+//    }

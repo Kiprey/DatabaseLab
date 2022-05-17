@@ -59,23 +59,16 @@ public class TeacherDao {
      * @param teacher 教师实体
      */
     public List<Teacher> query(Teacher teacher) {
-        String sql = "select * from Teacher where";
-        boolean addAnd = false;
+        String sql = "select * from Teacher where 1";
         if (teacher.getTeacherName() != null) {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql += " teacherName=" + teacher.getTeacherName();
+            sql += " and teacherName=" + teacher.getTeacherName();
 
         }
         if (teacher.getTeacherID() != null) {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql += " teacherID=" + teacher.getTeacherID();
+            sql += " and teacherID=" + teacher.getTeacherID();
         }
         if (teacher.getFacultyCode() != null) {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql += " facultyCode=" + teacher.getFacultyCode();
+            sql += " and facultyCode=" + teacher.getFacultyCode();
         }
         return jdbcTemplate.query(sql, new RowMapper<Teacher>() {
             @Override
@@ -88,15 +81,15 @@ public class TeacherDao {
         });
     }
 
-    /**
-     * 列表查看
-     */
-    public List<Teacher> getList() {
-        String sql = "select * from teacher";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
-                rs.getString("teacherName"),
-                rs.getString("teacherID"),
-                rs.getString("facultyCode")
-        ));
-    }
+//    /**
+//     * 列表查看
+//     */
+//    public List<Teacher> getList() {
+//        String sql = "select * from teacher";
+//        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
+//                rs.getString("teacherName"),
+//                rs.getString("teacherID"),
+//                rs.getString("facultyCode")
+//        ));
+//    }
 }

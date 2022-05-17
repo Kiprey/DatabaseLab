@@ -654,11 +654,53 @@ get http://localhost:8081/major/query?majorName=信息安全
 
 ##### 删除
 
-##### 多条件查询
+##### 查询
+
+get http://localhost:8081/courseClass/query
 
 - 不设条件的为null
 
-请求格式
+请求格式1：全部查询
+
+```json
+{
+    "courseClassID": null,
+    "courseID": null,
+    "teacherID": null,
+    "courseClassTime": null,
+    "courseClassAddress": null,
+    "courseClassWeek": null
+}
+```
+
+返回格式2：
+
+```json
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "courseClassID": "1",
+            "courseID": "1",
+            "teacherID": "0002",
+            "courseClassTime": "1",
+            "courseClassAddress": "院楼",
+            "courseClassWeek": "1"
+        },
+        {
+            "courseClassID": "2",
+            "courseID": "1",
+            "teacherID": "0002",
+            "courseClassTime": "2",
+            "courseClassAddress": "院楼",
+            "courseClassWeek": "2"
+        }
+    ]
+}
+```
+
+请求格式2：设有条件
 
 ```json
 {
@@ -671,7 +713,7 @@ get http://localhost:8081/major/query?majorName=信息安全
 }
 ```
 
-返回格式
+返回格式2：
 
 ```json
 //查询成功
@@ -707,37 +749,6 @@ get http://localhost:8081/major/query?majorName=信息安全
 ```
 
 
-
-##### 全部查询
-
-get http://localhost:8081/courseClass/list
-
-返回格式
-
-```json
-{
-    "code": "0",
-    "message": "列表查看成功！",
-    "data": [
-        {
-            "courseClassID": "1",
-            "courseID": "1",
-            "teacherID": "0002",
-            "courseClassTime": "1",
-            "courseClassAddress": "院楼",
-            "courseClassWeek": "1"
-        },
-        {
-            "courseClassID": "2",
-            "courseID": "1",
-            "teacherID": "0002",
-            "courseClassTime": "2",
-            "courseClassAddress": "院楼",
-            "courseClassWeek": "2"
-        }
-    ]
-}
-```
 
 
 
@@ -864,11 +875,39 @@ post http://localhost:8081/teacher/delete?teacherID=0001
 }
 ```
 
-##### 多条件查询
+##### 查询
+
+get http://localhost:8081/teacher/query
 
 - 不设条件的为null
 
-请求格式：
+请求格式1：全部查询
+
+```json
+{
+    "teacherName":null,
+    "teacherID": null,
+    "facultyCode": null
+}
+```
+
+返回格式1：
+
+```json
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "teacherName": "王五",
+            "teacherID": "0002",
+            "facultyCode": "1"
+        }
+    ]
+}
+```
+
+请求格式2：设有条件
 
 ```json
 {
@@ -878,7 +917,7 @@ post http://localhost:8081/teacher/delete?teacherID=0001
 }
 ```
 
-返回格式：
+返回格式2：
 
 ```json
 //查询成功
@@ -901,38 +940,9 @@ post http://localhost:8081/teacher/delete?teacherID=0001
 }
 ```
 
-##### 全部查询
 
-get http://localhost:8081/teacher/list
 
-返回格式：
 
-```json
-//成功
-{
-    "code": "0",
-    "message": "列表查看成功！",
-    "data": [
-        {
-            "teacherName": "李四",
-            "teacherID": "0001",
-            "facultyCode": "1"
-        },
-        {
-            "teacherName": "王五",
-            "teacherID": "0002",
-            "facultyCode": "1"
-        }
-    ]
-}
-
-//列表为空
-{
-    "code": "1",
-    "message": "当前列表为空！",
-    "data": null
-}
-```
 
 
 

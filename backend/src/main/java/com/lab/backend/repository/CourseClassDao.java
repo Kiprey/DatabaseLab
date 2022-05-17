@@ -65,72 +65,54 @@ public class CourseClassDao {
      * @param courseClass 课程班级实体
      */
     public List<CourseClass> query(CourseClass courseClass) {
-        String sql="select * from CourseClass where";
-        boolean addAnd = false;
-        if(courseClass.getCourseClassID()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassID="+courseClass.getCourseClassID();
+        String sql = "select * from CourseClass where 1";
+        if (courseClass.getCourseClassID() != null) {
+            sql += " and courseClassID=" + courseClass.getCourseClassID();
         }
-        if(courseClass.getCourseID()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseID="+courseClass.getCourseID();
+        if (courseClass.getCourseID() != null) {
+            sql += " and courseID=" + courseClass.getCourseID();
         }
-        if(courseClass.getTeacherID()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" teacherID="+courseClass.getTeacherID();
+        if (courseClass.getTeacherID() != null) {
+            sql += " and teacherID=" + courseClass.getTeacherID();
         }
-        if(courseClass.getCourseClassTime()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassTime="+courseClass.getCourseClassTime();
+        if (courseClass.getCourseClassTime() != null) {
+            sql += " and courseClassTime=" + courseClass.getCourseClassTime();
         }
-        if(courseClass.getCourseClassAddress()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassAddress="+courseClass.getCourseClassAddress();
+        if (courseClass.getCourseClassAddress() != null) {
+            sql += " and courseClassAddress=" + courseClass.getCourseClassAddress();
         }
-        if(courseClass.getCourseClassWeek()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassWeek="+courseClass.getCourseClassWeek();
+        if (courseClass.getCourseClassWeek() != null) {
+            sql += " and courseClassWeek=" + courseClass.getCourseClassWeek();
         }
         return jdbcTemplate.query(sql, new RowMapper<CourseClass>() {
             @Override
             public CourseClass mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new CourseClass(
-                    rs.getString("courseClassID"),
-                    rs.getString("courseID"),
-                    rs.getString("teacherID"),
-                    rs.getString("courseClassTime"),
-                    rs.getString("courseClassAddress"),
-                    rs.getString("courseClassWeek"));
+                        rs.getString("courseClassID"),
+                        rs.getString("courseID"),
+                        rs.getString("teacherID"),
+                        rs.getString("courseClassTime"),
+                        rs.getString("courseClassAddress"),
+                        rs.getString("courseClassWeek"));
             }
         });
     }
-
-    /**
-     * 列表查看（全部查询）
-     */
-    public List<CourseClass> getList() {
-        String sql = "select * from CourseClass";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
-                rs.getString("courseClassID"),
-                rs.getString("courseID"),
-                rs.getString("teacherID"),
-                rs.getString("courseClassTime"),
-                rs.getString("courseClassAddress"),
-                rs.getString("courseClassWeek")
-        ));
-    }
 }
+
+//    /**
+//     * 列表查看（全部查询）
+//     */
+//    public List<CourseClass> getList() {
+//        String sql = "select * from CourseClass";
+//        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
+//                rs.getString("courseClassID"),
+//                rs.getString("courseID"),
+//                rs.getString("teacherID"),
+//                rs.getString("courseClassTime"),
+//                rs.getString("courseClassAddress"),
+//                rs.getString("courseClassWeek")
+//        ));
+//    }
+//}
 
 
