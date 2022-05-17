@@ -1129,6 +1129,112 @@ get http://localhost:8081/student/queryClass?className=信安1901
 
 
 
+### 教师管理
+
+#### 1.教师授课管理
+
+##### 插入
+
+##### 更新
+
+##### 删除
+
+##### 查询
+
+get http://localhost:8081/courseClass/query
+
+- 不设条件的为null
+
+请求格式1：全部查询
+
+```json
+{
+    "courseClassID": null,
+    "courseID": null,
+    "teacherID": null,
+    "courseClassTime": null,
+    "courseClassAddress": null,
+    "courseClassWeek": null
+}
+```
+
+返回格式2：
+
+```json
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "courseClassID": "1",
+            "courseID": "1",
+            "teacherID": "0002",
+            "courseClassTime": "1",
+            "courseClassAddress": "院楼",
+            "courseClassWeek": "1"
+        },
+        {
+            "courseClassID": "2",
+            "courseID": "1",
+            "teacherID": "0002",
+            "courseClassTime": "2",
+            "courseClassAddress": "院楼",
+            "courseClassWeek": "2"
+        }
+    ]
+}
+```
+
+请求格式2：设有条件
+
+```json
+{
+    "courseClassID": null,
+    "courseID": "1",
+    "teacherID": "0002",
+    "courseClassTime": null,
+    "courseClassAddress": null,
+    "courseClassWeek": null
+}
+```
+
+返回格式2：
+
+```json
+//查询成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": [
+        {
+            "courseClassID": "1",
+            "courseID": "1",
+            "teacherID": "0002",
+            "courseClassTime": "1",
+            "courseClassAddress": "院楼",
+            "courseClassWeek": "1"
+        },
+        {
+            "courseClassID": "2",
+            "courseID": "1",
+            "teacherID": "0002",
+            "courseClassTime": "2",
+            "courseClassAddress": "院楼",
+            "courseClassWeek": "2"
+        }
+    ]
+}
+
+//查询失败
+{
+    "code": "1",
+    "message": "查询失败，结果为空",
+    "data": null
+}
+```
+
+
+
 
 
 #### 2.录入教师管理
