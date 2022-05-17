@@ -1,4 +1,4 @@
-# DatabaseLab1
+# DatabaseLab
 
 ## 一、简介
 
