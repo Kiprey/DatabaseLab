@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -109,6 +111,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getListByClassName(String className){
         return studentDao.getByAttribute("className", className);
+    }
+
+    /**
+     * 多条件查询
+     * @param student 学生实体
+     * @return result list
+     */
+    @Override
+    public Map<Object, Object> query(Student student, int pageIndex, int pageSize){
+        return studentDao.query(student,pageIndex,pageSize);
     }
 
 }

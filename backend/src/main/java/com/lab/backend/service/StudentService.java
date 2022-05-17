@@ -3,6 +3,8 @@ import com.lab.backend.domain.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public interface StudentService {
     int insert(Student student);
@@ -14,4 +16,8 @@ public interface StudentService {
     List<Student> getList();
     List<Student> getListByName(String name);
     List<Student> getListByClassName(String className);
+
+//    List<Student> query(Student student);
+
+    Map<Object, Object> query(Student student, int pageIndex, int pageSize);
 }
