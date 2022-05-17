@@ -51,7 +51,7 @@ public class CourseClassServiceImpl implements CourseClassService {
 
 
     /**
-     * 查询
+     * 多条件查询
      *
      * @param courseClass 课程班级实体：构成查询条件
      */
@@ -60,13 +60,13 @@ public class CourseClassServiceImpl implements CourseClassService {
         return courseClassDao.query(courseClass);
     }
 
-//    /**
-//     * 全部查询
-//     *
-//     * @return result list
-//     */
-//    @Override
-//    public List<CourseClass> getList() {
-//        return courseClassDao.getList();
-//    }
+    /**
+     * 全部查询
+     *
+     * @return result list
+     */
+    @Override
+    public List<CourseClass> getList() {
+        return courseClassDao.getList();
+    }
 }

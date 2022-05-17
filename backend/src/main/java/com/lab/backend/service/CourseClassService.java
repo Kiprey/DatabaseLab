@@ -13,5 +13,5 @@ public interface CourseClassService {
 
     List<CourseClass> query(CourseClass courseClass);
 
-//    List<CourseClass> getList();
+    List<CourseClass> getList();
 }
