@@ -1,6 +1,5 @@
 package com.lab.backend.controller;
 
-
 import com.lab.backend.domain.Student;
 import com.lab.backend.service.StudentService;
 import com.lab.backend.utils.Result;
@@ -63,7 +62,7 @@ public class StudentController {
             return Result.error("1","当前列表为空！");
         }
     }
-    @PostMapping("/query")
+    @GetMapping("/query")
     public Result<Map<Object, Object>> queryController(@RequestBody Student student,@RequestParam int pageIndex,@RequestParam int pageSize){
         Map<Object, Object> response =studentService.query(student,pageIndex,pageSize);
         if((int)response.get("total")!=0){

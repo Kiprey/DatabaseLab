@@ -1,16 +1,9 @@
 package com.lab.backend.repository;
 
-import com.lab.backend.domain.Major;
 import com.lab.backend.domain.Student;
-import com.lab.backend.domain.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 @Repository
@@ -28,7 +21,7 @@ public class StudentDao {
         jdbcTemplate.update(sql,
                 student.getStudentName(),
                 student.getStudentID(),
-                student.getClassName(),
+                student.getClassCode(),
                 student.getIdentifier(),
                 student.getDormitory(),
                 student.getAddress(),
@@ -54,7 +47,7 @@ public class StudentDao {
     public void update(Student student) {
         String sql="UPDATE student SET " +
                 "studentName=?, " +
-                "className=?, " +
+                "classCode=?, " +
                 "identifier=?, " +
                 "dormitory=?, " +
                 "address=?," +
@@ -67,7 +60,7 @@ public class StudentDao {
         jdbcTemplate.update(sql,
                 student.getStudentName(),
                 student.getStudentID(),
-                student.getClassName(),
+                student.getClassCode(),
                 student.getStudentID(),
                 student.getDormitory(),
                 student.getAddress(),
@@ -85,11 +78,11 @@ public class StudentDao {
      * @return 查询结果
      */
     public List<Student> getByAttribute(String attribute, String value) {
-        String sql="select * from student where "+attribute+"=?";
+        String sql="select * from student where "+attribute+" like ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
                 rs.getString("studentName"),
                 rs.getString("studentID"),
-                rs.getString("className"),
+                rs.getString("classCode"),
                 rs.getString("identifier"),
                 rs.getString("dormitory"),
                 rs.getString("address"),
@@ -109,7 +102,7 @@ public class StudentDao {
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
                 rs.getString("studentName"),
                 rs.getString("studentID"),
-                rs.getString("className"),
+                rs.getString("classCode"),
                 rs.getString("identifier"),
                 rs.getString("dormitory"),
                 rs.getString("address"),
@@ -128,7 +121,7 @@ public class StudentDao {
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
                 rs.getString("studentName"),
                 rs.getString("studentID"),
-                rs.getString("className"),
+                rs.getString("classCode"),
                 rs.getString("identifier"),
                 rs.getString("dormitory"),
                 rs.getString("address"),
@@ -164,10 +157,10 @@ public class StudentDao {
             params.add("%" +studentName+ "%");
         }
 
-        String className= student.getClassName();
-        if(className != null && !className.trim().isEmpty()){
-            sql.append(" and className like ?");
-            params.add("%" +className+ "%");
+        String classCode= student.getClassCode();
+        if(classCode != null && !classCode.trim().isEmpty()){
+            sql.append(" and classCode like ?");
+            params.add("%" +classCode+ "%");
         }
 
         String identifier= student.getIdentifier();
@@ -212,7 +205,7 @@ public class StudentDao {
         }
 
         //添加页数条目限制
-        sql.append("limit ?,?");
+        sql.append(" limit ?,?");
         params.add((pageIndex-1)*30);
         params.add(pageSize);
         //统计个数
@@ -225,7 +218,7 @@ public class StudentDao {
         response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new Student(
                 rs.getString("studentName"),
                 rs.getString("studentID"),
-                rs.getString("className"),
+                rs.getString("classCode"),
                 rs.getString("identifier"),
                 rs.getString("dormitory"),
                 rs.getString("address"),

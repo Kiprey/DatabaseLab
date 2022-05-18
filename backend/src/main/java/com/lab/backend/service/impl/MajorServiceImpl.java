@@ -3,15 +3,17 @@ package com.lab.backend.service.impl;
 
 import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.Major;
+import com.lab.backend.repository.ClassDao;
 import com.lab.backend.repository.FacultyDao;
 import com.lab.backend.repository.MajorDao;
-import com.lab.backend.service.ClassService;
 import com.lab.backend.service.MajorService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class MajorServiceImpl implements MajorService {
     @Resource
@@ -19,7 +21,7 @@ public class MajorServiceImpl implements MajorService {
     @Resource
     private FacultyDao facultyDao;
     @Resource
-    private ClassService classService;
+    private ClassDao classDao;
     /**
      * 插入
      * @param major 专业实体
@@ -50,7 +52,7 @@ public class MajorServiceImpl implements MajorService {
     @Override
     public int delete(String majorCode) {
         int num=majorDao.getByCode(majorCode).size();
-        int classNum=classService.getListByMajorCode(majorCode).size();
+        int classNum=classDao.getByAttribute("majorCode",majorCode).size();
         if(num!=0){
             if(classNum==0){
                 majorDao.delete(majorCode);
@@ -64,6 +66,8 @@ public class MajorServiceImpl implements MajorService {
             return 2;//专业不存在，无法删除
         }
     }
+
+
     /**
      * 更新
      * @param major 专业实体
@@ -87,6 +91,7 @@ public class MajorServiceImpl implements MajorService {
         }
     }
 
+
     /**
      * 全部查询
      * @return result list
@@ -96,15 +101,7 @@ public class MajorServiceImpl implements MajorService {
         return majorDao.getList();
     }
 
-    /**
-     * 按name查询
-     * @param name 专业名字
-     * @return result list
-     */
-    @Override
-    public List<Major> getListByName(String name){
-        return majorDao.getByAttribute("majorName",name);
-    }
+
     /**
      * 按院系名称查询
      * @param facultyName 专业名字
@@ -122,13 +119,14 @@ public class MajorServiceImpl implements MajorService {
             return new ArrayList<>();
         }
     }
+
     /**
-     * 按院系代码查询
-     * @param facultyCode 院系代码
+     * 多条件查询
+     * @param major 专业实体
      * @return result list
      */
     @Override
-    public  List<Major> getListByFacultyCode(String facultyCode){
-        return majorDao.getByAttribute("facultyCode",facultyCode);
+    public Map<Object, Object> query(Major major, int pageIndex, int pageSize){
+        return majorDao.query(major,pageIndex,pageSize);
     }
 }

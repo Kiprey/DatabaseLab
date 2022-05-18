@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class ClassServiceImpl implements ClassService {
     @Resource
@@ -27,7 +29,7 @@ public class ClassServiceImpl implements ClassService {
      */
     @Override
     public int insert(Classes classes) {
-        int num=classDao.getByName(classes.getClassName()).size();
+        int num=classDao.getByCode(classes.getClassCode()).size();
         int majorNum=majorDao.getByCode(classes.getMajorCode()).size();
         if(num==0){
             if(majorNum!=0){
@@ -44,16 +46,16 @@ public class ClassServiceImpl implements ClassService {
     }
     /**
      * 删除
-     * @param className 班级代码
+     * @param classCode 班级代码
      * @return int 0成功,1失败
      */
     @Override
-    public int delete(String className) {
-        int num=classDao.getByName(className).size();
-        int studentNum=studentDao.getByAttribute("className",className).size();
+    public int delete(String classCode) {
+        int num=classDao.getByCode(classCode).size();
+        int studentNum=studentDao.getByAttribute("classCode",classCode).size();
         if(num!=0){
             if(studentNum==0){
-                classDao.delete(className);
+                classDao.delete(classCode);
                 return 0;
             }
             else {
@@ -61,7 +63,7 @@ public class ClassServiceImpl implements ClassService {
             }
         }
         else {
-            return 1;//学生不存在，无法删除
+            return 2;//学生不存在，无法删除
         }
     }
     /**
@@ -71,7 +73,7 @@ public class ClassServiceImpl implements ClassService {
      */
     @Override
     public int update(Classes classes) {
-        int num=classDao.getByName(classes.getClassName()).size();
+        int num=classDao.getByCode(classes.getClassCode()).size();
         int majorNum=majorDao.getByCode(classes.getMajorCode()).size();
         if(num!=0){
             if(majorNum!=0){
@@ -97,15 +99,6 @@ public class ClassServiceImpl implements ClassService {
     }
 
     /**
-     * 按name查询
-     * @param name 班级名字
-     * @return result list
-     */
-    @Override
-    public List<Classes> getListByName(String name){
-        return classDao.getByName(name);
-    }
-    /**
      * 按专业名称查询
      * @param majorName 专业名字
      * @return result list
@@ -124,13 +117,12 @@ public class ClassServiceImpl implements ClassService {
     }
 
     /**
-     * 按专业code查询
-     * @param majorCode 专业代码
+     * 多条件查询
+     * @param classes 班级实体
      * @return result list
      */
     @Override
-    public List<Classes> getListByMajorCode(String majorCode){
-        return classDao.getByAttribute("majorCode", majorCode);
-
+    public Map<Object, Object> query(Classes classes, int pageIndex, int pageSize){
+        return classDao.query(classes,pageIndex,pageSize);
     }
 }

@@ -14,10 +14,8 @@ public interface StudentService {
     int update(Student student);
 
     List<Student> getList();
-    List<Student> getListByName(String name);
-    List<Student> getListByClassName(String className);
 
-//    List<Student> query(Student student);
+    List<Student> getListByClassName(String className);
 
     Map<Object, Object> query(Student student, int pageIndex, int pageSize);
 }

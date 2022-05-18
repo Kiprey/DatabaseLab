@@ -1,9 +1,7 @@
 package com.lab.backend.controller;
 
 import com.lab.backend.domain.CourseClass;
-import com.lab.backend.domain.Teacher;
 import com.lab.backend.service.CourseClassService;
-import com.lab.backend.service.TeacherService;
 import com.lab.backend.utils.Result;
 import org.springframework.web.bind.annotation.*;
 

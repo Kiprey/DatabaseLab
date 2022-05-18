@@ -1,6 +1,5 @@
 package com.lab.backend.service;
 
-import com.lab.backend.domain.Course;
 import com.lab.backend.domain.StudentCourse;
 import org.springframework.stereotype.Service;
 

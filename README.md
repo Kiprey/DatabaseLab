@@ -270,7 +270,7 @@ post http://localhost:8081/faculty/update
 
 ##### 删除
 
-post http://localhost:8081/faculty/delete
+post http://localhost:8081/faculty/delete?facultyCode=0003
 
 请求格式：
 
@@ -301,6 +301,11 @@ post http://localhost:8081/faculty/delete
 {
     "code": "1",
     "message": "该院系下专业非空，无法删除",
+    "data": null
+}
+{
+    "code": "1",
+    "message": "当前记录不存在，删除失败！",
     "data": null
 }
 ```
@@ -345,17 +350,30 @@ get http://localhost:8081/faculty/list
 }
 ```
 
-##### 按name查询
+##### 多条件查询
 
-get http://localhost:8081/faculty/query?facultyName=信息科学与工程学院
+get http://localhost:8081/faculty/query?pageIndex=1&pageSize=2
+
+全空即全部查询,
+
+null和" "等效
 
 请求格式：
 
 ```json
 {
-    "params":{
-        "facultyName": "信息科学与工程学院",
+    "params":
+    {
+        "pageIndex": 1,
+        "pageSize":2
     }
+    "body":
+    {
+        "facultyName":"信息",
+        "facultyCode": null,
+        "facultyAddress": null,
+        "facultyTeleno": null
+	}
 }
 ```
 
@@ -366,22 +384,30 @@ get http://localhost:8081/faculty/query?facultyName=信息科学与工程学院
 {
     "code": "0",
     "message": "查询成功",
-    "data": [
-        {
-            "facultyName": "信息科学与工程学院",
-            "facultyCode": "0001",
-            "facultyAddress": "湖南大学信科院",
-            "facultyTeleno": "123456"
-        }
-    ]
+    "data": {
+        "total": 1,
+        "pageIndex": 1,
+        "tableData": [
+            {
+                "facultyName": "信息科学与工程学院",
+                "facultyCode": "0001",
+                "facultyAddress": "湖南大学信科院",
+                "facultyTeleno": "8801002"
+            }
+        ]
+    }
 }
 //失败
 {
     "code": "1",
-    "message": "查询失败，信息科学与工程学院1不存在",
+    "message": "查询结果为空",
     "data": null
 }
 ```
+
+##### 
+
+
 
 #### 2.专业管理
 
@@ -400,7 +426,7 @@ post http://localhost:8081/major/insert
     "graduationCredits":"60"		  //not null
 }
 {
-    "majorName": "信息安全 ",
+    "majorName": "信息安全",
     "majorCode": "080904",
     "facultyCode": "0001",
     "degreeLevel": "本科",
@@ -492,7 +518,8 @@ post http://localhost:8081/major/delete?majorCode=080901
 
 ```json
 {
-    "params":{
+    "params":
+    {
         "majorCode": "080901",
     }
 }
@@ -520,8 +547,6 @@ post http://localhost:8081/major/delete?majorCode=080901
 ##### 全部查询
 
 get http://localhost:8081/major/list
-
-
 
 返回格式：
 
@@ -555,50 +580,9 @@ get http://localhost:8081/major/list
 
 ```
 
-##### 按专业name查询
-
-get http://localhost:8081/major/query?majorName=信息安全
-
-
-
-请求格式：
-
-```json
-{
-    "params":{
-        "majorName": "信息安全",
-    }
-}
-```
-
-返回格式：
-
-```json
-//成功
-{
-    "code": "0",
-    "message": "查询成功",
-    "data": [
-        {
-            "majorName": "信息安全",
-            "majorCode": "080904K",
-            "facultyCode": "0001",
-            "degreeLevel": "本科",
-            "graduationCredits": "60"
-        }
-    ]
-}
-//失败
-{
-    "code": "1",
-    "message": "查询失败，信息安全1不存在",
-    "data": null
-}
-```
-
 ##### 按院系name查询
 
-get http://localhost:8081/major/query?majorName=信息安全
+get http://localhost:8081/major/queryFaculty?facultyName=信息科学与工程学院
 
 请求格式：
 
@@ -631,6 +615,66 @@ get http://localhost:8081/major/query?majorName=信息安全
 {
     "code": "1",
     "message": "查询失败，建筑工程1不存在",
+    "data": null
+}
+```
+
+##### 多条件查询
+
+get http://localhost:8081/major/query?majorName=信息安全
+
+请求格式：
+
+```json
+{
+    "params":
+    {
+        "pageIndex": 1,
+        "pageSize":2
+    }
+    "body":
+    {
+        "majorName": null,
+        "majorCode": "",
+        "facultyCode": "0001",
+        "degreeLevel": "本科",
+        "graduationCredits":""
+	}
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": {
+        "total": 2,
+        "pageIndex": 1,
+        "tableData": [
+            {
+                "majorName": "计算机科学与技术",
+                "majorCode": "080901",
+                "facultyCode": "0001",
+                "degreeLevel": "本科",
+                "graduationCredits": "71"
+            },
+            {
+                "majorName": "信息安全 ",
+                "majorCode": "080904",
+                "facultyCode": "0001",
+                "degreeLevel": "本科",
+                "graduationCredits": "61"
+            }
+        ]
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "查询结果为空",
     "data": null
 }
 ```
@@ -722,7 +766,7 @@ post http://localhost:8081/class/update
 
 ##### 删除
 
-post http://localhost:8081/class/delete?className=080901
+post http://localhost:8081/class/delete?className=计科1901
 
 请求格式：
 
@@ -779,42 +823,6 @@ get http://localhost:8081/class/list
 
 ```
 
-##### 按班级name查询
-
-get http://localhost:8081/major/query?majorName=信息安全
-
-请求格式：
-
-```json
-{
-    "params":{
-        "className": "信安1901",
-    }
-}
-```
-
-返回格式：
-
-```json
-//成功
-{
-    "code": "0",
-    "message": "查询成功",
-    "data": [
-        {
-            "className": "计科1901",
-            "majorCode": "080901"
-        }
-    ]
-}
-//失败
-{
-    "code": "1",
-    "message": "查询失败，信安1901不存在",
-    "data": null
-}
-```
-
 ##### 按专业name查询
 
 get http://localhost:8081/major/query?majorName=信息安全
@@ -852,6 +860,54 @@ get http://localhost:8081/major/query?majorName=信息安全
     "data": null
 }
 ```
+
+##### 多条件查询
+
+get http://localhost:8081/class/query?pageIndex=1&pageSize=2
+
+请求格式：
+
+```json
+{
+    "params":
+    {
+        "className": "信安1901",
+    }
+    "body":
+    {
+        "className": "计科1902",
+        "majorCode": "080901"
+	}
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": {
+        "total": 1,
+        "pageIndex": 1,
+        "tableData": [
+            {
+                "className": "信安1901",
+                "majorCode": "080904"
+            }
+        ]
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "查询结果为空",
+    "data": null
+}
+```
+
+##### 
 
 #### 4.学生管理
 
@@ -1037,51 +1093,6 @@ get http://localhost:8081/student/list
 
 ```
 
-##### 按学生name查询
-
-get http://localhost:8081/student/query?studentName=小王
-
-请求格式：
-
-```json
-{
-    "params":{
-        "studentName": "小王",
-    }
-}
-```
-
-返回格式：
-
-```json
-//成功
-{
-    "code": "0",
-    "message": "查询成功",
-    "data": [
-        {
-            "studentName": "小王",
-            "studentID": "02",
-            "className": "信安1901",
-            "identifier": "33068120010103050690",
-            "dormitory": "天马学生公寓",
-            "address": "湖南大写天马学生公寓三区506",
-            "teleno": "13534348989",
-            "birthday": "2001-01-03",
-            "sex": "男",
-            "grade": "19",
-            "completedCredits": "23"
-        }
-    ]
-}
-//失败
-{
-    "code": "1",
-    "message": "查询失败，小王1不存在",
-    "data": null
-}
-```
-
 ##### 按班级name查询
 
 get http://localhost:8081/student/queryClass?className=信安1901
@@ -1127,7 +1138,68 @@ get http://localhost:8081/student/queryClass?className=信安1901
 }
 ```
 
+##### 多条件查询
 
+get http://localhost:8081/student/query?pageIndex=1&pageSize=2
+
+请求格式：
+
+```json
+{
+    "params":
+    {
+        "studentName": "小王",
+    }
+    {
+        "studentName":  null,
+        "studentID": null,
+        "className": "信安1901",
+        "identifier": null,
+        "dormitory": "天马学生公寓",
+        "address": "湖南大写天马学生公寓三区506",
+        "teleno": "13534348989",
+        "birthday": "2001-01-03",
+        "sex": "男",
+        "grade": "19",
+        "completedCredits":  null
+    }
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": {
+        "total": 1,
+        "pageIndex": 1,
+        "tableData": [
+            {
+                "studentName": "小王1",
+                "studentID": "02",
+                "className": "信安1901",
+                "identifier": "33068120010103050690",
+                "dormitory": "天马学生公寓",
+                "address": "湖南大写天马学生公寓三区506",
+                "teleno": "13534348989",
+                "birthday": "2001-01-03",
+                "sex": "男",
+                "grade": "19",
+                "completedCredits": "23"
+            }
+        ]
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "查询结果为空",
+    "data": null
+}
+```
 
 ### 教师管理
 
