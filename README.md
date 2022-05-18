@@ -689,13 +689,15 @@ post http://localhost:8081/class/insert
 
 ```json
 {
-    "className": "信安1901",		//not null
-    "majorCode": "080904"		 //not null
+    "className": "信安1901",
+    "classCode": "2019080601",
+    "majorCode": "080904"
 }
 
 {
     "className": "计科1901",
-    "majorCode": "080901"
+    "classCode": "2019080401",
+    "majorCode": "080904"
 }
 ```
 
@@ -708,7 +710,8 @@ post http://localhost:8081/class/insert
     "message": "成功",
     "data": {
         "className": "计科1901",
-        "majorCode": "080901"
+        "classCode": "2019080401",
+        "majorCode": "080904"
     }
 }
 //失败
@@ -733,7 +736,8 @@ post http://localhost:8081/class/update
 ```json
 {
     "className": "计科1901",
-    "majorCode": "080901"
+    "classCode": "2019080401",
+    "majorCode": "080904"
 }
 ```
 
@@ -746,7 +750,8 @@ post http://localhost:8081/class/update
     "message": "成功",
     "data": {
         "className": "计科1901",
-        "majorCode": "080901"
+        "classCode": "2019080401",
+        "majorCode": "080904"
     }
 }
 //失败
@@ -766,14 +771,15 @@ post http://localhost:8081/class/update
 
 ##### 删除
 
-post http://localhost:8081/class/delete?className=计科1901
+post http://localhost:8081/class/delete?classCode=2019080601
 
 请求格式：
 
 ```json
 {
-    "params":{
-        "className": "信安1901",
+    "params":
+    {
+        "classCode": "2019080601",
     }
 }
 ```
@@ -811,7 +817,13 @@ get http://localhost:8081/class/list
     "data": [
         {
             "className": "计科1901",
-            "majorCode": "080901"
+            "classCode": "2019080401",
+            "majorCode": "080904"
+        },
+        {
+            "className": "信安1901",
+            "classCode": "2019080601",
+            "majorCode": "080904"
         }
     ]
 }
@@ -875,8 +887,9 @@ get http://localhost:8081/class/query?pageIndex=1&pageSize=2
     }
     "body":
     {
-        "className": "计科1902",
-        "majorCode": "080901"
+        "className": "",
+        "classCode": "2019080601",
+        "majorCode": "080904"
 	}
 }
 ```
@@ -894,6 +907,7 @@ get http://localhost:8081/class/query?pageIndex=1&pageSize=2
         "tableData": [
             {
                 "className": "信安1901",
+                "classCode": "2019080601",
                 "majorCode": "080904"
             }
         ]
@@ -921,7 +935,7 @@ post http://localhost:8081/student/insert
 {
     "studentName": "小王",		//not null
     "studentID": "02",			 //not null
-    "className": "信安1901",		//not null
+    "classCode": "2019080601",		//not null
     "identifier": "33068120010103050690",
     "dormitory": "天马学生公寓",
     "address": "湖南大写天马学生公寓三区506",
@@ -943,7 +957,7 @@ post http://localhost:8081/student/insert
     "data": {
         "studentName": "小王",
         "studentID": "02",
-        "className": "信安1901",
+        "classCode": "2019080601",
         "identifier": "33068120010103050690",
         "dormitory": "天马学生公寓",
         "address": "湖南大写天马学生公寓三区506",
@@ -977,7 +991,7 @@ post http://localhost:8081/student/update
 {
     "studentName": "小王",
     "studentID": "02",
-    "className": "信安1901",
+    "classCode": "2019080601",
     "identifier": "33068120010103050690",
     "dormitory": "天马学生公寓",
     "address": "湖南大写天马学生公寓三区506",
@@ -999,7 +1013,7 @@ post http://localhost:8081/student/update
     "data": {
         "studentName": "小王",
         "studentID": "02",
-        "className": "信安1901",
+        "classCode": "2019080601",
         "identifier": "33068120010103050690",
         "dormitory": "天马学生公寓",
         "address": "湖南大写天马学生公寓三区506",
@@ -1073,7 +1087,7 @@ get http://localhost:8081/student/list
         {
             "studentName": "小王",
             "studentID": "02",
-            "className": "信安1901",
+            "classCode": "2019080601",
             "identifier": "33068120010103050690",
             "dormitory": "天马学生公寓",
             "address": "湖南大写天马学生公寓三区506",
@@ -1118,7 +1132,7 @@ get http://localhost:8081/student/queryClass?className=信安1901
         {
             "studentName": "小王",
             "studentID": "02",
-            "className": "信安1901",
+            "classCode": "2019080601",
             "identifier": "33068120010103050690",
             "dormitory": "天马学生公寓",
             "address": "湖南大写天马学生公寓三区506",
@@ -1153,7 +1167,7 @@ get http://localhost:8081/student/query?pageIndex=1&pageSize=2
     {
         "studentName":  null,
         "studentID": null,
-        "className": "信安1901",
+        "classCode": "2019080601",
         "identifier": null,
         "dormitory": "天马学生公寓",
         "address": "湖南大写天马学生公寓三区506",
