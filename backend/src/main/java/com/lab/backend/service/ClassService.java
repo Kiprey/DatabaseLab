@@ -16,7 +16,6 @@ public interface ClassService {
 
     List<Classes> getList();
 
-    List<Classes> getListByMajorName(String MajorName);
 
-    Map<Object, Object> query(Classes classes, int pageIndex, int pageSize);
+    Map<Object, Object> query(Classes classes, String majorName, int pageIndex, int pageSize);
 }

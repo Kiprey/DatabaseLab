@@ -10,7 +10,7 @@ import com.lab.backend.service.MajorService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,7 +91,6 @@ public class MajorServiceImpl implements MajorService {
         }
     }
 
-
     /**
      * 全部查询
      * @return result list
@@ -101,32 +100,36 @@ public class MajorServiceImpl implements MajorService {
         return majorDao.getList();
     }
 
-
-    /**
-     * 按院系名称查询
-     * @param facultyName 专业名字
-     * @return result list
-     */
-    @Override
-    public List<Major> getListByFacultyName(String facultyName){
-        String facultyCode;
-        List<Faculty> list=facultyDao.getByAttribute("facultyName", facultyName);
-        if(!list.isEmpty()) {
-            facultyCode = list.get(0).getFacultyCode();
-            return majorDao.getByAttribute("facultyCode", facultyCode);
-        }
-        else {
-            return new ArrayList<>();
-        }
-    }
-
     /**
      * 多条件查询
      * @param major 专业实体
      * @return result list
      */
     @Override
-    public Map<Object, Object> query(Major major, int pageIndex, int pageSize){
-        return majorDao.query(major,pageIndex,pageSize);
+    public Map<Object, Object> query(Major major, String facultyName, int pageIndex, int pageSize){
+        //采用名称的条件是名字非空且院系代码为空
+        // 其余情况都优先按照院系代码的设置查询
+        if(facultyName!=null&&(major.getFacultyCode()==null||major.getFacultyCode().trim().isEmpty())){
+            String facultyCode = null;
+            //根据名字获取code
+            List<Faculty> list=facultyDao.getByAttribute("facultyName", facultyName);
+            if(!list.isEmpty()) {
+                facultyCode = list.get(0).getFacultyCode();
+            }
+            //查询的code为空时直接返回结果为0
+            if(facultyCode==null){
+                Map<Object, Object> response=new HashMap<>();
+                response.put("total",0);
+                return response;
+            }
+            //否则将code加入多条件查询
+            else {
+                major.setFacultyCode(facultyCode);
+                return majorDao.query(major,pageIndex,pageSize);
+            }
+        }
+        else {
+            return majorDao.query(major,pageIndex,pageSize);
+        }
     }
 }

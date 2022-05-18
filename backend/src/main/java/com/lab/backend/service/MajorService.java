@@ -16,7 +16,5 @@ public interface MajorService {
 
     List<Major> getList();
 
-    List<Major> getListByFacultyName(String facultyName);
-
-    Map<Object, Object> query(Major major, int pageIndex, int pageSize);
+    Map<Object, Object> query(Major major, String facultyName, int pageIndex, int pageSize);
 }

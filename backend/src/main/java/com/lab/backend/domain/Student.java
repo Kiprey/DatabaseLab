@@ -81,4 +81,8 @@ public class Student {
     public String getCompletedCredits() {
         return completedCredits;
     }
+
+    public void setClassCode(String classCode) {
+        this.classCode = classCode;
+    }
 }

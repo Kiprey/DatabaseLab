@@ -1,11 +1,13 @@
 package com.lab.backend.repository;
 
 
+import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.Major;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.Map;
 public class MajorDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+//    @Resource
 
     /**
      * 插入
@@ -105,12 +108,14 @@ public class MajorDao {
      * @param pageSize  每页个数
      * @return result
      */
-    public Map<Object, Object> query(Major major, int pageIndex, int pageSize){
+    public Map<Object, Object> query(Major major,int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
         StringBuilder sql =new StringBuilder("select * from major where 1=1");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
+
+
         String majorName = major.getMajorName();
         if(majorName != null && !majorName.trim().isEmpty()){
             sql.append(" and majorName like ?");

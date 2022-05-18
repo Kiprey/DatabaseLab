@@ -64,21 +64,13 @@ public class ClassController {
         }
     }
     @GetMapping("/query")
-    public Result<Map<Object, Object>> queryController(@RequestBody Classes classes, @RequestParam int pageIndex, @RequestParam int pageSize){
-        Map<Object, Object> response =classService.query(classes,pageIndex,pageSize);
+    public Result<Map<Object, Object>> queryController(@RequestBody Classes classes, @RequestParam String majorName,@RequestParam int pageIndex, @RequestParam int pageSize){
+        Map<Object, Object> response =classService.query(classes,majorName,pageIndex,pageSize);
         if((int)response.get("total")!=0){
             return Result.success(response,"查询成功");
         }else{
             return Result.error("1","查询结果为空");
         }
     }
-    @GetMapping("/queryMajor")
-    public Result<List<Classes>> queryFacultyController(@RequestParam String majorName){
-        List<Classes> list =classService.getListByMajorName(majorName);
-        if(!list.isEmpty()){
-            return Result.success(list,"查询成功");
-        }else{
-            return Result.error("1","查询失败，专业为"+majorName+"的班级不存在");
-        }
-    }
+
 }

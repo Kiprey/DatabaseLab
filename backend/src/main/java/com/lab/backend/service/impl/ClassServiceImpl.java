@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,6 @@ public class ClassServiceImpl implements ClassService {
             return 2;//当前班级不存在，无法更新
         }
     }
-
     /**
      * 全部查询
      * @return result list
@@ -97,32 +97,36 @@ public class ClassServiceImpl implements ClassService {
     public List<Classes> getList() {
         return classDao.getList();
     }
-
-    /**
-     * 按专业名称查询
-     * @param majorName 专业名字
-     * @return result list
-     */
-    @Override
-    public List<Classes> getListByMajorName(String majorName){
-        String majorCode;
-        List<Major> list=majorDao.getByAttribute("majorName", majorName);
-        if(!list.isEmpty()) {
-            majorCode = list.get(0).getMajorCode();
-            return classDao.getByAttribute("majorCode", majorCode);
-        }
-        else {
-            return new ArrayList<>();
-        }
-    }
-
     /**
      * 多条件查询
      * @param classes 班级实体
      * @return result list
      */
     @Override
-    public Map<Object, Object> query(Classes classes, int pageIndex, int pageSize){
-        return classDao.query(classes,pageIndex,pageSize);
+    public Map<Object, Object> query(Classes classes, String majorName, int pageIndex, int pageSize){
+        //采用名称的条件是名字非空且专业代码为空
+        // 其余情况都优先按照专业代码的设置查询
+        if(majorName!=null&&(classes.getClassCode()==null||classes.getClassCode().trim().isEmpty())){
+            String majorCode = null;
+            //根据名字获取code
+            List<Major> list=majorDao.getByAttribute("majorName", majorName);
+            if(!list.isEmpty()) {
+                majorCode = list.get(0).getMajorCode();
+            }
+            //查询的code为空时直接返回结果为0
+            if(majorCode==null){
+                Map<Object, Object> response=new HashMap<>();
+                response.put("total",0);
+                return response;
+            }
+            //否则将code加入多条件查询
+            else {
+                classes.setMajorCode(majorCode);
+                return classDao.query(classes,pageIndex,pageSize);
+            }
+        }
+        else {
+            return classDao.query(classes,pageIndex,pageSize);
+        }
     }
 }

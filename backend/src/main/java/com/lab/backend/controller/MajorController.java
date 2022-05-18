@@ -64,21 +64,13 @@ public class MajorController {
         }
     }
     @GetMapping("/query")
-    public Result<Map<Object, Object>> queryController(@RequestBody Major major, @RequestParam int pageIndex, @RequestParam int pageSize){
-        Map<Object, Object> response =majorService.query(major,pageIndex,pageSize);
+    public Result<Map<Object, Object>> queryController(@RequestBody Major major, @RequestParam String facultyName,@RequestParam int pageIndex, @RequestParam int pageSize){
+        Map<Object, Object> response =majorService.query(major,facultyName,pageIndex,pageSize);
         if((int)response.get("total")!=0){
             return Result.success(response,"查询成功");
         }else{
             return Result.error("1","查询结果为空");
         }
     }
-    @GetMapping("/queryFaculty")
-    public Result<List<Major>> queryFacultyController(@RequestParam String facultyName){
-        List<Major> list =majorService.getListByFacultyName(facultyName);
-        if(!list.isEmpty()){
-            return Result.success(list,"查询成功");
-        }else{
-            return Result.error("1","查询失败，"+facultyName+"不存在");
-        }
-    }
+
 }

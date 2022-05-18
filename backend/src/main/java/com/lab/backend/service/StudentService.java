@@ -15,7 +15,5 @@ public interface StudentService {
 
     List<Student> getList();
 
-    List<Student> getListByClassName(String className);
-
-    Map<Object, Object> query(Student student, int pageIndex, int pageSize);
+    Map<Object, Object> query(Student student, String className, int pageIndex, int pageSize);
 }

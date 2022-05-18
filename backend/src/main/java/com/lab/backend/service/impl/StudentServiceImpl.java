@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +84,6 @@ public class StudentServiceImpl implements StudentService {
             return 2;//当前学生不存在，无法更新
         }
     }
-
     /**
      * 全部查询
      * @return result list
@@ -92,35 +92,37 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getList() {
         return studentDao.getList();
     }
-
-
-
-    /**
-     * 按班级名称查询
-     * @param className 班级名字
-     * @return result list
-     */
-    @Override
-    public List<Student> getListByClassName(String className){
-        String classCode;
-        List<Classes> list=classDao.getByAttribute("className", className);
-        if(!list.isEmpty()) {
-            classCode = list.get(0).getClassCode();
-            return studentDao.getByAttribute("classCode", classCode);
-        }
-        else {
-            return new ArrayList<>();
-        }
-    }
-
     /**
      * 多条件查询
      * @param student 学生实体
      * @return result list
      */
     @Override
-    public Map<Object, Object> query(Student student, int pageIndex, int pageSize){
-        return studentDao.query(student,pageIndex,pageSize);
+    public Map<Object, Object> query(Student student, String className, int pageIndex, int pageSize){
+        //采用名称的条件是名字非空且班级代码为空
+        // 其余情况都优先按照班级代码的设置查询
+        if(className!=null&&(student.getClassCode()==null||student.getClassCode().trim().isEmpty())){
+            String classCode = null;
+            //根据名字获取code
+            List<Classes> list=classDao.getByAttribute("className", className);
+            if(!list.isEmpty()) {
+                classCode = list.get(0).getClassCode();
+            }
+            //查询的code为空时直接返回结果为0
+            if(classCode==null){
+                Map<Object, Object> response=new HashMap<>();
+                response.put("total",0);
+                return response;
+            }
+            //否则将code加入多条件查询
+            else {
+                student.setClassCode(classCode);
+                return studentDao.query(student,pageIndex,pageSize);
+            }
+        }
+        else {
+            return studentDao.query(student,pageIndex,pageSize);
+        }
     }
 
 }
