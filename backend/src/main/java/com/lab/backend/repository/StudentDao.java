@@ -52,14 +52,13 @@ public class StudentDao {
                 "dormitory=?, " +
                 "address=?," +
                 "teleno=?," +
-                "teleno=?," +
                 "birthday=?," +
                 "sex=?," +
-                "grade=? " +
+                "grade=?," +
+                "completedCredits=?" +
                 "WHERE studentId=?";
         jdbcTemplate.update(sql,
                 student.getStudentName(),
-                student.getStudentID(),
                 student.getClassCode(),
                 student.getStudentID(),
                 student.getDormitory(),
@@ -68,7 +67,8 @@ public class StudentDao {
                 student.getBirthday(),
                 student.getSex(),
                 student.getGrade(),
-                student.getCompletedCredits());
+                student.getCompletedCredits(),
+                student.getStudentID());
     }
 
     /**

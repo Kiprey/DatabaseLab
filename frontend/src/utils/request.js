@@ -39,14 +39,15 @@ const request = function (loadtip, query) {
     })
 }
 
-const post = function (url, params) {
+const post = function (url, data, params = null) {
   const query = {
     baseURL: process.env.VUE_APP_URL,
     url: url,
     method: 'post',
     withCredentials: true,
     timeout: 30000,
-    data: params,
+    data: data,
+    params: params,
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
   }
   return request(false, query)
