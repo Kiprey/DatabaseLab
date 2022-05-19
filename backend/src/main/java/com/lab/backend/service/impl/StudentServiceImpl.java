@@ -101,7 +101,7 @@ public class StudentServiceImpl implements StudentService {
     public Map<Object, Object> query(Student student, String className, int pageIndex, int pageSize){
         //采用名称的条件是名字非空且班级代码为空
         // 其余情况都优先按照班级代码的设置查询
-        if(className!=null&&(student.getClassCode()==null||student.getClassCode().trim().isEmpty())){
+        if(className!=null&& !className.trim().isEmpty() &&(student.getClassCode()==null||student.getClassCode().trim().isEmpty())){
             String classCode = null;
             //根据名字获取code
             List<Classes> list=classDao.getByAttribute("className", className);

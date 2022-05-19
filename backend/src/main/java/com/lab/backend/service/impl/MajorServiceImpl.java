@@ -109,7 +109,7 @@ public class MajorServiceImpl implements MajorService {
     public Map<Object, Object> query(Major major, String facultyName, int pageIndex, int pageSize){
         //采用名称的条件是名字非空且院系代码为空
         // 其余情况都优先按照院系代码的设置查询
-        if(facultyName!=null&&(major.getFacultyCode()==null||major.getFacultyCode().trim().isEmpty())){
+        if(facultyName!=null&&!facultyName.trim().isEmpty()&&(major.getFacultyCode()==null||major.getFacultyCode().trim().isEmpty())){
             String facultyCode = null;
             //根据名字获取code
             List<Faculty> list=facultyDao.getByAttribute("facultyName", facultyName);

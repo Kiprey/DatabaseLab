@@ -63,8 +63,8 @@ public class ClassController {
             return Result.error("1","当前列表为空！");
         }
     }
-    @GetMapping("/query")
-    public Result<Map<Object, Object>> queryController(@RequestBody Classes classes, @RequestParam String majorName,@RequestParam int pageIndex, @RequestParam int pageSize){
+    @PostMapping("/query")
+    public Result<Map<Object, Object>> queryController(@RequestBody Classes classes, String majorName,@RequestParam int pageIndex, @RequestParam int pageSize){
         Map<Object, Object> response =classService.query(classes,majorName,pageIndex,pageSize);
         if((int)response.get("total")!=0){
             return Result.success(response,"查询成功");

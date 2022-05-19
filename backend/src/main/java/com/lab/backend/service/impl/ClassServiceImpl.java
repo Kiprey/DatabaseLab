@@ -106,7 +106,7 @@ public class ClassServiceImpl implements ClassService {
     public Map<Object, Object> query(Classes classes, String majorName, int pageIndex, int pageSize){
         //采用名称的条件是名字非空且专业代码为空
         // 其余情况都优先按照专业代码的设置查询
-        if(majorName!=null&&(classes.getClassCode()==null||classes.getClassCode().trim().isEmpty())){
+        if(majorName!=null&&!majorName.trim().isEmpty()&&(classes.getClassCode()==null||classes.getClassCode().trim().isEmpty())){
             String majorCode = null;
             //根据名字获取code
             List<Major> list=majorDao.getByAttribute("majorName", majorName);

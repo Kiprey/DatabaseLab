@@ -63,8 +63,8 @@ public class MajorController {
             return Result.error("1","当前列表为空！");
         }
     }
-    @GetMapping("/query")
-    public Result<Map<Object, Object>> queryController(@RequestBody Major major, @RequestParam String facultyName,@RequestParam int pageIndex, @RequestParam int pageSize){
+    @PostMapping("/query")
+    public Result<Map<Object, Object>> queryController(@RequestBody Major major,String facultyName,@RequestParam int pageIndex, @RequestParam int pageSize){
         Map<Object, Object> response =majorService.query(major,facultyName,pageIndex,pageSize);
         if((int)response.get("total")!=0){
             return Result.success(response,"查询成功");

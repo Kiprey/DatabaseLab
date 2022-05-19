@@ -47,7 +47,7 @@ public class FacultyController {
         }
     }
 
-    @GetMapping("/query")
+    @PostMapping("/query")
     public Result<Map<Object, Object>> queryController(@RequestBody Faculty faculty, @RequestParam int pageIndex, @RequestParam int pageSize){
         Map<Object, Object> response =facultyService.query(faculty,pageIndex,pageSize);
         if((int)response.get("total")!=0){

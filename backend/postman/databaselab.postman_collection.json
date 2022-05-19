@@ -135,11 +135,8 @@
 				},
 				{
 					"name": "query",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -307,11 +304,8 @@
 				},
 				{
 					"name": "query",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -483,15 +477,12 @@
 				},
 				{
 					"name": "query",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"className\": \"\",\r\n    \"classCode\": \"2019080402\",\r\n    \"majorCode\": \"\"\r\n}",
+							"raw": "{\r\n    \"className\": \"\",\r\n    \"classCode\": \"\",\r\n    \"majorCode\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -499,7 +490,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/class/query?majorName=信息安全&pageIndex=1&pageSize=2",
+							"raw": "http://localhost:8081/class/query?majorName=&pageIndex=1&pageSize=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -512,7 +503,7 @@
 							"query": [
 								{
 									"key": "majorName",
-									"value": "信息安全"
+									"value": ""
 								},
 								{
 									"key": "pageIndex",
@@ -659,15 +650,12 @@
 				},
 				{
 					"name": "query",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"studentName\":  null,\r\n    \"studentID\": \"\",\r\n    \"classCode\": \"\",\r\n    \"identifier\": null,\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\":  null\r\n}",
+							"raw": "{\r\n    \"studentName\":  null,\r\n    \"studentID\": \"01\",\r\n    \"classCode\": null,\r\n    \"identifier\": null,\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\":  null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -675,7 +663,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/student/query?className=计科1902&pageIndex=1&pageSize=2",
+							"raw": "http://localhost:8081/student/query?className=&pageIndex=1&pageSize=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -688,7 +676,7 @@
 							"query": [
 								{
 									"key": "className",
-									"value": "计科1902"
+									"value": ""
 								},
 								{
 									"key": "pageIndex",
