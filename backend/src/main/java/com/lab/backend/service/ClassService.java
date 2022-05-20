@@ -4,6 +4,8 @@ import com.lab.backend.domain.Classes;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public interface ClassService {
     int insert(Classes classes);
@@ -14,9 +16,6 @@ public interface ClassService {
 
     List<Classes> getList();
 
-    List<Classes> getListByName(String name);
 
-    List<Classes> getListByMajorName(String MajorName);
-
-    List<Classes> getListByMajorCode(String majorCode);
+    Map<Object, Object> query(Classes classes, String majorName, int pageIndex, int pageSize);
 }

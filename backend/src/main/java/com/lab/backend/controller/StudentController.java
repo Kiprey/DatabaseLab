@@ -1,12 +1,12 @@
 package com.lab.backend.controller;
 
-
 import com.lab.backend.domain.Student;
 import com.lab.backend.service.StudentService;
 import com.lab.backend.utils.Result;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/student")
@@ -46,9 +46,6 @@ public class StudentController {
         if(r==0){
             return Result.success(studentID);
         }
-//        else if(r==1){
-//            return Result.error("1","该专业下班级非空，无法删除！");
-//        }
         else{
             return Result.error("1","当前记录不存在，删除失败！");
         }
@@ -62,22 +59,14 @@ public class StudentController {
             return Result.error("1","当前列表为空！");
         }
     }
-    @GetMapping("/query")
-    public Result<List<Student>> queryController(@RequestParam String studentName){
-        List<Student> list =studentService.getListByName(studentName);
-        if(!list.isEmpty()){
-            return Result.success(list,"查询成功");
+    @PostMapping("/query")
+    public Result<Map<Object, Object>> queryController(@RequestBody Student student,String className,@RequestParam int pageIndex,@RequestParam int pageSize){
+        Map<Object, Object> response =studentService.query(student,className,pageIndex,pageSize);
+        if((int)response.get("total")!=0){
+            return Result.success(response,"查询成功");
         }else{
-            return Result.error("1","查询失败，"+studentName+"不存在");
+            return Result.error("1","查询结果为空");
         }
     }
-    @GetMapping("/queryClass")
-    public Result<List<Student>> queryFacultyController(@RequestParam String className){
-        List<Student> list =studentService.getListByClassName(className);
-        if(!list.isEmpty()){
-            return Result.success(list,"查询成功");
-        }else{
-            return Result.error("1","查询失败，"+className+"不存在");
-        }
-    }
+
 }

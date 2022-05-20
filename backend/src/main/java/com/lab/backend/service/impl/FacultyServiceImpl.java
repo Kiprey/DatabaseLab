@@ -2,19 +2,21 @@ package com.lab.backend.service.impl;
 
 import com.lab.backend.domain.Faculty;
 import com.lab.backend.repository.FacultyDao;
+import com.lab.backend.repository.MajorDao;
 import com.lab.backend.service.FacultyService;
-import com.lab.backend.service.MajorService;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class FacultyServiceImpl  implements FacultyService {
     @Resource
     private FacultyDao facultyDao;
     @Resource
-    private MajorService majorService;
+    private MajorDao majorDao;
     /**
      * 插入
      * @param faculty 院系实体
@@ -39,7 +41,7 @@ public class FacultyServiceImpl  implements FacultyService {
     @Override
     public int delete(String facultyCode) {
         int num=facultyDao.getByCode(facultyCode).size();
-        int majorNum=majorService.getListByFacultyCode(facultyCode).size();
+        int majorNum=majorDao.getByAttribute("facultyCode",facultyCode).size();
         if(num!=0){
             if(majorNum==0){
                 facultyDao.delete(facultyCode);
@@ -79,13 +81,14 @@ public class FacultyServiceImpl  implements FacultyService {
         return facultyDao.getList();
     }
 
+
     /**
-     * 按name查询
-     * @param name 院系名字
+     * 多条件查询
+     * @param faculty 院系实体
      * @return result list
      */
     @Override
-    public List<Faculty> getListByName(String name){
-        return facultyDao.getByAttribute("facultyName",name);
+    public Map<Object, Object> query(Faculty faculty, int pageIndex, int pageSize){
+        return facultyDao.query(faculty,pageIndex,pageSize);
     }
 }

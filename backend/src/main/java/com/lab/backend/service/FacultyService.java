@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public interface FacultyService {
     boolean insert(Faculty faculty);
@@ -15,5 +17,5 @@ public interface FacultyService {
 
     List<Faculty> getList();
 
-    List<Faculty> getListByName(String name);
+    Map<Object, Object> query(Faculty faculty, int pageIndex, int pageSize);
 }

@@ -3,15 +3,17 @@ package com.lab.backend.service.impl;
 
 import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.Major;
+import com.lab.backend.repository.ClassDao;
 import com.lab.backend.repository.FacultyDao;
 import com.lab.backend.repository.MajorDao;
-import com.lab.backend.service.ClassService;
 import com.lab.backend.service.MajorService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class MajorServiceImpl implements MajorService {
     @Resource
@@ -19,7 +21,7 @@ public class MajorServiceImpl implements MajorService {
     @Resource
     private FacultyDao facultyDao;
     @Resource
-    private ClassService classService;
+    private ClassDao classDao;
     /**
      * 插入
      * @param major 专业实体
@@ -50,7 +52,7 @@ public class MajorServiceImpl implements MajorService {
     @Override
     public int delete(String majorCode) {
         int num=majorDao.getByCode(majorCode).size();
-        int classNum=classService.getListByMajorCode(majorCode).size();
+        int classNum=classDao.getByAttribute("majorCode",majorCode).size();
         if(num!=0){
             if(classNum==0){
                 majorDao.delete(majorCode);
@@ -64,6 +66,8 @@ public class MajorServiceImpl implements MajorService {
             return 2;//专业不存在，无法删除
         }
     }
+
+
     /**
      * 更新
      * @param major 专业实体
@@ -97,38 +101,35 @@ public class MajorServiceImpl implements MajorService {
     }
 
     /**
-     * 按name查询
-     * @param name 专业名字
+     * 多条件查询
+     * @param major 专业实体
      * @return result list
      */
     @Override
-    public List<Major> getListByName(String name){
-        return majorDao.getByAttribute("majorName",name);
-    }
-    /**
-     * 按院系名称查询
-     * @param facultyName 专业名字
-     * @return result list
-     */
-    @Override
-    public List<Major> getListByFacultyName(String facultyName){
-        String facultyCode;
-        List<Faculty> list=facultyDao.getByAttribute("facultyName", facultyName);
-        if(!list.isEmpty()) {
-            facultyCode = list.get(0).getFacultyCode();
-            return majorDao.getByAttribute("facultyCode", facultyCode);
+    public Map<Object, Object> query(Major major, String facultyName, int pageIndex, int pageSize){
+        //采用名称的条件是名字非空且院系代码为空
+        // 其余情况都优先按照院系代码的设置查询
+        if(facultyName!=null&&!facultyName.trim().isEmpty()&&(major.getFacultyCode()==null||major.getFacultyCode().trim().isEmpty())){
+            String facultyCode = null;
+            //根据名字获取code
+            List<Faculty> list=facultyDao.getByAttribute("facultyName", facultyName);
+            if(!list.isEmpty()) {
+                facultyCode = list.get(0).getFacultyCode();
+            }
+            //查询的code为空时直接返回结果为0
+            if(facultyCode==null){
+                Map<Object, Object> response=new HashMap<>();
+                response.put("total",0);
+                return response;
+            }
+            //否则将code加入多条件查询
+            else {
+                major.setFacultyCode(facultyCode);
+                return majorDao.query(major,pageIndex,pageSize);
+            }
         }
         else {
-            return new ArrayList<>();
+            return majorDao.query(major,pageIndex,pageSize);
         }
-    }
-    /**
-     * 按院系代码查询
-     * @param facultyCode 院系代码
-     * @return result list
-     */
-    @Override
-    public  List<Major> getListByFacultyCode(String facultyCode){
-        return majorDao.getByAttribute("facultyCode",facultyCode);
     }
 }

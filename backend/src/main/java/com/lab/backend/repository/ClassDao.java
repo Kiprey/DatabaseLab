@@ -1,12 +1,15 @@
 package com.lab.backend.repository;
 
 import com.lab.backend.domain.Classes;
-import com.lab.backend.domain.Faculty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Repository
 public class ClassDao {
     @Autowired
@@ -17,9 +20,10 @@ public class ClassDao {
      * @param classes 班级实体
      */
     public void insert(Classes classes) {
-        String sql="insert into class values (?,?)";
+        String sql="insert into class values (?,?,?)";
         jdbcTemplate.update(sql,
                 classes.getClassName(),
+                classes.getClassCode(),
                 classes.getMajorCode());
     }
 
@@ -28,7 +32,7 @@ public class ClassDao {
      * @param classCode 班级代码
      */
     public void delete(String classCode) {
-        String sql="delete from class where className = ?";
+        String sql="delete from class where classCode = ?";
         jdbcTemplate.update(sql, classCode);
     }
 
@@ -37,10 +41,11 @@ public class ClassDao {
      * @param classes 班级实体
      */
     public void update(Classes classes) {
-        String sql="UPDATE class SET MajorCode=? WHERE className=?";
+        String sql="UPDATE class SET className=?, MajorCode=? WHERE classCode=?";
         jdbcTemplate.update(sql,
+                classes.getClassName(),
                 classes.getMajorCode(),
-                classes.getClassName());
+                classes.getClassCode());
     }
 
     /**
@@ -50,21 +55,23 @@ public class ClassDao {
      * @return 查询结果
      */
     public List<Classes> getByAttribute(String attribute, String name) {
-        String sql="select * from class where "+attribute+"=?";
+        String sql="select * from class where "+attribute+" like ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Classes(
                 rs.getString("className"),
+                rs.getString("classCode"),
                 rs.getString("majorCode")
         ),name);
     }
     /**
-     * 按name查询
+     * 按code查询
      */
-    public List<Classes> getByName(String name) {
-        String sql="select * from class where className=?";
+    public List<Classes> getByCode(String code) {
+        String sql="select * from class where classCode = ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Classes(
                 rs.getString("className"),
+                rs.getString("classCode"),
                 rs.getString("majorCode")
-        ),name);
+        ),code);
     }
     /**
      * 列表查看
@@ -73,7 +80,58 @@ public class ClassDao {
         String sql="select * from class";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Classes(
                 rs.getString("className"),
+                rs.getString("classCode"),
                 rs.getString("majorCode")
         ));
+    }
+    /**
+     * 多条件模糊查询
+     * @param classes 学生实体
+     * @param pageIndex 起始页
+     * @param pageSize  每页个数
+     * @return result
+     */
+    public Map<Object, Object> query(Classes classes, int pageIndex, int pageSize){
+        //给出sql模板,为了便于后面添加sql语句
+        StringBuilder sql =new StringBuilder("select * from class where 1=1");
+        //给出params
+        List<Object> params = new ArrayList<>();
+        //构造查询语句
+        String className = classes.getClassName();
+        if(className != null && !className.trim().isEmpty()){
+            sql.append(" and className like ?");
+            params.add("%" +className+ "%");
+        }
+
+        String classCode = classes.getClassCode();
+        if(classCode != null && !classCode.trim().isEmpty()){
+            sql.append(" and classCode like ?");
+            params.add("%" +classCode+ "%");
+        }
+
+        String majorCode= classes.getMajorCode();
+        if(majorCode != null && !majorCode.trim().isEmpty()){
+            sql.append(" and majorCode like ?");
+            params.add("%" +majorCode+ "%");
+        }
+
+        //添加页数条目限制
+        sql.append(" limit ?,?");
+        params.add((pageIndex-1)*30);
+        params.add(pageSize);
+        //统计个数
+        String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
+        int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
+
+        Map<Object, Object> response=new HashMap<>();
+        response.put("total",count);
+        response.put("pageIndex",pageIndex);
+        response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new Classes(
+                rs.getString("className"),
+                rs.getString("classCode"),
+                rs.getString("majorCode")
+        ),params.toArray()));
+
+        return response;
     }
 }

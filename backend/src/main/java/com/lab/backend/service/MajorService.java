@@ -4,6 +4,8 @@ import com.lab.backend.domain.Major;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+
 @Service
 public interface MajorService {
     int insert(Major major);
@@ -14,9 +16,5 @@ public interface MajorService {
 
     List<Major> getList();
 
-    List<Major> getListByName(String name);
-
-    List<Major> getListByFacultyName(String facultyName);
-
-    List<Major> getListByFacultyCode(String facultyCode);
+    Map<Object, Object> query(Major major, String facultyName, int pageIndex, int pageSize);
 }
