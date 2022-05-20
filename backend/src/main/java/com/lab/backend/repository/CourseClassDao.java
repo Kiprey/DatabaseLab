@@ -1,5 +1,6 @@
 package com.lab.backend.repository;
 
+import com.lab.backend.domain.Course;
 import com.lab.backend.domain.CourseClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,7 +49,7 @@ public class CourseClassDao {
      * @param courseClass 课程班级实体
      */
     public void update(CourseClass courseClass) {
-        String sql = "UPDATE CouseClass SET courseID=?,teacherID=?,coureClassTime=?,coureClassAddress=?,courseClassWeek=? WHERE coureClassID=?";
+        String sql = "UPDATE CourseClass SET courseID=?,teacherID=?,coureClassTime=?,coureClassAddress=?,courseClassWeek=? WHERE coureClassID=?";
         jdbcTemplate.update(sql,
                 courseClass.getCourseID(),
                 courseClass.getTeacherID(),
@@ -57,7 +58,17 @@ public class CourseClassDao {
                 courseClass.getCourseClassWeek(),
                 courseClass.getCourseClassID());
     }
-
+    public List<CourseClass> getByCode(String code) {
+        String sql="select * from courseclass where courseClassID=?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
+                rs.getString("courseClassID"),
+                rs.getString("courseID"),
+                rs.getString("teacherID"),
+                rs.getString("courseClassTime"),
+                rs.getString("courseClassAddress"),
+                rs.getString("courseClassWeek"))
+                ,code);
+    }
     /**
      * 多条件查询
      *

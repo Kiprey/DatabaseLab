@@ -275,12 +275,7 @@ post http://localhost:8081/faculty/delete?facultyCode=0003
 请求格式：
 
 ```json
-{
-    "facultyName": "信息科学与工程学院",
-    "facultyCode": "0001",
-    "facultyAddress": "湖南大学信科院",
-    "facultyTeleno": "8801002"
-}
+
 ```
 
 返回格式：
@@ -290,22 +285,12 @@ post http://localhost:8081/faculty/delete?facultyCode=0003
 {
     "code": "0",
     "message": "成功",
-    "data": {
-        "facultyName": "信息科学与工程学院",
-        "facultyCode": "0001",
-        "facultyAddress": "湖南大学信科院",
-        "facultyTeleno": "8801002"
-    }
+    "data": "0002"
 }
 //失败
 {
     "code": "1",
-    "message": "该院系下专业非空，无法删除",
-    "data": null
-}
-{
-    "code": "1",
-    "message": "当前记录不存在，删除失败！",
+    "message": "没有所要删除的课程，删除失败！",
     "data": null
 }
 ```
@@ -1416,7 +1401,314 @@ get http://localhost:8081/teacher/query
 
 
 
+### 课程管理
 
+#### 1. 课程信息管理
+
+##### 插入
+
+`post http://localhost:8081/course/insert`
+
+请求格式：
+
+```json
+{
+    "courseName": "数据库",
+    "courseNature": "必修",
+    "courseCategory": "专业课",
+    "courseID": "0002",
+    "facultyCode": "0001",
+    "courseHours": 25,
+    "credit": 2
+}
+```
+
+返回格式：
+
+```json
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "courseName": "数据库",
+        "courseNature": "必修",
+        "courseCategory": "专业课",
+        "courseID": "0002",
+        "facultyCode": "0001",
+        "courseHours": 25,
+        "credit": 2
+    }
+}
+{
+    "code": "2",
+    "message": "该课程已存在，插入失败！",
+    "data": null
+}
+```
+
+##### 更新
+
+`post http://127.0.0.1:8081/course/update`
+
+请求格式：
+
+```json
+{
+    "courseName": "数据库",
+    "courseNature": "必修2",
+    "courseCategory": "专业课",
+    "courseID": "0002",
+    "facultyCode": "0001",
+    "courseHours": 25,
+    "credit": 2
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": {
+        "courseName": "数据库",
+        "courseNature": "必修2",
+        "courseCategory": "专业课",
+        "courseID": "0002",
+        "facultyCode": "0001",
+        "courseHours": 25,
+        "credit": 2
+    }
+}
+//失败
+{
+    "code": "2",
+    "message": "该课程不存在，更新失败！",
+    "data": null
+}
+```
+
+##### 删除
+
+`post http://127.0.0.1:8081/course/delete?courseID=0002`
+
+请求格式：
+
+```json
+{
+    "facultyName": "信息科学与工程学院",
+    "facultyCode": "0001",
+    "facultyAddress": "湖南大学信科院",
+    "facultyTeleno": "8801002"
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "成功",
+    "data": "0002"
+}
+//失败
+{
+    "code": "1",
+    "message": "没有所要删除的课程，删除失败！",
+    "data": null
+}
+```
+
+##### 全部查询
+
+（测试用，可用多条件查询代替）
+
+`get http://127.0.0.1:8081/course/list`
+
+返回格式：
+
+```json
+{
+    "code": "0",
+    "message": "列表查看成功！",
+    "data": [
+        {
+            "courseName": "数据库",
+            "courseNature": "必修",
+            "courseCategory": "专业课",
+            "courseID": "0002",
+            "facultyCode": "0001",
+            "courseHours": 25,
+            "credit": 2
+        }
+    ]
+}
+```
+
+##### 多条件查询
+
+`post http://localhost:8081/faculty/query?pageIndex=1&pageSize=2`
+
+```c
+//全空即全部查询,
+//null和"  "、""等效
+```
+
+请求格式：
+
+```json
+{
+    "credit": 2
+}
+```
+
+返回格式：
+
+```json
+//成功
+{
+    "code": "0",
+    "message": "查询成功",
+    "data": {
+        "total": 1,
+        "pageIndex": 1,
+        "tableData": [
+            {
+                "courseName": "数据库",
+                "courseNature": "必修",
+                "courseCategory": "专业课",
+                "courseID": "0002",
+                "facultyCode": "0001",
+                "courseHours": 25,
+                "credit": 2
+            }
+        ]
+    }
+}
+//失败
+{
+    "code": "1",
+    "message": "查询结果为空",
+    "data": null
+}
+```
+
+#### 2. 选修信息管理
+
+##### 插入
+
+`post http://127.0.0.1:8081/studentcourse/insert`
+
+请求格式：
+
+```json
+{
+    "courseClassID": "2019080402",
+    "studentID": "01",
+    "score": 98
+}
+```
+
+返回格式：
+
+```json
+{
+    "code": "2",
+    "message": "没有课程班级，插入失败！",
+    "data": null
+}
+```
+
+##### 更新
+
+`post http://localhost:8081/studentcourse/update`
+
+请求格式：
+
+```json
+{
+    "courseClassID": "2019080402",
+    "studentID": "01",
+    "score": 95
+}
+```
+
+返回格式：
+
+```json
+{
+    "code": "2",
+    "message": "没有课程班级，更新失败！",
+    "data": null
+}
+```
+
+##### 删除
+
+`post http://127.0.0.1:8081/studentcourse/delete?courseClassID=01`
+
+请求格式：
+
+```json
+
+```
+
+返回格式：
+
+```json
+{
+    "code": "1",
+    "message": "没有找到要删除的记录，删除失败！",
+    "data": null
+}
+```
+
+##### 全部查询
+
+（测试用，可用多条件查询代替）
+
+`get http://127.0.0.1:8081/studentcourse/list`
+
+返回格式：
+
+```json
+
+//列表为空
+{
+    "code": "1",
+    "message": "当前列表为空！",
+    "data": null
+}
+```
+
+##### 多条件查询
+
+`post http://127.0.0.1:8081/studentcourse/query?pageIndex=1&pageSize=2`
+
+```c
+//全空即全部查询,
+//null和"  "、""等效
+```
+
+请求格式：
+
+```json
+{
+    "score": 95
+}
+```
+
+返回格式：
+
+```json
+{
+    "code": "1",
+    "message": "查询结果为空",
+    "data": null
+}
+```
 
 
 

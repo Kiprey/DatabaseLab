@@ -50,3 +50,27 @@
 }
 ```
 
+### Course
+
+```json
+{
+    "courseName": "数据库",
+    "courseNature": "必修",
+    "courseCategory": "专业课",
+    "courseID": "0001",
+    "facultyCode": "0001",
+    "courseHours": 25,
+    "credit": 2
+}
+```
+
+### StudentCourse
+
+```json
+{
+    "courseClassID": "0001",
+    "studentID": "02",
+    "score": 98
+}
+```
+
