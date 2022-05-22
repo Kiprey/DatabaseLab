@@ -86,6 +86,12 @@ export default {
         ],
         classCode: [
           { required: true, message: '请输入班级编号', trigger: 'blur' }
+        ],
+        teleno: [
+          { required: false, message: '手机号格式不正确', trigger: 'blur', pattern: /^1[3456789]\d{9}$/ }
+        ],
+        identifier: [
+          { required: false, message: '身份证号格式不正确', trigger: 'blur', pattern: /^[1-9]\d{17}$/ }
         ]
       },
       isEditMode: false
