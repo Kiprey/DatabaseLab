@@ -121,54 +121,69 @@ export default {
   methods: {
     submitForm () {
       let _this = this
-      this.$refs.form.validate((valid) => {
-        if (valid) {
-          this.formLoading = true
-          let api = null
-          if (this.isEditMode) {
-            api = userApi.updateUser
-          } else {
-            api = userApi.createUser
-          }
-          api(this.form).then(data => {
-            if (data.code === '0') {
-              _this.$message.success(data.message)
-              _this.delCurrentView(_this).then(() => {
-                _this.$router.push('/user/student/list')
-              })
+
+      this.$confirm('确定提交 ?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        _this.$refs.form.validate((valid) => {
+          if (valid) {
+            _this.formLoading = true
+            let api = null
+            if (_this.isEditMode) {
+              api = userApi.updateUser
             } else {
-              _this.$message.error(data.message)
-              _this.formLoading = false
+              api = userApi.createUser
             }
-          }).catch(e => {
-            _this.formLoading = false
-          })
-        } else {
-          return false
-        }
-      })
+            api(_this.form).then(data => {
+              if (data.code === '0') {
+                _this.$message.success(data.message)
+                _this.delCurrentView(_this).then(() => {
+                  _this.$router.push('/user/student/list')
+                })
+              } else {
+                _this.$message.error(data.message)
+                _this.formLoading = false
+              }
+            }).catch(e => {
+              _this.formLoading = false
+            })
+          } else {
+            return false
+          }
+        })
+      }).catch(() => {})
     },
     resetForm () {
-      let lastStudentID = this.form.studentID
-      let lastCompletedCredits = this.form.completedCredits
+      let _this = this
 
-      this.$refs['form'].resetFields()
+      this.$confirm('确定重置表单 ?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let lastStudentID = _this.form.studentID
+        let lastCompletedCredits = _this.form.completedCredits
 
-      this.form = {
-        studentName: null,
-        studentID: null,
-        classCode: null,
-        identifier: null,
-        dormitory: null,
-        address: null,
-        teleno: null,
-        birthday: null,
-        sex: null,
-        grade: null,
-        completedCredits: 0
-      }
-      this.form.studentID = lastStudentID
-      this.form.completedCredits = lastCompletedCredits
+        _this.$refs['form'].resetFields()
+
+        _this.form = {
+          studentName: null,
+          studentID: null,
+          classCode: null,
+          identifier: null,
+          dormitory: null,
+          address: null,
+          teleno: null,
+          birthday: null,
+          sex: null,
+          grade: null,
+          completedCredits: 0
+        }
+        _this.form.studentID = lastStudentID
+        _this.form.completedCredits = lastCompletedCredits
+      }).catch(() => {})
     },
     ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
   },

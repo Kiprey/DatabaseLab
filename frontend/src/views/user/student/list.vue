@@ -113,14 +113,21 @@ export default {
     },
     deleteUser (row) {
       let _this = this
-      userApi.deleteUser(row.studentID).then(re => {
-        if (re.code === '0') {
-          _this.search()
-          _this.$message.success(re.message)
-        } else {
-          _this.$message.error(re.message)
-        }
-      })
+
+      this.$confirm('确定删除 ?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        userApi.deleteUser(row.studentID).then(re => {
+          if (re.code === '0') {
+            _this.search()
+            _this.$message.success(re.message)
+          } else {
+            _this.$message.error(re.message)
+          }
+        })
+      }).catch(() => {})
     },
     submitForm () {
       this.queryData.pageIndex = 1
