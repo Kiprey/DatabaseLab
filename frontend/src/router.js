@@ -57,6 +57,19 @@ const constantRoutes = [
         name: 'UserStudentEdit',
         meta: { title: '学生编辑', noCache: true, activeMenu: '/school/student/list' },
         hidden: true
+      },
+      {
+        path: 'class/list',
+        component: () => import('@/views/school/class/list'),
+        name: 'classPageList',
+        meta: { title: '班级列表', noCache: true }
+      },
+      {
+        path: 'class/edit',
+        component: () => import('@/views/school/class/edit'),
+        name: 'classEdit',
+        meta: { title: '班级编辑', noCache: true, activeMenu: '/school/class/list' },
+        hidden: true
       }
     ]
   },
