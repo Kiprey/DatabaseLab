@@ -58,7 +58,7 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex'
-import userApi from '@/api/user'
+import API from '@/api/school'
 
 export default {
   data () {
@@ -112,7 +112,7 @@ export default {
         'pageSize': 1
       }
 
-      userApi.getUserPageList(queryData, queryParam).then(re => {
+      API.queryStudent(queryData, queryParam).then(re => {
         if (re.code === '0') {
           _this.form = re.data.tableData[0]
         } else {
@@ -138,15 +138,15 @@ export default {
             _this.formLoading = true
             let api = null
             if (_this.isEditMode) {
-              api = userApi.updateUser
+              api = API.updateStudent
             } else {
-              api = userApi.createUser
+              api = API.createStudent
             }
             api(_this.form).then(data => {
               if (data.code === '0') {
                 _this.$message.success(data.message)
                 _this.delCurrentView(_this).then(() => {
-                  _this.$router.push('/user/student/list')
+                  _this.$router.push('/school/student/list')
                 })
               } else {
                 _this.$message.error(data.message)

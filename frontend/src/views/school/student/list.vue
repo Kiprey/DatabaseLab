@@ -27,7 +27,7 @@
 
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
-        <router-link :to="{path:'/user/student/edit'}" class="link-left">
+        <router-link :to="{path:'/school/student/edit'}" class="link-left">
           <el-button type="primary">添加</el-button>
         </router-link>
       </el-form-item>
@@ -47,10 +47,10 @@
       <el-table-column prop="completedCredits" label="已修学分" />
       <el-table-column width="270px" label="操作" align="center">
         <template slot-scope="{row}">
-          <router-link :to="{path:'/user/student/edit', query:{studentID:row.studentID}}" class="link-left">
+          <router-link :to="{path:'/school/student/edit', query:{studentID:row.studentID}}" class="link-left">
             <el-button size="mini" >编辑</el-button>
           </router-link>
-          <el-button  size="mini" type="danger" @click="deleteUser(row)" class="link-left">删除</el-button>
+          <el-button  size="mini" type="danger" @click="deleteStudent(row)" class="link-left">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -61,7 +61,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import userApi from '@/api/user'
+import API from '@/api/school'
 
 export default {
   components: { Pagination },
@@ -94,7 +94,7 @@ export default {
         'pageIndex': this.queryData.pageIndex,
         'pageSize': this.queryData.pageSize
       }
-      userApi.getUserPageList(this.queryData, queryParam).then(data => {
+      API.queryStudent(this.queryData, queryParam).then(data => {
         let _this = this
         if (data.code === '0') {
           const re = data.data
@@ -111,7 +111,7 @@ export default {
         this.listLoading = false
       })
     },
-    deleteUser (row) {
+    deleteStudent (row) {
       let _this = this
 
       this.$confirm('确定删除 ?', '提示', {
@@ -119,7 +119,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        userApi.deleteUser(row.studentID).then(re => {
+        API.deleteStudent(row.studentID).then(re => {
           if (re.code === '0') {
             _this.search()
             _this.$message.success(re.message)

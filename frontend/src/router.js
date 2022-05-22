@@ -37,9 +37,9 @@ const constantRoutes = [
     ]
   },
   {
-    path: '/user',
+    path: '/school',
     component: Layout,
-    name: 'UserPage',
+    name: 'SchoolPage',
     meta: {
       title: '校建管理',
       icon: 'users'
@@ -47,28 +47,15 @@ const constantRoutes = [
     children: [
       {
         path: 'student/list',
-        component: () => import('@/views/user/student/list'),
+        component: () => import('@/views/school/student/list'),
         name: 'UserStudentPageList',
         meta: { title: '学生列表', noCache: true }
       },
       {
         path: 'student/edit',
-        component: () => import('@/views/user/student/edit'),
+        component: () => import('@/views/school/student/edit'),
         name: 'UserStudentEdit',
-        meta: { title: '学生编辑', noCache: true, activeMenu: '/user/student/list' },
-        hidden: true
-      },
-      {
-        path: 'admin/list',
-        component: () => import('@/views/user/admin/list'),
-        name: 'UserAdminPageList',
-        meta: { title: '管理员列表', noCache: true }
-      },
-      {
-        path: 'admin/edit',
-        component: () => import('@/views/user/admin/edit'),
-        name: 'UserAdminEdit',
-        meta: { title: '管理员编辑', noCache: true, activeMenu: '/user/admin/list' },
+        meta: { title: '学生编辑', noCache: true, activeMenu: '/school/student/list' },
         hidden: true
       }
     ]
