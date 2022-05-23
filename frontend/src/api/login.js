@@ -7,5 +7,10 @@ export default {
   changePass: query => post(`/api/account/changepass`, query),
 
   getInfo: () => postWithLoadTip('/api/account/getinfo'),
-  saveInfo: (data) => post('/api/account/saveinfo', data)
+  saveInfo: (data) => post('/api/account/saveinfo', data),
+
+  queryuserbyadmin: (data, params) => post('/api/account/queryuserbyadmin', data, params),
+  deluserbyadmin: id => post('/api/account/deluserbyadmin', null, { 'username': id }),
+  adduserbyadmin: data => post('/api/account/adduserbyadmin', data),
+  modifypassbyadmin: data => post('/api/account/modifypassbyadmin', data)
 }
