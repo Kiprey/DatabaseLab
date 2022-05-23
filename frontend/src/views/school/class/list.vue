@@ -70,7 +70,7 @@ export default {
     this.search()
   },
   methods: {
-    getMajorName (i) {
+    async getMajorName (i) {
       let _this = this
 
       var tmpqueryData = {
@@ -81,15 +81,7 @@ export default {
         'pageSize': 1
       }
 
-      API.queryMajor(tmpqueryData, queryParam).then(re => {
-        if (re.code === '0') {
-          _this.tableData[i].majorName = re.data.tableData[0].majorName
-          // 手动更新 this.form 以触发 el-input 载入时自动更新
-          _this.tableData = JSON.parse(JSON.stringify(_this.tableData))
-        } else {
-          _this.$message.error('未获取到专业名称')
-        }
-      }).catch(e => {})
+      return API.queryMajor(tmpqueryData, queryParam)
     },
     search () {
       this.listLoading = true
@@ -98,14 +90,24 @@ export default {
         'pageIndex': this.queryData.pageIndex,
         'pageSize': this.queryData.pageSize
       }
-      API.queryClass(this.queryData, queryParam).then(data => {
+      API.queryClass(this.queryData, queryParam).then(async data => {
         let _this = this
         if (data.code === '0') {
           const re = data.data
           this.tableData = re.tableData
           for (let i = 0; i < this.tableData.length; i++) {
-            _this.getMajorName(i)
+            try {
+              let re = await _this.getMajorName(i)
+              if (re.code === '0') {
+                _this.tableData[i].majorName = re.data.tableData[0].majorName
+              } else {
+                _this.$message.error('未获取到专业名称', _this.tableData[i].majorCode)
+              }
+            } catch (e) {
+              console.log('getMajorName fail: ', e)
+            }
           }
+          _this.tableData = JSON.parse(JSON.stringify(_this.tableData))
 
           this.total = re.total
           this.queryData.pageIndex = re.pageIndex
