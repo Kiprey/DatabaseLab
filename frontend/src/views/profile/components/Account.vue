@@ -1,13 +1,24 @@
 <template>
-  <StudentAccount :form="form"></StudentAccount>
+  <div>
+    <span v-if="form.studentID !== undefined">
+      <StudentAccount :form="form"></StudentAccount>
+    </span>
+    <span v-else-if="form.teacherID !== undefined">
+      <TeacherAccount :form="form"></TeacherAccount>
+    </span>
+    <span v-else>
+      <label>暂无个人信息</label>
+    </span>
+  </div>
 </template>
 
 <script>
 import API from '@/api/login'
 import StudentAccount from './StudentAccount'
+import TeacherAccount from './TeacherAccount'
 
 export default {
-  components: { StudentAccount },
+  components: { StudentAccount, TeacherAccount },
   data () {
     return {
       form: {}
@@ -35,6 +46,11 @@ export default {
         // sex: '男',
         // grade: '19',
         // completedCredits: 24
+
+        // 教师测试
+        // teacherName: '小王',
+        // teacherID: '123',
+        // facultyCode: '334'
       }
     })
   }

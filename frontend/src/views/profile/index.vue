@@ -9,7 +9,7 @@
 
         <el-col :span="18" :xs="24">
           <el-card>
-            <el-tabs active-name="timeline">
+            <el-tabs active-name="account">
               <el-tab-pane label="账号" name="account">
                 <account></account>
               </el-tab-pane>
