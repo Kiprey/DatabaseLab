@@ -178,8 +178,12 @@ export default {
         _this.$refs['form'].resetFields()
 
         _this.form = {
-          majorCode: null,
-          facultyCode: null
+          majorCode: '',
+          majorName: '',
+          facultyCode: '',
+          facultyName: '',
+          degreeLevel: '',
+          graduationCredits: ''
         }
         _this.form.majorCode = majorCode
       }).catch(() => {})

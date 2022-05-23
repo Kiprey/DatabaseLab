@@ -83,6 +83,19 @@ const constantRoutes = [
         name: 'majorEdit',
         meta: { title: '专业编辑', noCache: true, activeMenu: '/school/major/list' },
         hidden: true
+      },
+      {
+        path: 'faculty/list',
+        component: () => import('@/views/school/faculty/list'),
+        name: 'facultyPageList',
+        meta: { title: '院系列表', noCache: true }
+      },
+      {
+        path: 'faculty/edit',
+        component: () => import('@/views/school/faculty/edit'),
+        name: 'facultyEdit',
+        meta: { title: '院系编辑', noCache: true, activeMenu: '/school/faculty/list' },
+        hidden: true
       }
     ]
   },
