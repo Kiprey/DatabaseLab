@@ -144,14 +144,14 @@ public class MajorDao {
             params.add("%" +graduationCredits+ "%");
         }
 
-
-        //添加页数条目限制
-        sql.append(" limit ?,?");
-        params.add((pageIndex-1)*30);
-        params.add(pageSize);
-        //统计个数
         String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
         int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
+        //添加页数条目限制
+        sql.append(" limit ?,?");
+        params.add((pageIndex-1)*pageSize);
+        params.add(pageSize);
+        //统计个数
+
 
         Map<Object, Object> response=new HashMap<>();
         response.put("total",count);
