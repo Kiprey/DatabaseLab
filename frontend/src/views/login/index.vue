@@ -6,15 +6,15 @@
         <h3 class="title">请登录</h3>
       </div>
 
-      <el-form-item prop="userName">
+      <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="userName"
-          v-model="loginForm.userName"
+          ref="username"
+          v-model="loginForm.username"
           placeholder="用户名"
-          name="userName"
+          name="username"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -79,12 +79,12 @@ export default {
     }
     return {
       loginForm: {
-        userName: '',
+        username: '',
         password: '',
         remember: false
       },
       loginRules: {
-        userName: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
@@ -97,8 +97,8 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted () {
-    if (this.loginForm.userName === '') {
-      this.$refs.userName.focus()
+    if (this.loginForm.username === '') {
+      this.$refs.username.focus()
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
@@ -136,8 +136,8 @@ export default {
         if (valid) {
           this.loading = true
           loginApi.login(this.loginForm).then(function (result) {
-            if (result && result.code === 1) {
-              _this.setUserName(_this.loginForm.userName)
+            if (result && result.code === 0) {
+              _this.setUserName(_this.loginForm.username)
               _this.$router.push({ path: '/' })
             } else {
               _this.loading = false
