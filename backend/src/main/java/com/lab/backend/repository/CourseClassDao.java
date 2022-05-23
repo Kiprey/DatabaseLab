@@ -2,6 +2,7 @@ package com.lab.backend.repository;
 
 import com.lab.backend.domain.Course;
 import com.lab.backend.domain.CourseClass;
+import com.lab.backend.domain.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -49,7 +53,7 @@ public class CourseClassDao {
      * @param courseClass 课程班级实体
      */
     public void update(CourseClass courseClass) {
-        String sql = "UPDATE CourseClass SET courseID=?,teacherID=?,coureClassTime=?,coureClassAddress=?,courseClassWeek=? WHERE coureClassID=?";
+        String sql = "UPDATE CourseClass SET courseID=?,teacherID=?,courseClassTime=?,courseClassAddress=?,courseClassWeek=? WHERE courseClassID=?";
         jdbcTemplate.update(sql,
                 courseClass.getCourseID(),
                 courseClass.getTeacherID(),
@@ -58,89 +62,116 @@ public class CourseClassDao {
                 courseClass.getCourseClassWeek(),
                 courseClass.getCourseClassID());
     }
-    public List<CourseClass> getByCode(String code) {
-        String sql="select * from courseclass where courseClassID=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
-                rs.getString("courseClassID"),
-                rs.getString("courseID"),
-                rs.getString("teacherID"),
-                rs.getString("courseClassTime"),
-                rs.getString("courseClassAddress"),
-                rs.getString("courseClassWeek"))
-                ,code);
-    }
-    /**
-     * 多条件查询
-     *
-     * @param courseClass 课程班级实体
-     */
-    public List<CourseClass> query(CourseClass courseClass) {
-        String sql="select * from CourseClass where";
-        boolean addAnd = false;
-        if(courseClass.getCourseClassID()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassID="+courseClass.getCourseClassID();
+    public Map<Object, Object> query(CourseClass courseClass, int pageIndex, int pageSize) {
+        //给出sql模板,为了便于后面添加sql语句
+        StringBuilder sql = new StringBuilder("select * from courseClass where 1=1");
+        //给出params
+        List<Object> params = new ArrayList<>();
+        //构造查询语句
+        String courseClassID = courseClass.getCourseClassID();
+        if (courseClassID != null && !courseClassID.trim().isEmpty()) {
+            sql.append(" and courseClassID like ?");
+            params.add("%" + courseClassID + "%");
         }
-        if(courseClass.getCourseID()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseID="+courseClass.getCourseID();
+        String courseID = courseClass.getCourseID();
+        if (courseID != null && !courseID.trim().isEmpty()) {
+            sql.append(" and courseID like ?");
+            params.add("%" + courseID + "%");
         }
-        if(courseClass.getTeacherID()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" teacherID="+courseClass.getTeacherID();
+        String teacherID = courseClass.getTeacherID();
+        if (teacherID != null && !teacherID.trim().isEmpty()) {
+            sql.append(" and teacherID like ?");
+            params.add("%" + teacherID+ "%");
         }
-        if(courseClass.getCourseClassTime()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassTime="+courseClass.getCourseClassTime();
+        String courseClassTime = courseClass.getCourseClassTime();
+        if (courseClassTime != null && !courseClassTime.trim().isEmpty()) {
+            sql.append(" and courseClassTime like ?");
+            params.add("%" + courseClassTime+ "%");
         }
-        if(courseClass.getCourseClassAddress()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassAddress="+courseClass.getCourseClassAddress();
+        String courseClassAddress = courseClass.getCourseClassAddress();
+        if (courseClassAddress != null && !courseClassAddress.trim().isEmpty()) {
+            sql.append(" and courseClassAddress like ?");
+            params.add("%" + courseClassAddress+ "%");
         }
-        if(courseClass.getCourseClassWeek()!=null)
-        {
-            if (addAnd) sql += " and";
-            else addAnd = true;
-            sql+=" courseClassWeek="+courseClass.getCourseClassWeek();
+        String courseClassWeek = courseClass.getCourseClassWeek();
+        if (courseClassWeek != null && !courseClassWeek.trim().isEmpty()) {
+            sql.append(" and courseClassWeek like ?");
+            params.add("%" + courseClassWeek+ "%");
         }
-        return jdbcTemplate.query(sql, new RowMapper<CourseClass>() {
-            @Override
-            public CourseClass mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return new CourseClass(
-                    rs.getString("courseClassID"),
-                    rs.getString("courseID"),
-                    rs.getString("teacherID"),
-                    rs.getString("courseClassTime"),
-                    rs.getString("courseClassAddress"),
-                    rs.getString("courseClassWeek"));
-            }
-        });
-    }
+        //添加页数条目限制
+        sql.append(" limit ?,?");
+        params.add((pageIndex - 1) * 30);
+        params.add(pageSize);
+        //统计个数
+        String sql2 = "SELECT count(*) as sum from (" + sql + ") as a;";
+        System.out.println(sql2);
+        int count = jdbcTemplate.queryForObject(sql2, Integer.class, params.toArray());
 
-    /**
-     * 列表查看（全部查询）
-     */
-    public List<CourseClass> getList() {
-        String sql = "select * from CourseClass";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
+        Map<Object, Object> response = new HashMap<>();
+        response.put("total", count);
+        response.put("pageIndex", pageIndex);
+        response.put("tableData", jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new CourseClass(
                 rs.getString("courseClassID"),
                 rs.getString("courseID"),
                 rs.getString("teacherID"),
                 rs.getString("courseClassTime"),
                 rs.getString("courseClassAddress"),
                 rs.getString("courseClassWeek")
-        ));
+        ), params.toArray()));
+
+        return response;
     }
-}
+    /**
+     * 按courseClassID字段查询
+     *
+     * @param code courseClassID字段的值
+     * @return 返回查询结果
+     */
+    public List<CourseClass> getByCode(String code) {
+        String sql = "select * from courseclass where courseClassID=?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
+                        rs.getString("courseClassID"),
+                        rs.getString("courseID"),
+                        rs.getString("teacherID"),
+                        rs.getString("courseClassTime"),
+                        rs.getString("courseClassAddress"),
+                        rs.getString("courseClassWeek"))
+                , code);
+    }
+
+    /**
+     * 按courseClass字段查询
+     *
+     * @param attribute 字段名
+     * @param name      字段的值
+     * @return 返回查询结果
+     */
+    public List<CourseClass> getByAttribute(String attribute, String name) {
+        String sql = "select * from courseClass where " + attribute + "=?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
+                        rs.getString("courseClassID"),
+                        rs.getString("courseID"),
+                        rs.getString("teacherID"),
+                        rs.getString("courseClassTime"),
+                        rs.getString("courseClassAddress"),
+                        rs.getString("courseClassWeek"))
+                , name);
+    }
+
+        /**
+         * 列表查看（全部查询）
+         */
+        public List<CourseClass> getList() {
+            String sql = "select * from CourseClass";
+            return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
+                    rs.getString("courseClassID"),
+                    rs.getString("courseID"),
+                    rs.getString("teacherID"),
+                    rs.getString("courseClassTime"),
+                    rs.getString("courseClassAddress"),
+                    rs.getString("courseClassWeek")
+            ));
+        }
+    }
 
 

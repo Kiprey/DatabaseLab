@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
@@ -17,12 +18,11 @@ public class TeacherController {
     @PostMapping("/insert")
     public Result<Teacher> insertController(@RequestBody Teacher teacher) {
         int result = teacherService.insert(teacher);
-        if (result==0) {
+        if (result == 0) {
             return Result.success(teacher);
-        } else if(result==1){
+        } else if (result == 1) {
             return Result.error("1", "对应院系不存在，插入失败！");
-        }
-        else {
+        } else {
             return Result.error("2", "当前记录已存在，插入失败！");
         }
     }
@@ -30,12 +30,11 @@ public class TeacherController {
     @PostMapping("/update")
     public Result<Teacher> updateController(@RequestBody Teacher teacher) {
         int result = teacherService.update(teacher);
-        if (result==0) {
+        if (result == 0) {
             return Result.success(teacher);
-        } else if(result==1){
+        } else if (result == 1) {
             return Result.error("1", "对应院系不存在，更新失败！");
-        }
-        else {
+        } else {
             return Result.error("2", "当前记录不存在，更新失败！");
         }
     }
@@ -63,12 +62,12 @@ public class TeacherController {
     }
 
     @GetMapping("/query")
-    public Result<List<Teacher>> queryByNameController(@RequestBody Teacher teacher) {
-        List<Teacher> list = teacherService.query(teacher);
-        if (!list.isEmpty()) {
-            return Result.success(list, "查询成功");
+    public Result<Map<Object, Object>> queryController(@RequestBody Teacher teacher, @RequestParam int pageIndex, @RequestParam int pageSize) {
+        Map<Object, Object> response = teacherService.query(teacher, pageIndex, pageSize);
+        if ((int) response.get("total") != 0) {
+            return Result.success(response, "查询成功");
         } else {
-            return Result.error("1", "查询失败，结果为空");
+            return Result.error("1", "查询结果为空");
         }
     }
 }
