@@ -6,6 +6,6 @@ export default {
   register: query => post(`/api/account/register`, query),
   changePass: query => post(`/api/account/changepass`, query),
 
-  getInfo: () => post('/api/account/getinfo'),
-  saveInfo: () => post('/api/account/saveinfo')
+  getInfo: () => postWithLoadTip('/api/account/getinfo'),
+  saveInfo: (data) => post('/api/account/saveinfo', data)
 }

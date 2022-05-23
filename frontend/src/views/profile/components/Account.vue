@@ -1,42 +1,42 @@
 <template>
-  <el-form>
-    <el-form-item label="真实姓名">
-      <el-input v-model.trim="userInfo.realName" />
-    </el-form-item>
-    <el-form-item label="手机号">
-      <el-input v-model.trim="userInfo.phone" />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submit">更新</el-button>
-    </el-form-item>
-  </el-form>
+  <StudentAccount :form="form"></StudentAccount>
 </template>
 
 <script>
-import userApi from '@/api/user'
+import API from '@/api/login'
+import StudentAccount from './StudentAccount'
+
 export default {
-  props: {
-    userInfo: {
-      type: Object,
-      default: () => {
-        return {
-          realName: '',
-          phone: ''
-        }
-      }
+  components: { StudentAccount },
+  data () {
+    return {
+      form: {}
     }
   },
-  methods: {
-    submit () {
-      let _this = this
-      userApi.updateUser(this.userInfo).then(re => {
-        if (re.code === 0) {
-          _this.$message.success(re.message)
-        } else {
-          _this.$message.error(re.message)
-        }
-      })
-    }
+  created  () {
+    let _this = this
+    API.getInfo().then(re => {
+      if (re.code === '0') {
+        _this.form = re.data
+      } else {
+        _this.$message.error(re.message)
+      }
+    }).catch(e => {
+      _this.form = {
+        // 学生测试
+        // studentName:  'kp',
+        // studentID: '123',
+        // classCode: '2019080601',
+        // identifier: '350111100109027163',
+        // dormitory: '天马学生公寓',
+        // address: '湖南大写天马学生公寓三区506',
+        // teleno: '13534348989',
+        // birthday: '2001-01-03',
+        // sex: '男',
+        // grade: '19',
+        // completedCredits: 24
+      }
+    })
   }
 }
 </script>
