@@ -23,7 +23,7 @@
           <el-option v-for="item in degreeEnum" :key="item" :value="item" :label="item"></el-option>
         </el-select>
       </el-form-item>
-      
+
       <el-form-item label="毕业学分：" prop="graduationCredits" required>
         <el-input v-model="form.graduationCredits"></el-input>
       </el-form-item>
