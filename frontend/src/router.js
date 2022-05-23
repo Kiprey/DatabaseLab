@@ -19,22 +19,14 @@ const constantRoutes = [
   {
     path: '/login',
     name: 'Login',
-    hidden: false,
+    hidden: true,
     component: () => import('@/views/login/index'),
     meta: { title: '登录' }
   },
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: '主页', icon: 'home', affix: true }
-      }
-    ]
+    redirect: '/profile/index'
   },
   {
     path: '/school',
