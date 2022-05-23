@@ -30,7 +30,7 @@ export default {
     submit () {
       let _this = this
       userApi.updateUser(this.userInfo).then(re => {
-        if (re.code === 1) {
+        if (re.code === 0) {
           _this.$message.success(re.message)
         } else {
           _this.$message.error(re.message)
