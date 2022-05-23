@@ -35,8 +35,8 @@
       </el-form-item>
 
       <el-form-item label="性别：" prop="sex">
-        <el-select v-model="form.sex" placeholder="性别" clearable>
-          <el-option v-for="item in sexEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+        <el-select v-model="form.sex" clearable>
+          <el-option v-for="item in sexEnum" :key="item" :value="item" :label="item"></el-option>
         </el-select>
       </el-form-item>
 
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import API from '@/api/school'
 
 export default {
@@ -76,6 +76,7 @@ export default {
         grade: null,
         completedCredits: 0
       },
+      sexEnum: ['男', '女'],
       formLoading: false,
       rules: {
         studentName: [
@@ -192,14 +193,6 @@ export default {
       }).catch(() => {})
     },
     ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
-  },
-  computed: {
-    ...mapGetters('enumItem', [
-      'enumFormat'
-    ]),
-    ...mapState('enumItem', {
-      sexEnum: state => state.user.sexEnum
-    })
   }
 }
 </script>

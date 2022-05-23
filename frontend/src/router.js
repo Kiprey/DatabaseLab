@@ -70,6 +70,19 @@ const constantRoutes = [
         name: 'classEdit',
         meta: { title: '班级编辑', noCache: true, activeMenu: '/school/class/list' },
         hidden: true
+      },
+      {
+        path: 'major/list',
+        component: () => import('@/views/school/major/list'),
+        name: 'majorPageList',
+        meta: { title: '专业列表', noCache: true }
+      },
+      {
+        path: 'major/edit',
+        component: () => import('@/views/school/major/edit'),
+        name: 'majorEdit',
+        meta: { title: '专业编辑', noCache: true, activeMenu: '/school/major/list' },
+        hidden: true
       }
     ]
   },
