@@ -1,24 +1,24 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2022/5/14 16:48:40                           */
+/* Created on:     2022-05-18 10:03:38                          */
 /*==============================================================*/
 
+drop table if exists StudentCourse;
+
+drop table if exists CourseClass;
+
+drop table if exists Student;
+
+drop table if exists Teacher;
 
 drop table if exists Class;
 
 drop table if exists Course;
 
-drop table if exists CourseClass;
+drop table if exists Major;
 
 drop table if exists Faculty;
 
-drop table if exists Major;
-
-drop table if exists Student;
-
-drop table if exists StudentCourse;
-
-drop table if exists Teacher;
 
 /*==============================================================*/
 /* Table: Class                                                 */
@@ -26,8 +26,9 @@ drop table if exists Teacher;
 create table Class
 (
    className            varchar(20) not null,
+   classCode            varchar(20) not null,
    majorCode            varchar(20) not null,
-   primary key (className)
+   primary key (classCode)
 );
 
 /*==============================================================*/
@@ -91,7 +92,7 @@ create table Student
 (
    studentName          varchar(20) not null,
    studentID            varchar(20) not null,
-   className            varchar(20) not null,
+   classCode            varchar(20) not null,
    identifier           varchar(20),
    dormitory            varchar(20),
    address              varchar(100),
@@ -140,8 +141,8 @@ alter table CourseClass add constraint FK_TeacherTeaching foreign key (teacherID
 alter table Major add constraint FK_Major_Faculty foreign key (facultyCode)
       references Faculty (facultyCode) on delete restrict on update cascade;
 
-alter table Student add constraint FK_StudentClass foreign key (className)
-      references Class (className) on delete restrict on update cascade;
+alter table Student add constraint FK_StudentClass foreign key (classCode)
+      references Class (classCode) on delete restrict on update cascade;
 
 alter table StudentCourse add constraint FK_StudentCourse foreign key (studentID)
       references Student (studentID) on delete restrict on update cascade;
@@ -152,3 +153,41 @@ alter table StudentCourse add constraint FK_StudentCourse2 foreign key (courseCl
 alter table Teacher add constraint FK_TeacherFaculty foreign key (facultyCode)
       references Faculty (facultyCode) on delete restrict on update cascade;
 
+
+
+
+CREATE TRIGGER credit1
+AFTER INSERT  ON studentcourse  -- 在插入后修改对应已修学分
+FOR EACH ROW
+BEGIN
+	UPDATE student SET completedCredits=
+	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
+	studentcourse.studentID=new.studentID and 
+	studentcourse.score>60 and 
+	studentcourse.courseClassID=courseclass.courseClassID and 
+	course.courseID=courseclass.courseID);
+END;
+
+CREATE TRIGGER credit2
+AFTER UPDATE  ON studentcourse  -- 在更新后修改对应已修学分
+FOR EACH ROW
+BEGIN
+	UPDATE student SET completedCredits=
+	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
+	studentcourse.studentID=new.studentID and 
+	studentcourse.score>60 and 
+	studentcourse.courseClassID=courseclass.courseClassID and 
+	course.courseID=courseclass.courseID);
+END;
+
+CREATE TRIGGER credit3
+AFTER DELETE  ON studentcourse  -- 在删除后修改对应已修学分
+FOR EACH ROW
+BEGIN
+	UPDATE student SET completedCredits=
+	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
+	studentcourse.studentID=old.studentID and 
+	studentcourse.score>60 and 
+	studentcourse.courseClassID=courseclass.courseClassID and 
+	course.courseID=courseclass.courseID);
+END;

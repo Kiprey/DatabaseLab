@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/major")
@@ -62,22 +63,14 @@ public class MajorController {
             return Result.error("1","当前列表为空！");
         }
     }
-    @GetMapping("/query")
-    public Result<List<Major>> queryController(@RequestParam String majorName){
-        List<Major> list =majorService.getListByName(majorName);
-        if(!list.isEmpty()){
-            return Result.success(list,"查询成功");
+    @PostMapping("/query")
+    public Result<Map<Object, Object>> queryController(@RequestBody Major major,String facultyName,@RequestParam int pageIndex, @RequestParam int pageSize){
+        Map<Object, Object> response =majorService.query(major,facultyName,pageIndex,pageSize);
+        if((int)response.get("total")!=0){
+            return Result.success(response,"查询成功");
         }else{
-            return Result.error("1","查询失败，"+majorName+"不存在");
+            return Result.error("1","查询结果为空");
         }
     }
-    @GetMapping("/queryFaculty")
-    public Result<List<Major>> queryFacultyController(@RequestParam String facultyName){
-        List<Major> list =majorService.getListByFacultyName(facultyName);
-        if(!list.isEmpty()){
-            return Result.success(list,"查询成功");
-        }else{
-            return Result.error("1","查询失败，"+facultyName+"不存在");
-        }
-    }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/faculty")
@@ -45,6 +46,17 @@ public class FacultyController {
             return Result.error("1","当前记录不存在，删除失败！");
         }
     }
+
+    @PostMapping("/query")
+    public Result<Map<Object, Object>> queryController(@RequestBody Faculty faculty, @RequestParam int pageIndex, @RequestParam int pageSize){
+        Map<Object, Object> response =facultyService.query(faculty,pageIndex,pageSize);
+        if((int)response.get("total")!=0){
+            return Result.success(response,"查询成功");
+        }else{
+            return Result.error("1","查询结果为空");
+        }
+    }
+
     @GetMapping("/list")
     public Result<List<Faculty>> listController(){
         List<Faculty> list =facultyService.getList();
@@ -54,13 +66,5 @@ public class FacultyController {
             return Result.error("1","当前列表为空！");
         }
     }
-    @GetMapping("/query")
-    public Result<List<Faculty>> queryController(@RequestParam String facultyName){
-        List<Faculty> list =facultyService.getListByName(facultyName);
-        if(!list.isEmpty()){
-            return Result.success(list,"查询成功");
-        }else{
-            return Result.error("1","查询失败，"+facultyName+"不存在");
-        }
-    }
+
 }

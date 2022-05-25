@@ -49,7 +49,7 @@ export default {
     logout () {
       let _this = this
       loginApi.logout().then(function (result) {
-        if (result && result.code === 1) {
+        if (result && result.code === 0) {
           _this.clearLogin()
           _this.$router.push({ path: '/login' })
         }

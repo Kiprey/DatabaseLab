@@ -13,8 +13,8 @@ public class Course {
     @Id
     private String courseID;
     private String facultyCode;
-    private int courseHours;
-    private int credit;
+    private Integer courseHours;
+    private Integer credit;
 
     public Course(String courseName, String courseNature, String courseCategory, String courseID, String facultyCode, int courseHours, int credit) {
         this.courseName = courseName;
@@ -24,6 +24,10 @@ public class Course {
         this.facultyCode = facultyCode;
         this.courseHours = courseHours;
         this.credit = credit;
+    }
+
+    public Course() {
+
     }
 
     public String getCourseName() {
@@ -66,7 +70,7 @@ public class Course {
         this.facultyCode = facultyCode;
     }
 
-    public int getCourseHours() {
+    public Integer getCourseHours() {
         return courseHours;
     }
 
@@ -74,7 +78,7 @@ public class Course {
         this.courseHours = courseHours;
     }
 
-    public int getCredit() {
+    public Integer getCredit() {
         return credit;
     }
 

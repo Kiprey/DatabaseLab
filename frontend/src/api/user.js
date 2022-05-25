@@ -1,13 +1,14 @@
 import { post } from '@/utils/request'
 
 export default {
-  getUserPageList: query => post('/api/admin/user/page/list', query),
+  getUserPageList: (data, params) => post('/api/student/query', data, params),
+  deleteUser: id => post('/api/student/delete', null, { 'studentID': id }),
+  createUser: data => post('/api/student/insert', data),
+  updateUser: data => post('/api/student/update', data),
+
   getUserEventPageList: query => post('/api/admin/user/event/page/list', query),
-  createUser: query => post('/api/admin/user/edit', query),
   selectUser: id => post('/api/admin/user/select/' + id),
   getCurrentUser: () => post('/api/admin/user/current'),
-  updateUser: query => post('/api/admin/user/update', query),
   changeStatus: id => post('/api/admin/user/changeStatus/' + id),
-  deleteUser: id => post('/api/admin/user/delete/' + id),
   selectByUserName: query => post('/api/admin/user/selectByUserName', query)
 }

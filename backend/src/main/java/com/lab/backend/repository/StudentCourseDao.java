@@ -1,5 +1,6 @@
 package com.lab.backend.repository;
 
+import com.lab.backend.domain.Course;
 import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.StudentCourse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -88,5 +92,56 @@ public class StudentCourseDao {
                 rs.getString("studentID"),
                 rs.getInt("score"))
         );
+    }
+
+    /**
+     * 多条件模糊查询
+     * @param studentCourse 学生选课
+     * @param pageIndex 起始页
+     * @param pageSize 大小
+     * @return 查询结果
+     */
+    public Map<Object, Object> query(StudentCourse studentCourse, int pageIndex, int pageSize){
+        //给出sql模板,为了便于后面添加sql语句
+        StringBuilder sql =new StringBuilder("select * from studentcourse where 1=1");
+        //给出params
+        List<Object> params = new ArrayList<>();
+        //构造查询语句
+        String courseClassID = studentCourse.getCourseClassID();
+        if(courseClassID != null && !courseClassID.trim().isEmpty()){
+            sql.append(" and courseClassID like ?");
+            params.add("%" +courseClassID+ "%");
+        }
+        String studentID= studentCourse.getStudentID();
+        if(studentID != null && !studentID.trim().isEmpty()){
+            sql.append(" and studentID like ?");
+            params.add("%" +studentID+ "%");
+        }
+
+        Integer score= studentCourse.getScore();
+        if(score != null){
+            sql.append(" and score like ?");
+            params.add("%" +score+ "%");
+        }
+
+        //添加页数条目限制
+        sql.append(" limit ?,?");
+        params.add((pageIndex-1)*30);
+        params.add(pageSize);
+        //统计个数
+        String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
+        System.out.println(sql2);
+        int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
+
+        Map<Object, Object> response=new HashMap<>();
+        response.put("total",count);
+        response.put("pageIndex",pageIndex);
+        response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new StudentCourse(
+                rs.getString("courseClassID"),
+                rs.getString("studentID"),
+                rs.getInt("score")
+        ),params.toArray()));
+
+        return response;
     }
 }

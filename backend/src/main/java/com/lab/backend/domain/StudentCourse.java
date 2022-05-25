@@ -10,8 +10,9 @@ public class StudentCourse {
     @Id
     private String courseClassID;
     private String studentID;
-    private int score;
-
+    private Integer score;
+    public StudentCourse() {
+    }
     public StudentCourse(String courseClassID, String studentID, int score) {
         this.courseClassID = courseClassID;
         this.studentID = studentID;
@@ -34,7 +35,7 @@ public class StudentCourse {
         this.studentID = studentID;
     }
 
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
