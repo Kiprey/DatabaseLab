@@ -41,10 +41,10 @@ public class StudentCourseController {
         }
     }
     @PostMapping("/delete")
-    public Result<String> updateController(@RequestParam String courseClassID){
-        int res_code = studentCourseService.delete(courseClassID);
+    public Result<String> updateController(@RequestParam String courseClassID,@RequestParam String studentID){
+        int res_code = studentCourseService.delete(courseClassID,studentID);
         if(res_code == 0){
-            return Result.success(courseClassID);
+            return Result.success(courseClassID+" "+studentID);
         } else {
             return Result.error("1","没有找到要删除的记录，删除失败！");
         }
@@ -65,6 +65,15 @@ public class StudentCourseController {
             return Result.success(response,"查询成功");
         }else{
             return Result.error("1","查询结果为空");
+        }
+    }
+    @PostMapping("/mean")
+    public Result<List<Integer>> CountMean(String studentID) {
+        List<Integer> list = studentCourseService.getMeanScore(studentID);
+        if (!list.isEmpty()) {
+            return Result.success(list, "平均分查询成功！");
+        } else {
+            return Result.error("1", "当前列表为空！");
         }
     }
 }

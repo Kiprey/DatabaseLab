@@ -35,9 +35,9 @@ public class StudentCourseDao {
      * 按照主键删除
      * @param courseClassID courseClassID字段的值
      */
-    public void delete(String courseClassID) {
-        String sql="delete from studentcourse where courseClassID = ?";
-        jdbcTemplate.update(sql, courseClassID);
+    public void delete(String courseClassID,String studentID) {
+        String sql="delete from studentcourse where courseClassID = ? and studentID = ?";
+        jdbcTemplate.update(sql, courseClassID,studentID);
     }
 
     /**

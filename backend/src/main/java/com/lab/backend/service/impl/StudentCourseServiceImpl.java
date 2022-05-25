@@ -2,12 +2,14 @@ package com.lab.backend.service.impl;
 
 import com.lab.backend.domain.StudentCourse;
 import com.lab.backend.repository.CourseClassDao;
+import com.lab.backend.repository.CourseDao;
 import com.lab.backend.repository.StudentCourseDao;
 import com.lab.backend.repository.StudentDao;
 import com.lab.backend.service.StudentCourseService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     private StudentDao studentDao;
     @Resource
     private CourseClassDao courseClassDao;
+//    @Resource
+//    private CourseDao courseDao;
 
     /**
      * 插入
@@ -48,10 +52,11 @@ public class StudentCourseServiceImpl implements StudentCourseService {
      * @return 结果码 0：成功删除；1：没有找到要删除的班级课程
      */
     @Override
-    public int delete(String courseClassID){
-        int studentcourse_num = studentcourseDao.getByCode(courseClassID).size();
-        if(studentcourse_num != 0){
-            studentcourseDao.delete(courseClassID);
+    public int delete(String courseClassID,String studentID){
+        int course_num = studentcourseDao.getByCode(courseClassID).size();
+        int student_num = studentcourseDao.getByAttribute("studentID",studentID).size();
+        if(course_num != 0 && student_num != 0){
+            studentcourseDao.delete(courseClassID,studentID);
             return 0;
         } else {
             return 1;
@@ -122,4 +127,24 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         return studentcourseDao.query(studentCourse, pageIndex, pageSize);
     }
 
+    /**
+     * 计算平均分
+     * @param studentID 学生ID
+     * @return 计算结果
+     */
+    @Override
+    public List<Integer> getMeanScore(String studentID){
+        List<StudentCourse> score_list = studentcourseDao.getByAttribute(studentID,studentID);
+        if(score_list.size() == 0) return null;
+        List<Integer> result = new ArrayList<>();
+        Integer count = score_list.size();
+        Integer algorithm_mean = 0;
+//        Integer weigh_mean = 0;
+        for (StudentCourse tem : score_list) {
+            algorithm_mean += tem.getScore();
+//            weigh_mean += tem.getScore()
+        }
+        if(algorithm_mean != 0) result.add(algorithm_mean/count);
+        return result;
+    }
 }
