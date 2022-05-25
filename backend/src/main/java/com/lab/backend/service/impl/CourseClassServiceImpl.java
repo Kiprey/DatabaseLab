@@ -1,18 +1,26 @@
 package com.lab.backend.service.impl;
 
-import com.lab.backend.repository.CourseClassDao;
+import com.lab.backend.domain.Course;
+import com.lab.backend.domain.Teacher;
+import com.lab.backend.repository.*;
 import com.lab.backend.service.CourseClassService;
 import com.lab.backend.domain.CourseClass;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CourseClassServiceImpl implements CourseClassService {
     @Resource
     private CourseClassDao courseClassDao;
-
+    @Resource
+    private CourseDao courseDao;
+    @Resource
+    private TeacherDao teacherDao;
+    @Resource
+    private StudentCourseDao studentCourseDao;
 
     /**
      * 插入
@@ -22,7 +30,16 @@ public class CourseClassServiceImpl implements CourseClassService {
      */
     @Override
     public int insert(CourseClass courseClass) {
-        return 0;
+        if (courseDao.getByCode(courseClass.getCourseID()).size() == 0) {
+            return 1;
+        } else if (teacherDao.getByAttribute("teacherID",courseClass.getTeacherID()).size() == 0) {
+            return 2;
+        } else if (courseClassDao.getByAttribute("courseClassID", courseClass.getCourseClassID()).size() > 0) {
+            return 3;
+        } else {
+            courseClassDao.insert(courseClass);
+            return 0;
+        }
     }
 
     /**
@@ -33,7 +50,14 @@ public class CourseClassServiceImpl implements CourseClassService {
      */
     @Override
     public int delete(String courseClassID) {
-        return 0;
+        if (studentCourseDao.getByAttribute("courseClassID",courseClassID).size() != 0) {
+            return 1;
+        } else if (courseClassDao.getByAttribute("courseClassID", courseClassID).size() == 0) {
+            return 2;
+        } else {
+            courseClassDao.delete(courseClassID);
+            return 0;
+        }
     }
 
 
@@ -45,8 +69,16 @@ public class CourseClassServiceImpl implements CourseClassService {
      */
     @Override
     public int update(CourseClass courseClass) {
-        int num = courseClassDao.query(courseClass).size();
-        return 0;
+        if (courseDao.getByCode(courseClass.getCourseID()).size() == 0) {
+            return 1;
+        } else if (teacherDao.getByAttribute("teacherID",courseClass.getTeacherID()).size() == 0) {
+            return 2;
+        } else if (courseClassDao.getByAttribute("courseClassID", courseClass.getCourseClassID()).size() == 0) {
+            return 3;
+        } else {
+            courseClassDao.update(courseClass);
+            return 0;
+        }
     }
 
 
@@ -56,8 +88,8 @@ public class CourseClassServiceImpl implements CourseClassService {
      * @param courseClass 课程班级实体：构成查询条件
      */
     @Override
-    public List<CourseClass> query(CourseClass courseClass) {
-        return courseClassDao.query(courseClass);
+    public Map<Object, Object> query(CourseClass courseClass, int pageIndex, int pageSize) {
+        return courseClassDao.query(courseClass, pageIndex, pageSize);
     }
 
     /**

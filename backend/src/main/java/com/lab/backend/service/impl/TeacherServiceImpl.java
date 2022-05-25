@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -29,9 +30,7 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int insert(Teacher teacher) {
-        Teacher temp = new Teacher();
-        temp.setTeacherID(teacher.getTeacherID());
-        int num = teacherDao.query(temp).size();
+        int num = teacherDao.getByAttribute("teacherID",teacher.getTeacherID()).size();
         if ((facultyDao.getByCode(teacher.getFacultyCode()).size() == 0)) {
             return 1;
         } else if (num == 0) {
@@ -50,12 +49,8 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int delete(String teacherID) {
-        Teacher temp = new Teacher();
-        temp.setTeacherID(teacherID);
-        CourseClass courseClass = new CourseClass();
-        courseClass.setTeacherID(teacherID);
-        int num = teacherDao.query(temp).size();
-        if (courseClassDao.query(courseClass).size() != 0) {
+        int num = teacherDao.getByAttribute("teacherID",teacherID).size();
+        if (courseClassDao.getByAttribute("teacherID",teacherID).size() != 0) {
             return 1;
         } else if (num != 0) {
             teacherDao.delete(teacherID);
@@ -73,9 +68,7 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int update(Teacher teacher) {
-        Teacher temp = new Teacher();
-        temp.setTeacherID(teacher.getTeacherID());
-        int num = teacherDao.query(temp).size();
+        int num = teacherDao.getByAttribute("teacherID",teacher.getTeacherID()).size();
         if ((facultyDao.getByCode(teacher.getFacultyCode()).size() == 0)) {
             return 1;
         } else if (num != 0) {
@@ -93,8 +86,8 @@ public class TeacherServiceImpl implements TeacherService {
      * @return result list
      */
     @Override
-    public List<Teacher> query(Teacher teacher) {
-        return teacherDao.query(teacher);
+    public Map<Object, Object> query(Teacher teacher, int pageIndex, int pageSize) {
+        return teacherDao.query(teacher,pageIndex,pageSize);
     }
 
     /**
