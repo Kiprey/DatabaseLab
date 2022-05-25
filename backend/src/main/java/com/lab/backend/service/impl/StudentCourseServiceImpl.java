@@ -49,7 +49,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     /**
      * 删除
      * @param courseClassID 课程班级ID
-     * @return 结果码 0：成功删除；1：没有找到要删除的班级课程
+     * @param studentID 学生ID
+     * @return 结果码 0：成功删除；1：没有找到要删除的班级课程；2：没有找到对应的学生
      */
     @Override
     public int delete(String courseClassID,String studentID){
@@ -58,8 +59,10 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         if(course_num != 0 && student_num != 0){
             studentcourseDao.delete(courseClassID,studentID);
             return 0;
-        } else {
+        } else if (course_num == 0 ) {
             return 1;
+        } else {
+            return 2;
         }
     }
 
