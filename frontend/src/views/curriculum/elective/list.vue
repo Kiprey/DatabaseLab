@@ -9,10 +9,6 @@
         <el-input v-model="queryData.studentID"></el-input>
       </el-form-item>
 
-      <el-form-item label="课程分数">
-        <el-input v-model="queryData.score"></el-input>
-      </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
         <router-link :to="{path:'/curriculum/elective/edit'}" class="link-left">
@@ -51,7 +47,6 @@ export default {
       queryData: {
         courseClassID: '',
         studentID: '',
-        score: '',
 
         pageIndex: 1,
         pageSize: 10
@@ -87,7 +82,7 @@ export default {
         this.listLoading = false
       })
     },
-    deleteCourse (row) {
+    deleteStudentCourse (row) {
       let _this = this
       var QParam = {
         'courseClassID': row.courseClassID,

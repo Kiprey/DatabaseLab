@@ -207,13 +207,13 @@ const constantRoutes = [
         path: 'teacher/list',
         component: () => import('@/views/education/teacher/list'),
         name: 'EducationTeacherPage',
-        meta: {title: '教师列表', noCache: true}
+        meta: { title: '教师列表', noCache: true }
       },
       {
         path: 'teacher/edit',
         component: () => import('@/views/education/teacher/edit'),
         name: 'EducationTeacherEditPage',
-        meta: {title: '教师编辑', noCache: true, activeMenu: 'education/teacher/list'},
+        meta: { title: '教师编辑', noCache: true, activeMenu: 'education/teacher/list' },
         hidden: true
       }
     ]

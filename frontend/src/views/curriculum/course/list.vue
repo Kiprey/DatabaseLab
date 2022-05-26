@@ -21,14 +21,6 @@
         <el-input v-model="queryData.facultyCode"></el-input>
       </el-form-item>
 
-      <el-form-item label="学时">
-        <el-input v-model="queryData.courseHours"></el-input>
-      </el-form-item>
-
-      <el-form-item label="学分">
-        <el-input v-model="queryData.credit"></el-input>
-      </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
         <router-link :to="{path:'/curriculum/course/edit'}" class="link-left">
@@ -74,8 +66,6 @@ export default {
         courseCategory: '',
         courseID: '',
         facultyCode: '',
-        courseHours: '',
-        credit: '',
 
         pageIndex: 1,
         pageSize: 10
