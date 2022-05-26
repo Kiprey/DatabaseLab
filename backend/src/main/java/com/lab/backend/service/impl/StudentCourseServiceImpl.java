@@ -69,22 +69,19 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     /**
      * 更新
      * @param studentcourse 选课实体
-     * @return 结果码 0：插入成功；1：没有该学生；2：没有课程班级；3：没有该选课
+     * @return 结果码 0：插入成功；1：没有找到要删除的班级课程；2：没有找到对应的学生
      */
     @Override
     public int update(StudentCourse studentcourse){
-        int studentcourse_num = studentcourseDao.getByCode(studentcourse.getCourseClassID()).size();
-        int courseclass_num = courseClassDao.getByCode(studentcourse.getCourseClassID()).size();
-        int student_num = studentDao.getByID(studentcourse.getStudentID()).size();
-        if(student_num != 0 && courseclass_num !=0 && studentcourse_num != 0){
+        int course_num = studentcourseDao.getByCode(studentcourse.getCourseClassID()).size();
+        int student_num = studentcourseDao.getByAttribute("studentID", studentcourse.getStudentID()).size();
+        if(course_num != 0 && student_num != 0){
             studentcourseDao.update(studentcourse);
             return 0;
-        } else if(student_num == 0){
+        } else if (course_num == 0 ) {
             return 1;
-        } else if (courseclass_num == 0) {
-            return 2;
         } else {
-            return 3;
+            return 2;
         }
     }
 
