@@ -67,7 +67,7 @@ public class CourseClassController {
     }
 
 
-    @GetMapping("/query")
+    @PostMapping("/query")
     public Result<Map<Object, Object>> queryController(@RequestBody CourseClass courseClass, @RequestParam int pageIndex, @RequestParam int pageSize) {
         Map<Object, Object> response = courseClassService.query(courseClass, pageIndex, pageSize);
         if ((int) response.get("total") != 0) {

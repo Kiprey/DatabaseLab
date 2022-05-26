@@ -185,41 +185,74 @@ const constantRoutes = [
     component: Layout,
     name: 'EducationPage',
     meta: {
-      title: '教育管理',
+      title: '教师管理',
       icon: 'education'
     },
     alwaysShow: true,
     children: [
       {
-        path: 'subject/list',
-        component: () => import('@/views/education/subject/list'),
-        name: 'EducationSubjectPage',
-        meta: { title: '学科列表', noCache: true }
+        path: 'courseClass/list',
+        component: () => import('@/views/education/courseClass/list'),
+        name: 'EducationCourseClassPage',
+        meta: { title: '授课列表', noCache: true }
       },
       {
-        path: 'subject/edit',
-        component: () => import('@/views/education/subject/edit'),
-        name: 'EducationSubjectEditPage',
-        meta: { title: '学科编辑', noCache: true, activeMenu: '/education/subject/list' },
+        path: 'courseClass/edit',
+        component: () => import('@/views/education/courseClass/edit'),
+        name: 'EducationCourseClassEditPage',
+        meta: { title: '授课编辑', noCache: true, activeMenu: '/education/subject/list' },
+        hidden: true
+      },
+      {
+        path: 'teacher/list',
+        component: () => import('@/views/education/teacher/list'),
+        name: 'EducationTeacherPage',
+        meta: {title: '教师列表', noCache: true}
+      },
+      {
+        path: 'teacher/edit',
+        component: () => import('@/views/education/teacher/edit'),
+        name: 'EducationTeacherEditPage',
+        meta: {title: '教师编辑', noCache: true, activeMenu: 'education/teacher/list'},
         hidden: true
       }
     ]
   },
   {
-    path: '/answer',
+    path: '/curriculum',
     component: Layout,
-    name: 'AnswerPage',
+    name: 'CurriculumPage',
     meta: {
-      title: '成绩管理',
+      title: '课程管理',
       icon: 'answer'
     },
     alwaysShow: true,
     children: [
       {
-        path: 'list',
-        component: () => import('@/views/answer/list'),
-        name: 'AnswerPageList',
-        meta: { title: '答卷列表', noCache: true }
+        path: 'course/list',
+        component: () => import('@/views/curriculum/course/list'),
+        name: 'CurriculumCoursePage',
+        meta: { title: '课程列表', noCache: true }
+      },
+      {
+        path: 'course/edit',
+        component: () => import('@/views/curriculum/course/edit'),
+        name: 'CurriculumCourseEditPage',
+        meta: { title: '课程编辑', noCache: true, activeMenu: 'curriculum/course/list' },
+        hidden: true
+      },
+      {
+        path: 'elective/list',
+        component: () => import('@/views/curriculum/elective/list'),
+        name: 'CurriculumElectivePage',
+        meta: { title: '选修列表', noCache: true }
+      },
+      {
+        path: 'elective/edit',
+        component: () => import('@/views/curriculum/elective/edit'),
+        name: 'CurriculumElectiveEditPage',
+        meta: { title: '课程编辑', noCache: true, activeMenu: 'curriculum/elective/list' },
+        hidden: true
       }
     ]
   },
