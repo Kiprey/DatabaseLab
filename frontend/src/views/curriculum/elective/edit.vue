@@ -4,7 +4,7 @@
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
 
       <el-form-item label="开课号："  prop="courseClassID" required>
-        <el-input v-model="form.courseClassID"></el-input>
+        <el-input v-model="form.courseClassID" :disabled="isEditMode ? 'disabled' : false"></el-input>
       </el-form-item>
 
       <el-form-item label="学生编号：" prop="studentID" >
@@ -58,7 +58,7 @@ export default {
       _this.formLoading = true
 
       var queryData = {
-        'teacherID': studentID
+        'studentID': studentID
       }
       var queryParam = {
         'pageIndex': 1,
@@ -93,7 +93,7 @@ export default {
             if (_this.isEditMode) {
               api = API.updateStudentCourse
             } else {
-              api = API.createStudentCourse
+              api = API.updateStudentCourse
             }
             api(_this.form).then(data => {
               if (data.code === '0') {
@@ -123,6 +123,7 @@ export default {
         type: 'warning'
       }).then(() => {
         let laststudentID = _this.form.studentID
+        let lastcourseClassID = _this.form.courseClassID
 
         _this.$refs['form'].resetFields()
 
@@ -132,6 +133,7 @@ export default {
           score: null
         }
         _this.form.studentID = laststudentID
+        _this.form.courseClassID = lastcourseClassID
       }).catch(() => {})
     },
     ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })

@@ -78,7 +78,7 @@ export default {
       _this.formLoading = true
 
       var queryData = {
-        'teacherID': courseID
+        'courseID': courseID
       }
       var queryParam = {
         'pageIndex': 1,
