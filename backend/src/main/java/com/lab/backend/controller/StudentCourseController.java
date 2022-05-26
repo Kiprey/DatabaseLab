@@ -68,7 +68,7 @@ public class StudentCourseController {
         }
     }
     @PostMapping("/mean")
-    public Result<List<Integer>> CountMean(String studentID) {
+    public Result<List<Integer>> CountMean(@RequestParam String studentID) {
         List<Integer> list = studentCourseService.getMeanScore(studentID);
         if (!list.isEmpty()) {
             return Result.success(list, "平均分查询成功！");
