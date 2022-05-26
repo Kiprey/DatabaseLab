@@ -47,9 +47,10 @@ public class StudentCourseDao {
     public void update(StudentCourse studentcourse) {
         String sql="UPDATE studentcourse SET score = ? where courseClassID = ? and studentID = ?";
         jdbcTemplate.update(sql,
+                studentcourse.getScore(),
                 studentcourse.getCourseClassID(),
-                studentcourse.getStudentID(),
-                studentcourse.getScore());
+                studentcourse.getStudentID()
+                );
     }
 
     /**
