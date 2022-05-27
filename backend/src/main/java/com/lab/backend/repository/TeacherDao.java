@@ -1,5 +1,6 @@
 package com.lab.backend.repository;
 
+import com.lab.backend.domain.Student;
 import com.lab.backend.domain.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -132,5 +133,17 @@ public class TeacherDao {
                 rs.getString("teacherID"),
                 rs.getString("facultyCode")
         ));
+    }
+
+    /**
+     * 按ID查询
+     */
+    public List<Teacher> getByID(String ID) {
+        String sql="select * from teacher where teacherID=?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Teacher(
+                rs.getString("teacherName"),
+                rs.getString("teacherID"),
+                rs.getString("facultyCode"))
+        ,ID);
     }
 }
