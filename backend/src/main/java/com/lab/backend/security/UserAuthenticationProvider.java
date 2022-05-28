@@ -23,8 +23,6 @@ import java.util.Set;
 
 /**
  * 自定义登录验证
- * @Author Sans
- * @CreateTime 2019/10/1 19:11
  */
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
@@ -32,6 +30,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
     private SelfUserDetailsService selfUserDetailsService;
     @Autowired
     private SysUserService sysUserService;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         // 获取表单输入中返回的用户名
@@ -56,7 +55,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         // 查询用户角色
         List<SysRoleEntity> sysRoleEntityList = sysUserService.selectSysRoleByUserId(userInfo.getUserId());
         for (SysRoleEntity sysRoleEntity: sysRoleEntityList){
-            authorities.add(new SimpleGrantedAuthority(sysRoleEntity.getRoleName()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+sysRoleEntity.getRoleName()));
         }
         userInfo.setAuthorities(authorities);
         // 进行登录

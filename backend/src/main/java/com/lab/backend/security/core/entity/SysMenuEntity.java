@@ -7,9 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @Description 权限实体
- * @Author Sans
- * @CreateTime 2019/9/14 15:57
+ * 权限实体
  */
 @Data
 @TableName("sys_menu")
