@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "4c28f99e-80a3-4a8b-be7f-79ee1a78e040",
+		"name": "databaseLab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "注册管理员",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"teacherName\":\"李四\",\r\n    \"teacherID\":\"0001\",\r\n    \"facultyCode\":\"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/user/adminRegister?username=admin&password=123456&code=hnu123456",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"adminRegister"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						},
+						{
+							"key": "code",
+							"value": "hnu123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登录",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE2NTM1NTAzMTYsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjUzNjM2NzE2fQ.YG0bRDRdMJ2yNFTill5zyiNQ5lDHQOsg38RBKn8zqpHrM0PpKf961zg5csd9CsqhFvro2jqSMHHraVKC5VHhMw",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/user/login?username=admin&password=123456",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登出",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/user/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "注册普通用户",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE2NTM1NTU4ODUsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjUzNjQyMjg1fQ.LQ0GZFrtWGsZkwwpIqL6pkpftjJ-ie4kglOu8NDnUbL8h9Alo1YvAMoYWMA2_wmK_yof9aAY4UN2EX1FSJu9Sg",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/user/userRegister?username=02&password=123456&role=STUDENT",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"userRegister"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "02"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						},
+						{
+							"key": "role",
+							"value": "STUDENT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "当前用户修改密码",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/user/changePassword?oldPassword=123456&newPassword=1234567",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"changePassword"
+					],
+					"query": [
+						{
+							"key": "oldPassword",
+							"value": "123456"
+						},
+						{
+							"key": "newPassword",
+							"value": "1234567"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "列表查看教师信息",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNjUzNjM2NDE3LCJpc3MiOiJzYW5zIiwiYXV0aG9yaXRpZXMiOiJbe1wiYXV0aG9yaXR5XCI6XCJBRE1JTlwifV0iLCJleHAiOjE2NTM3MjI4MTd9.TaM2ucqrCb8UpCTqCHoOqXhJKaEQRbq4XFAnP3WhNkTjrg2vqB-i1tpMkIWe8YlWZ_nKvHmcdktQZQlt4wVENg",
+						"type": "default"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNjUzNjM2NDE3LCJpc3MiOiJzYW5zIiwiYXV0aG9yaXRpZXMiOiJbe1wiYXV0aG9yaXR5XCI6XCJBRE1JTlwifV0iLCJleHAiOjE2NTM3MjI4MTd9.TaM2ucqrCb8UpCTqCHoOqXhJKaEQRbq4XFAnP3WhNkTjrg2vqB-i1tpMkIWe8YlWZ_nKvHmcdktQZQlt4wVENg",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8081/teacher/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacher",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
