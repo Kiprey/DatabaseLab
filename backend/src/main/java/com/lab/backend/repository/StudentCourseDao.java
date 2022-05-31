@@ -124,15 +124,14 @@ public class StudentCourseDao {
             sql.append(" and score like ?");
             params.add("%" +score+ "%");
         }
-
-        //添加页数条目限制
-        sql.append(" limit ?,?");
-        params.add((pageIndex-1)*30);
-        params.add(pageSize);
         //统计个数
         String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
-        System.out.println(sql2);
         int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
+        //添加页数条目限制
+        sql.append(" limit ?,?");
+        params.add((pageIndex-1)*pageSize);
+        params.add(pageSize);
+
 
         Map<Object, Object> response=new HashMap<>();
         response.put("total",count);

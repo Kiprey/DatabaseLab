@@ -87,7 +87,7 @@ public class AdminServiceImpl implements AdminService {
                 return 2;
             sysUserService.save(sysUserEntity);
             SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
-            sysUserRoleEntity.setRoleId(2L);
+            sysUserRoleEntity.setRoleId(3L);
             sysUserRoleEntity.setUserId(sysUserEntity.getUserId());
             sysUserRoleService.save(sysUserRoleEntity);
             return 0;
