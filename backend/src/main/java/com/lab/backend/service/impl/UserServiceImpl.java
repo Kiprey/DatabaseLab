@@ -1,6 +1,7 @@
 package com.lab.backend.service.impl;
 
 import com.lab.backend.security.core.dao.SysUserDao;
+import com.lab.backend.security.core.dao.SysUserRoleDao;
 import com.lab.backend.security.entity.SelfUserEntity;
 import com.lab.backend.security.service.SelfUserDetailsService;
 import com.lab.backend.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.lab.backend.utils.SecurityUtil.getUserName;
@@ -19,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private SysUserDao sysUserDao;
+
     @Resource
     private SelfUserDetailsService selfUserDetailsService;
 
@@ -45,4 +48,6 @@ public class UserServiceImpl implements UserService {
             return 0;
         }
     }
+
+
 }

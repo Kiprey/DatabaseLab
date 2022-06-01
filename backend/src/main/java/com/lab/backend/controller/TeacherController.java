@@ -16,6 +16,7 @@ import java.util.Map;
 public class TeacherController {
     @Resource
     private TeacherService teacherService;
+    @Resource
     private AdminService adminService;
 
     @PreAuthorize("hasRole('ADMIN')")
