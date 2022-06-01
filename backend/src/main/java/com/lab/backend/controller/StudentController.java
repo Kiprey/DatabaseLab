@@ -1,6 +1,7 @@
 package com.lab.backend.controller;
 
 import com.lab.backend.domain.Student;
+import com.lab.backend.service.AdminService;
 import com.lab.backend.service.StudentService;
 import com.lab.backend.utils.Result;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,14 @@ import java.util.Map;
 public class StudentController {
     @Resource
     private StudentService studentService;
+    @Resource
+    private AdminService adminService;
 
     @PostMapping("/insert")
     public Result<Student> insertController(@RequestBody Student student){
         int r=studentService.insert(student);
         if(r==0){
+            adminService.studentRegister(student.getStudentID(),"123456");
             return Result.success(student);
         }
         else if(r==1){
