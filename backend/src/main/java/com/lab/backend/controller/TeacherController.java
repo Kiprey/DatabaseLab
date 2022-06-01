@@ -69,6 +69,7 @@ public class TeacherController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/query")
     public Result<Map<Object, Object>> queryController(@RequestBody Map<String,Object> map, @RequestParam int pageIndex, @RequestParam int pageSize) {
         Map<Object, Object> response = teacherService.query(map, pageIndex, pageSize);
@@ -78,7 +79,16 @@ public class TeacherController {
             return Result.error("1", "查询结果为空");
         }
     }
-
+    @PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
+    @PostMapping("/queryWithoutID")
+    public Result<Map<Object, Object>> queryWithoutIDController(@RequestBody Map<String,Object> map, @RequestParam int pageIndex, @RequestParam int pageSize) {
+        Map<Object, Object> response = teacherService.queryWithoutID(map, pageIndex, pageSize);
+        if ((int) response.get("total") != 0) {
+            return Result.success(response, "查询成功");
+        } else {
+            return Result.error("1", "查询结果为空");
+        }
+    }
     @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/info")
     public Result<List<Teacher>> infoController() {

@@ -117,7 +117,59 @@ public class TeacherDao {
         response.put("tableData", jdbcTemplate.queryForList(sql.toString(), params.toArray()));
         return response;
     }
+    /**
+     * 多条件模糊查询，结果中无教师ID
+     *
+     * @param map 查询条件
+     * @param pageIndex 起始页
+     * @param pageSize  每页个数
+     * @return result
+     */
+    public Map<Object, Object> queryWithoutID(Map<String,Object> map, int pageIndex, int pageSize) {
+        //给出sql模板,为了便于后面添加sql语句
+        StringBuilder sql = new StringBuilder("select teacherName,teacher.facultyCode,facultyName from teacher,faculty where 1=1 and teacher.facultyCode=faculty.facultyCode");
+        //给出params
+        List<Object> params = new ArrayList<>();
+        //构造查询语句
+        if (map.get("teacherName")!=null)
+        {
+            String s = map.get("teacherName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and teacherName like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("facultyCode")!=null)
+        {
+            String s = map.get("facultyCode").toString();
+            if (s != null && !s.trim().isEmpty()) {
+                sql.append(" and teacher.facultyCode like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("facultyName")!=null)
+        {
+            String s = map.get("facultyName").toString();
+            if (s != null && !s.trim().isEmpty()) {
+                sql.append(" and facultyName like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        //统计个数
+        String sql2 = "SELECT count(*) as sum from (" + sql + ") as a;";
+        int count = jdbcTemplate.queryForObject(sql2, Integer.class, params.toArray());
+        //添加页数条目限制
+        sql.append(" limit ?,?");
+        params.add((pageIndex - 1) * pageSize);
+        params.add(pageSize);
 
+        Map<Object, Object> response = new HashMap<>();
+        response.put("total", count);
+        response.put("pageIndex", pageIndex);
+        response.put("tableData", jdbcTemplate.queryForList(sql.toString(), params.toArray()));
+        return response;
+    }
     /**
      * 按teacher字段查询
      *

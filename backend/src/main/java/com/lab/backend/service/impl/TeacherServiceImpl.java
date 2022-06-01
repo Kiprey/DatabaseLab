@@ -92,6 +92,17 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     /**
+     * 多条件查询，得不到ID
+     *
+     * @param map：查询条件
+     * @return result list
+     */
+    @Override
+    public Map<Object, Object> queryWithoutID(Map<String,Object> map, int pageIndex, int pageSize) {
+        return teacherDao.queryWithoutID(map,pageIndex,pageSize);
+    }
+
+    /**
      * 全部查询
      *
      * @return result list

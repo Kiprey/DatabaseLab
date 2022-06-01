@@ -17,6 +17,8 @@ public interface TeacherService {
     Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize);
 
 
+    Map<Object, Object> queryWithoutID(Map<String, Object> map, int pageIndex, int pageSize);
+
     List<Teacher> getList();
 
 
