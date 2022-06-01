@@ -83,13 +83,24 @@ public class CourseClassServiceImpl implements CourseClassService {
 
 
     /**
-     * 多条件查询
+     * 多条件查询（管理员）
      *
      * @param map：构成查询条件
      */
     @Override
     public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize) {
         return courseClassDao.query(map, pageIndex, pageSize);
+    }
+
+
+    /**
+     * 多条件查询（学生和教师）
+     *
+     * @param map：构成查询条件
+     */
+    @Override
+    public Map<Object, Object> queryByUser(Map<String,Object> map, int pageIndex, int pageSize) {
+        return courseClassDao.queryByUser(map, pageIndex, pageSize);
     }
 
     /**
