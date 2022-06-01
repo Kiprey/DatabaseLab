@@ -14,7 +14,6 @@ public interface MajorService {
 
     int update(Major major);
 
-    List<Major> getList();
 
     Map<Object, Object> query(Major major, String facultyName, int pageIndex, int pageSize);
 }

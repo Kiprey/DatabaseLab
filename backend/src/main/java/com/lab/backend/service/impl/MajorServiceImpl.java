@@ -91,14 +91,7 @@ public class MajorServiceImpl implements MajorService {
         }
     }
 
-    /**
-     * 全部查询
-     * @return result list
-     */
-    @Override
-    public List<Major> getList() {
-        return majorDao.getList();
-    }
+
 
     /**
      * 多条件查询
@@ -107,29 +100,6 @@ public class MajorServiceImpl implements MajorService {
      */
     @Override
     public Map<Object, Object> query(Major major, String facultyName, int pageIndex, int pageSize){
-        //采用名称的条件是名字非空且院系代码为空
-        // 其余情况都优先按照院系代码的设置查询
-        if(facultyName!=null&&!facultyName.trim().isEmpty()&&(major.getFacultyCode()==null||major.getFacultyCode().trim().isEmpty())){
-            String facultyCode = null;
-            //根据名字获取code
-            List<Faculty> list=facultyDao.getByAttribute("facultyName", facultyName);
-            if(!list.isEmpty()) {
-                facultyCode = list.get(0).getFacultyCode();
-            }
-            //查询的code为空时直接返回结果为0
-            if(facultyCode==null){
-                Map<Object, Object> response=new HashMap<>();
-                response.put("total",0);
-                return response;
-            }
-            //否则将code加入多条件查询
-            else {
-                major.setFacultyCode(facultyCode);
-                return majorDao.query(major,pageIndex,pageSize);
-            }
-        }
-        else {
-            return majorDao.query(major,pageIndex,pageSize);
-        }
+        return majorDao.query(major,facultyName,pageIndex,pageSize);
     }
 }

@@ -72,14 +72,6 @@ public class FacultyServiceImpl  implements FacultyService {
         }
     }
 
-    /**
-     * 全部查询
-     * @return result list
-     */
-    @Override
-    public List<Faculty> getList() {
-        return facultyDao.getList();
-    }
 
 
     /**

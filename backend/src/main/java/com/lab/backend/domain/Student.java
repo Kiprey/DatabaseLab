@@ -85,4 +85,44 @@ public class Student {
     public void setClassCode(String classCode) {
         this.classCode = classCode;
     }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public void setDormitory(String dormitory) {
+        this.dormitory = dormitory;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTeleno(String teleno) {
+        this.teleno = teleno;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public void setCompletedCredits(String completedCredits) {
+        this.completedCredits = completedCredits;
+    }
 }

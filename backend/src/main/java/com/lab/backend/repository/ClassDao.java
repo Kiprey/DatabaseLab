@@ -73,17 +73,7 @@ public class ClassDao {
                 rs.getString("majorCode")
         ),code);
     }
-    /**
-     * 列表查看
-     */
-    public List<Classes> getList() {
-        String sql="select * from class";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Classes(
-                rs.getString("className"),
-                rs.getString("classCode"),
-                rs.getString("majorCode")
-        ));
-    }
+
     /**
      * 多条件模糊查询
      * @param classes 学生实体
@@ -91,9 +81,9 @@ public class ClassDao {
      * @param pageSize  每页个数
      * @return result
      */
-    public Map<Object, Object> query(Classes classes, int pageIndex, int pageSize){
+    public Map<Object, Object> query(Classes classes, String majorName, String facultyName, int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select * from class where 1=1");
+        StringBuilder sql =new StringBuilder("select major.facultyCode,facultyName,class.majorCode,majorName,classCode,className from class,major,faculty where class.majorCode=major.majorCode and major.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
@@ -111,9 +101,19 @@ public class ClassDao {
 
         String majorCode= classes.getMajorCode();
         if(majorCode != null && !majorCode.trim().isEmpty()){
-            sql.append(" and majorCode like ?");
+            sql.append(" and class.majorCode like ?");
             params.add("%" +majorCode+ "%");
         }
+
+        if(majorName != null && !majorName.trim().isEmpty()){
+            sql.append(" and majorName like ?");
+            params.add("%" +majorName+ "%");
+        }
+        if(facultyName != null && !facultyName.trim().isEmpty()){
+            sql.append(" and facultyName like ?");
+            params.add("%" +facultyName+ "%");
+        }
+
         //统计个数
         String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
         int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
@@ -127,11 +127,7 @@ public class ClassDao {
         Map<Object, Object> response=new HashMap<>();
         response.put("total",count);
         response.put("pageIndex",pageIndex);
-        response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new Classes(
-                rs.getString("className"),
-                rs.getString("classCode"),
-                rs.getString("majorCode")
-        ),params.toArray()));
+        response.put("tableData",jdbcTemplate.queryForList(sql.toString(), params.toArray()));
 
         return response;
     }

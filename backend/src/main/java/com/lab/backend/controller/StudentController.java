@@ -1,8 +1,10 @@
 package com.lab.backend.controller;
 
 import com.lab.backend.domain.Student;
+import com.lab.backend.domain.Teacher;
 import com.lab.backend.service.StudentService;
 import com.lab.backend.utils.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
@@ -14,6 +16,7 @@ public class StudentController {
     @Resource
     private StudentService studentService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/insert")
     public Result<Student> insertController(@RequestBody Student student){
         int r=studentService.insert(student);
@@ -27,8 +30,9 @@ public class StudentController {
             return Result.error("1","当前记录已存在，插入失败！");
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
-    public Result<Student> deleteController(@RequestBody Student student){
+    public Result<Student> updateController(@RequestBody Student student){
         int r=studentService.update(student);
         if(r==0){
             return Result.success(student);
@@ -40,8 +44,11 @@ public class StudentController {
             return Result.error("1","当前记录不存在，无法更新！");
         }
     }
+
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
-    public Result<String> updateController(@RequestParam String studentID){
+    public Result<String> deleteController(@RequestParam String studentID){
         int r=studentService.delete(studentID);
         if(r==0){
             return Result.success(studentID);
@@ -50,18 +57,10 @@ public class StudentController {
             return Result.error("1","当前记录不存在，删除失败！");
         }
     }
-    @GetMapping("/list")
-    public Result<List<Student>> listController(){
-        List<Student> list =studentService.getList();
-        if(!list.isEmpty()){
-            return Result.success(list,"列表查看成功！");
-        }else{
-            return Result.error("1","当前列表为空！");
-        }
-    }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/query")
-    public Result<Map<Object, Object>> queryController(@RequestBody Student student,String className,@RequestParam int pageIndex,@RequestParam int pageSize){
-        Map<Object, Object> response =studentService.query(student,className,pageIndex,pageSize);
+    public Result<Map<Object, Object>> queryController(@RequestBody Student student,String className,String majorName,String facultyName,@RequestParam int pageIndex,@RequestParam int pageSize){
+        Map<Object, Object> response =studentService.query(student,className,majorName,facultyName,pageIndex,pageSize);
         if((int)response.get("total")!=0){
             return Result.success(response,"查询成功");
         }else{
@@ -69,4 +68,22 @@ public class StudentController {
         }
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/info")
+    public Result<List<Map<String, Object>>> infoController() {
+        List<Map<String, Object>> response = studentService.getInfo();
+        return Result.success(response, "查看成功！");
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/updateByStudent")
+    public Result<Student> updateByStudentController(@RequestBody Student student){
+        int r=studentService.updateByStudent(student);
+        if(r==0){
+            return Result.success(student);
+        }
+        else{
+            return Result.error("1","当前记录不存在，无法更新！");
+        }
+    }
 }

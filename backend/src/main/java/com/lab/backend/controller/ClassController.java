@@ -3,6 +3,8 @@ package com.lab.backend.controller;
 import com.lab.backend.domain.Classes;
 import com.lab.backend.service.ClassService;
 import com.lab.backend.utils.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
@@ -15,6 +17,7 @@ public class ClassController {
     @Resource
     private ClassService classService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/insert")
     public Result<Classes> insertController(@RequestBody Classes classes){
         int r=classService.insert(classes);
@@ -28,6 +31,7 @@ public class ClassController {
             return Result.error("1","当前记录已存在，插入失败！");
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public Result<Classes> deleteController(@RequestBody Classes classes){
         int r=classService.update(classes);
@@ -41,6 +45,7 @@ public class ClassController {
             return Result.error("1","当前记录不存在，无法更新！");
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
     public Result<String> updateController(@RequestParam String classCode){
         int r=classService.delete(classCode);
@@ -54,18 +59,10 @@ public class ClassController {
             return Result.error("1","当前记录不存在，删除失败！");
         }
     }
-    @GetMapping("/list")
-    public Result<List<Classes>> listController(){
-        List<Classes> list =classService.getList();
-        if(!list.isEmpty()){
-            return Result.success(list,"列表查看成功！");
-        }else{
-            return Result.error("1","当前列表为空！");
-        }
-    }
+
     @PostMapping("/query")
-    public Result<Map<Object, Object>> queryController(@RequestBody Classes classes, String majorName,@RequestParam int pageIndex, @RequestParam int pageSize){
-        Map<Object, Object> response =classService.query(classes,majorName,pageIndex,pageSize);
+    public Result<Map<Object, Object>> queryController(@RequestBody Classes classes, String majorName, String facultyName, @RequestParam int pageIndex, @RequestParam int pageSize){
+        Map<Object, Object> response =classService.query(classes,majorName,facultyName,pageIndex,pageSize);
         if((int)response.get("total")!=0){
             return Result.success(response,"查询成功");
         }else{

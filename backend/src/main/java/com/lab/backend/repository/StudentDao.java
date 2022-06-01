@@ -60,7 +60,7 @@ public class StudentDao {
         jdbcTemplate.update(sql,
                 student.getStudentName(),
                 student.getClassCode(),
-                student.getStudentID(),
+                student.getIdentifier(),
                 student.getDormitory(),
                 student.getAddress(),
                 student.getTeleno(),
@@ -93,44 +93,35 @@ public class StudentDao {
                 rs.getString("completedCredits")
         ),value);
     }
-
+    /**
+     * 学生更新可修改的个人信息
+     */
+    public void updateByStudent(Student student) {
+        String sql="UPDATE student SET " +
+                "studentName=?, " +
+                "identifier=?, " +
+                "dormitory=?, " +
+                "address=?," +
+                "teleno=?," +
+                "birthday=?," +
+                "sex=?" +
+                "WHERE studentId = ?";
+        jdbcTemplate.update(sql,
+                student.getStudentName(),
+                student.getStudentID(),
+                student.getDormitory(),
+                student.getAddress(),
+                student.getTeleno(),
+                student.getBirthday(),
+                student.getSex(),
+                student.getStudentID());
+    }
     /**
      * 按Code查询
      */
-    public List<Student> getByID(String ID) {
-        String sql="select * from student where studentID=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
-                rs.getString("studentName"),
-                rs.getString("studentID"),
-                rs.getString("classCode"),
-                rs.getString("identifier"),
-                rs.getString("dormitory"),
-                rs.getString("address"),
-                rs.getString("teleno"),
-                rs.getString("birthday"),
-                rs.getString("sex"),
-                rs.getString("grade"),
-                rs.getString("completedCredits")
-        ),ID);
-    }
-    /**
-     * 查询student列表
-     */
-    public List<Student> getList() {
-        String sql="select * from student";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
-                rs.getString("studentName"),
-                rs.getString("studentID"),
-                rs.getString("classCode"),
-                rs.getString("identifier"),
-                rs.getString("dormitory"),
-                rs.getString("address"),
-                rs.getString("teleno"),
-                rs.getString("birthday"),
-                rs.getString("sex"),
-                rs.getString("grade"),
-                rs.getString("completedCredits")
-        ));
+    public List<Map<String, Object>> getByID(String ID) {
+        String sql="select facultyName,faculty.facultyCode,majorName,major.majorCode,className,student.classCode,studentName,studentID,identifier,dormitory,address,teleno,birthday,sex,grade,completedCredits from student,class,major,faculty where student.classCode=class.classCode and class.majorCode=major.majorCode and major.facultyCode=faculty.facultyCode and studentID=?";
+        return jdbcTemplate.queryForList(sql,ID);
     }
 
     /**
@@ -140,9 +131,9 @@ public class StudentDao {
      * @param pageSize  每页个数
      * @return result
      */
-    public Map<Object, Object> query(Student student,int pageIndex,int pageSize){
+    public Map<Object, Object> query(Student student,String className,String majorName,String facultyName,int pageIndex,int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select * from student where 1=1");
+        StringBuilder sql =new StringBuilder("select faculty.facultyCode,facultyName,major.majorCode,\tmajorName,student.classCode,className,studentName,studentID,identifier,dormitory,address,teleno,birthday,sex,grade,completedCredits from student,class,major,faculty where 1=1 and student.classCode=class.classCode and class.majorCode=major.majorCode and major.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
@@ -159,7 +150,7 @@ public class StudentDao {
 
         String classCode= student.getClassCode();
         if(classCode != null && !classCode.trim().isEmpty()){
-            sql.append(" and classCode like ?");
+            sql.append(" and student.classCode like ?");
             params.add("%" +classCode+ "%");
         }
 
@@ -204,6 +195,19 @@ public class StudentDao {
             params.add("%" +completedCredits+ "%");
         }
 
+        if(className != null && !className.trim().isEmpty()){
+            sql.append(" and className like ?");
+            params.add("%" +className+ "%");
+        }
+        if(majorName != null && !majorName.trim().isEmpty()){
+            sql.append(" and majorName like ?");
+            params.add("%" +majorName+ "%");
+        }
+        if(facultyName != null && !facultyName.trim().isEmpty()){
+            sql.append(" and facultyName like ?");
+            params.add("%" +facultyName+ "%");
+        }
+
 
         //统计个数
         String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
@@ -218,19 +222,7 @@ public class StudentDao {
         Map<Object, Object> response=new HashMap<>();
         response.put("total",count);
         response.put("pageIndex",pageIndex);
-        response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new Student(
-                rs.getString("studentName"),
-                rs.getString("studentID"),
-                rs.getString("classCode"),
-                rs.getString("identifier"),
-                rs.getString("dormitory"),
-                rs.getString("address"),
-                rs.getString("teleno"),
-                rs.getString("birthday"),
-                rs.getString("sex"),
-                rs.getString("grade"),
-                rs.getString("completedCredits")
-        ),params.toArray()));
+        response.put("tableData",jdbcTemplate.queryForList(sql.toString(),params.toArray()));
 
         return response;
     }

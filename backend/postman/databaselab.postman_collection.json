@@ -1,21 +1,717 @@
 {
 	"info": {
-		"_postman_id": "f8fbd156-d179-4c16-b058-84d2455e5124",
+		"_postman_id": "21256e97-8b21-45ed-8ad9-e1e0982046a5",
 		"name": "databaselab",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20520231"
 	},
 	"item": [
 		{
-			"name": "faculty",
+			"name": "admin",
 			"item": [
 				{
-					"name": "insert",
+					"name": "faculty",
+					"item": [
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"facultyName\": \"信息科学与工程学院\",\r\n    \"facultyCode\": \"0001\",\r\n    \"facultyAddress\": \"湖南大学信科院\",\r\n    \"facultyTeleno\": \"8801002\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/faculty/insert",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"faculty",
+										"insert"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"facultyName\": \"信息科学与工程学院\",\r\n    \"facultyCode\": \"00011\",\r\n    \"facultyAddress\": \"湖南大学信科院\",\r\n    \"facultyTeleno\": \"8801002\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/faculty/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"faculty",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/faculty/delete?facultyCode=0001",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"faculty",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "facultyCode",
+											"value": "0001"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"facultyName\":\"1\",\r\n    \"facultyCode\": null,\r\n    \"facultyAddress\": null,\r\n    \"facultyTeleno\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/faculty/query?pageIndex=1&pageSize=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"faculty",
+										"query"
+									],
+									"query": [
+										{
+											"key": "pageIndex",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "major",
+					"item": [
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"majorName\": \"计算机科学与技术\",\r\n    \"majorCode\": \"080901\",\r\n    \"facultyCode\": \"0001\",\r\n    \"degreeLevel\": \"本科\",\r\n    \"graduationCredits\":\"61\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/major/insert?=",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"major",
+										"insert"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"majorName\": \"计算机科学与技术\",\r\n    \"majorCode\": \"080901\",\r\n    \"facultyCode\": \"00011\",\r\n    \"degreeLevel\": \"本科\",\r\n    \"graduationCredits\":\"71\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/major/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"major",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/major/delete?majorCode=080904",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"major",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "majorCode",
+											"value": "080904"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"majorName\": null,\r\n    \"majorCode\": \"\",\r\n    \"facultyCode\": null,\r\n    \"degreeLevel\": \"\",\r\n    \"graduationCredits\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/major/query?facultyName=信息科学与工程学院&pageIndex=1&pageSize=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"major",
+										"query"
+									],
+									"query": [
+										{
+											"key": "facultyName",
+											"value": "信息科学与工程学院"
+										},
+										{
+											"key": "pageIndex",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "class",
+					"item": [
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"className\": \"计科1902\",\r\n    \"classCode\": \"2019080402\",\r\n    \"majorCode\": \"080901\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/class/insert?=",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"class",
+										"insert"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzkwMjYsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTY1NDI2fQ.Hh1-cwsbMJoGbypZKpnjya6JXmwBQtusClNysa2lh3LsbDcJgrsbNIQDJKzB7lwIhd2nY6LVNLjkI5ie9WjkzQ",
+										"equals": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"className\": \"信1安1901\",\r\n    \"classCode\": \"2019080601\",\r\n    \"majorCode\": \"080904\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/class/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"class",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/class/delete?classCode=2019080601",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"class",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "classCode",
+											"value": "2019080601"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzE4MTAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTU4MjEwfQ.51U22H7szudVBr1G_BJxrKf9_c_MTK76Qs6bneu_6NfNG7yNw1bQI1LDmMVbXZG6VAzCWqbR4HDCm1AudUge8w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"className\": \"\",\r\n    \"classCode\": \"\",\r\n    \"majorCode\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/class/query?majorName=信息安全&facultyName=信息科学与工程学院&pageIndex=1&pageSize=30",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"class",
+										"query"
+									],
+									"query": [
+										{
+											"key": "majorName",
+											"value": "信息安全"
+										},
+										{
+											"key": "facultyName",
+											"value": "信息科学与工程学院"
+										},
+										{
+											"key": "pageIndex",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "30"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "student",
+					"item": [
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzkwMjYsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTY1NDI2fQ.Hh1-cwsbMJoGbypZKpnjya6JXmwBQtusClNysa2lh3LsbDcJgrsbNIQDJKzB7lwIhd2nY6LVNLjkI5ie9WjkzQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"studentName\": \"计科2班小王\",\r\n    \"studentID\": \"01\",\r\n    \"classCode\": \"2019080402\",\r\n    \"identifier\": \"33068120010103050690\",\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\": 23\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/student/insert",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"student",
+										"insert"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzkwMjYsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTY1NDI2fQ.Hh1-cwsbMJoGbypZKpnjya6JXmwBQtusClNysa2lh3LsbDcJgrsbNIQDJKzB7lwIhd2nY6LVNLjkI5ie9WjkzQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"studentName\": \"小王\",\r\n    \"studentID\": \"02\",\r\n    \"classCode\": \"2019080601\",\r\n    \"identifier\": \"33068120010103050690\",\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\": 23\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/student/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"student",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzkwMjYsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTY1NDI2fQ.Hh1-cwsbMJoGbypZKpnjya6JXmwBQtusClNysa2lh3LsbDcJgrsbNIQDJKzB7lwIhd2nY6LVNLjkI5ie9WjkzQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/student/delete?studentID=02",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"student",
+										"delete"
+									],
+									"query": [
+										{
+											"key": "studentID",
+											"value": "02"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "query",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxMyIsInN1YiI6ImFkbWluY3MiLCJpYXQiOjE2NTQwNzkwMjYsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjU0MTY1NDI2fQ.Hh1-cwsbMJoGbypZKpnjya6JXmwBQtusClNysa2lh3LsbDcJgrsbNIQDJKzB7lwIhd2nY6LVNLjkI5ie9WjkzQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"studentName\":  null,\r\n    \"studentID\": \"\",\r\n    \"classCode\": \"01\",\r\n    \"identifier\": null,\r\n    \"dormitory\": \"\",\r\n    \"address\": \"\",\r\n    \"teleno\": \"\",\r\n    \"birthday\": \"\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\":  null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/student/query?className=&majorName=&facultyName&pageIndex=1&pageSize=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"student",
+										"query"
+									],
+									"query": [
+										{
+											"key": "className",
+											"value": ""
+										},
+										{
+											"key": "majorName",
+											"value": ""
+										},
+										{
+											"key": "facultyName",
+											"value": null
+										},
+										{
+											"key": "pageIndex",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "teacher",
+			"item": []
+		},
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "getInfo",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNCIsInN1YiI6IjAxIiwiaWF0IjoxNjU0MDc4ODI5LCJpc3MiOiJzYW5zIiwiYXV0aG9yaXRpZXMiOiJbe1wiYXV0aG9yaXR5XCI6XCJST0xFX1NUVURFTlRcIn1dIiwiZXhwIjoxNjU0MTY1MjI5fQ.CTDVdjwgPMM49Yc-YOZfyCNmNajGxGWzzuK9Pk22uho5J6Ep8kT4ACAEQwzrzvSeGOoXs83Nvh95b1EDuwFaRA",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"facultyName\": \"信息科学与工程学院\",\r\n    \"facultyCode\": \"0001\",\r\n    \"facultyAddress\": \"湖南大学信科院\",\r\n    \"facultyTeleno\": \"8801002\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,15 +719,22 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/faculty/insert",
+							"raw": "http://localhost:8081/student/info",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"faculty",
-								"insert"
+								"student",
+								"info"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -41,10 +744,16 @@
 					"name": "update",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNCIsInN1YiI6IjAxIiwiaWF0IjoxNjU0MDc4ODI5LCJpc3MiOiJzYW5zIiwiYXV0aG9yaXRpZXMiOiJbe1wiYXV0aG9yaXR5XCI6XCJST0xFX1NUVURFTlRcIn1dIiwiZXhwIjoxNjU0MTY1MjI5fQ.CTDVdjwgPMM49Yc-YOZfyCNmNajGxGWzzuK9Pk22uho5J6Ep8kT4ACAEQwzrzvSeGOoXs83Nvh95b1EDuwFaRA",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"facultyName\": \"信息科学与工程学院\",\r\n    \"facultyCode\": \"00011\",\r\n    \"facultyAddress\": \"湖南大学信科院\",\r\n    \"facultyTeleno\": \"8801002\"\r\n}",
+							"raw": "{\r\n    \"studentName\": \"小王\",\r\n    \"studentID\": \"02\",\r\n    \"classCode\": \"2019080601\",\r\n    \"identifier\": \"33068120010103050690\",\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\": 23\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -52,95 +761,34 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/faculty/update",
+							"raw": "http://localhost:8081/student/updateByStudent",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"faculty",
-								"update"
+								"student",
+								"updateByStudent"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "delete",
+					"name": "facultyquery",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNCIsInN1YiI6IjAxIiwiaWF0IjoxNjU0MDc4ODI5LCJpc3MiOiJzYW5zIiwiYXV0aG9yaXRpZXMiOiJbe1wiYXV0aG9yaXR5XCI6XCJST0xFX1NUVURFTlRcIn1dIiwiZXhwIjoxNjU0MTY1MjI5fQ.CTDVdjwgPMM49Yc-YOZfyCNmNajGxGWzzuK9Pk22uho5J6Ep8kT4ACAEQwzrzvSeGOoXs83Nvh95b1EDuwFaRA",
+								"type": "text"
 							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/faculty/delete?facultyCode=0001",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"faculty",
-								"delete"
-							],
-							"query": [
-								{
-									"key": "facultyCode",
-									"value": "0001"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "list",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/faculty/list",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"faculty",
-								"list"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "query",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"facultyName\":\"1\",\r\n    \"facultyCode\": null,\r\n    \"facultyAddress\": null,\r\n    \"facultyTeleno\": null\r\n}",
+							"raw": "{\r\n    \"facultyName\":\"\",\r\n    \"facultyCode\": null,\r\n    \"facultyAddress\": null,\r\n    \"facultyTeleno\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,142 +819,18 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "major",
-			"item": [
-				{
-					"name": "insert",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"majorName\": \"计算机科学与技术\",\r\n    \"majorCode\": \"080901\",\r\n    \"facultyCode\": \"0001\",\r\n    \"degreeLevel\": \"本科\",\r\n    \"graduationCredits\":\"61\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/major/insert",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"major",
-								"insert"
-							]
-						}
-					},
-					"response": []
 				},
 				{
-					"name": "update",
+					"name": "majorquery",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"majorName\": \"计算机科学与技术\",\r\n    \"majorCode\": \"080901\",\r\n    \"facultyCode\": \"00011\",\r\n    \"degreeLevel\": \"本科\",\r\n    \"graduationCredits\":\"71\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNCIsInN1YiI6IjAxIiwiaWF0IjoxNjU0MDc4ODI5LCJpc3MiOiJzYW5zIiwiYXV0aG9yaXRpZXMiOiJbe1wiYXV0aG9yaXR5XCI6XCJST0xFX1NUVURFTlRcIn1dIiwiZXhwIjoxNjU0MTY1MjI5fQ.CTDVdjwgPMM49Yc-YOZfyCNmNajGxGWzzuK9Pk22uho5J6Ep8kT4ACAEQwzrzvSeGOoXs83Nvh95b1EDuwFaRA",
+								"type": "text"
 							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/major/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"major",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/major/delete?majorCode=080904",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"major",
-								"delete"
-							],
-							"query": [
-								{
-									"key": "majorCode",
-									"value": "080904"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "list",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/major/list",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"major",
-								"list"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "query",
-					"request": {
-						"method": "POST",
-						"header": [],
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"majorName\": null,\r\n    \"majorCode\": \"\",\r\n    \"facultyCode\": null,\r\n    \"degreeLevel\": \"\",\r\n    \"graduationCredits\":\"\"\r\n}",
@@ -344,142 +868,18 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "class",
-			"item": [
-				{
-					"name": "insert",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"className\": \"计科1902\",\r\n    \"classCode\": \"2019080402\",\r\n    \"majorCode\": \"080901\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/class/insert",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"class",
-								"insert"
-							]
-						}
-					},
-					"response": []
 				},
 				{
-					"name": "update",
+					"name": "classquery",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"className\": \"信1安1901\",\r\n    \"classCode\": \"2019080601\",\r\n    \"majorCode\": \"080904\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxNCIsInN1YiI6IjAxIiwiaWF0IjoxNjU0MDc4ODI5LCJpc3MiOiJzYW5zIiwiYXV0aG9yaXRpZXMiOiJbe1wiYXV0aG9yaXR5XCI6XCJST0xFX1NUVURFTlRcIn1dIiwiZXhwIjoxNjU0MTY1MjI5fQ.CTDVdjwgPMM49Yc-YOZfyCNmNajGxGWzzuK9Pk22uho5J6Ep8kT4ACAEQwzrzvSeGOoXs83Nvh95b1EDuwFaRA",
+								"type": "text"
 							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/class/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"class",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/class/delete?classCode=2019080601",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"class",
-								"delete"
-							],
-							"query": [
-								{
-									"key": "classCode",
-									"value": "2019080601"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "list",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/class/list",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"class",
-								"list"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "query",
-					"request": {
-						"method": "POST",
-						"header": [],
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"className\": \"\",\r\n    \"classCode\": \"\",\r\n    \"majorCode\": \"\"\r\n}",
@@ -521,16 +921,16 @@
 			]
 		},
 		{
-			"name": "student",
+			"name": "security",
 			"item": [
 				{
-					"name": "insert",
+					"name": "注册管理员",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"studentName\": \"计科2班小王\",\r\n    \"studentID\": \"01\",\r\n    \"classCode\": \"2019080402\",\r\n    \"identifier\": \"33068120010103050690\",\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\": 23\r\n}",
+							"raw": "{\r\n    \"teacherName\":\"李四\",\r\n    \"teacherID\":\"0001\",\r\n    \"facultyCode\":\"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -538,78 +938,125 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/student/insert",
+							"raw": "http://localhost:8081/user/adminRegister?username=admin&password=123456&code=hnu123456",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"student",
-								"insert"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"studentName\": \"小王\",\r\n    \"studentID\": \"02\",\r\n    \"classCode\": \"2019080601\",\r\n    \"identifier\": \"33068120010103050690\",\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\": 23\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/student/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"student",
-								"update"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/student/delete?studentID=02",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"student",
-								"delete"
+								"user",
+								"adminRegister"
 							],
 							"query": [
 								{
-									"key": "studentID",
+									"key": "username",
+									"value": "admin"
+								},
+								{
+									"key": "password",
+									"value": "123456"
+								},
+								{
+									"key": "code",
+									"value": "hnu123456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "登录",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE2NTM1NTAzMTYsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjUzNjM2NzE2fQ.YG0bRDRdMJ2yNFTill5zyiNQ5lDHQOsg38RBKn8zqpHrM0PpKf961zg5csd9CsqhFvro2jqSMHHraVKC5VHhMw",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/user/login?username=admincs&password=123456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"user",
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "admincs"
+								},
+								{
+									"key": "password",
+									"value": "123456"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "登出",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/user/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "注册普通用户",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE2NTM1NTU4ODUsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlJPTEVfQURNSU5cIn1dIiwiZXhwIjoxNjUzNjQyMjg1fQ.LQ0GZFrtWGsZkwwpIqL6pkpftjJ-ie4kglOu8NDnUbL8h9Alo1YvAMoYWMA2_wmK_yof9aAY4UN2EX1FSJu9Sg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/user/userRegister?username=02&password=123456&role=STUDENT",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"user",
+								"userRegister"
+							],
+							"query": [
+								{
+									"key": "username",
 									"value": "02"
+								},
+								{
+									"key": "password",
+									"value": "123456"
+								},
+								{
+									"key": "role",
+									"value": "STUDENT"
 								}
 							]
 						}
@@ -617,74 +1064,35 @@
 					"response": []
 				},
 				{
-					"name": "list",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8081/student/list",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8081",
-							"path": [
-								"student",
-								"list"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "query",
+					"name": "当前用户修改密码",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"studentName\":  null,\r\n    \"studentID\": \"01\",\r\n    \"classCode\": null,\r\n    \"identifier\": null,\r\n    \"dormitory\": \"天马学生公寓\",\r\n    \"address\": \"湖南大写天马学生公寓三区506\",\r\n    \"teleno\": \"13534348989\",\r\n    \"birthday\": \"2001-01-03\",\r\n    \"sex\": \"男\",\r\n    \"grade\": \"19\",\r\n    \"completedCredits\":  null\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE2NTM1NjA2NDAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsImV4cCI6MTY1MzY0NzA0MH0.rD8k-WLdr1NEXqlgALoKfhzFtufNhv7XxP-D7oUR1VhmRX9l5N9Yg1aLv5Mcrey5__JpYVr_nXpHQ4TFpl2AeQ",
+								"type": "default"
 							}
-						},
+						],
 						"url": {
-							"raw": "http://localhost:8081/student/query?className=&pageIndex=1&pageSize=2",
+							"raw": "http://localhost:8081/user/changePassword?oldPassword=123456&newPassword=1234567",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"student",
-								"query"
+								"user",
+								"changePassword"
 							],
 							"query": [
 								{
-									"key": "className",
-									"value": ""
+									"key": "oldPassword",
+									"value": "123456"
 								},
 								{
-									"key": "pageIndex",
-									"value": "1"
-								},
-								{
-									"key": "pageSize",
-									"value": "2"
+									"key": "newPassword",
+									"value": "1234567"
 								}
 							]
 						}

@@ -79,18 +79,6 @@ public class FacultyDao {
                 rs.getString("facultyTeleno")
         ),name);
     }
-    /**
-     * 列表查看
-     */
-    public List<Faculty> getList() {
-        String sql="select * from faculty";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Faculty(
-                rs.getString("facultyName"),
-                rs.getString("facultyCode"),
-                rs.getString("facultyAddress"),
-                rs.getString("facultyTeleno")
-        ));
-    }
 
     /**
      * 多条件模糊查询

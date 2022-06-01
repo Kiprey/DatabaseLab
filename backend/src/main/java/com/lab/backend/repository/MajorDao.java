@@ -87,19 +87,7 @@ public class MajorDao {
                 rs.getString("graduationCredits")
         ),code);
     }
-    /**
-     * 列表查看
-     */
-    public List<Major> getList() {
-        String sql="select * from major";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new Major(
-                rs.getString("majorName"),
-                rs.getString("majorCode"),
-                rs.getString("facultyCode"),
-                rs.getString("degreeLevel"),
-                rs.getString("graduationCredits")
-        ));
-    }
+
 
     /**
      * 多条件模糊查询
@@ -108,9 +96,9 @@ public class MajorDao {
      * @param pageSize  每页个数
      * @return result
      */
-    public Map<Object, Object> query(Major major,int pageIndex, int pageSize){
+    public Map<Object, Object> query(Major major,String facultyName,int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select * from major where 1=1");
+        StringBuilder sql =new StringBuilder("select faculty.facultyCode,facultyName,major.majorCode,majorName,degreeLevel,graduationCredits from major,faculty where major.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
@@ -129,7 +117,7 @@ public class MajorDao {
 
         String facultyCode= major.getFacultyCode();
         if(facultyCode != null && !facultyCode.trim().isEmpty()){
-            sql.append(" and facultyCode like ?");
+            sql.append(" and major.facultyCode like ?");
             params.add("%" +facultyCode+ "%");
         }
 
@@ -143,6 +131,12 @@ public class MajorDao {
             sql.append(" and graduationCredits like ?");
             params.add("%" +graduationCredits+ "%");
         }
+
+        if(facultyName != null && !facultyName.trim().isEmpty()){
+            sql.append(" and facultyName like ?");
+            params.add("%" +facultyName+ "%");
+        }
+
         //统计个数
         String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
         int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
@@ -156,13 +150,7 @@ public class MajorDao {
         Map<Object, Object> response=new HashMap<>();
         response.put("total",count);
         response.put("pageIndex",pageIndex);
-        response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new Major(
-                rs.getString("majorName"),
-                rs.getString("majorCode"),
-                rs.getString("facultyCode"),
-                rs.getString("degreeLevel"),
-                rs.getString("graduationCredits")
-        ),params.toArray()));
+        response.put("tableData",jdbcTemplate.queryForList(sql.toString(), params.toArray()));
 
         return response;
     }

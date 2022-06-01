@@ -3,6 +3,7 @@ package com.lab.backend.controller;
 import com.lab.backend.domain.Faculty;
 import com.lab.backend.service.FacultyService;
 import com.lab.backend.utils.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class FacultyController {
     @Resource
     private FacultyService facultyService;
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/insert")
     public Result<Faculty> insertController(@RequestBody Faculty faculty){
         if(facultyService.insert(faculty)){
@@ -24,6 +25,7 @@ public class FacultyController {
             return Result.error("1","当前记录已存在，插入失败！");
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public Result<Faculty> deleteController(@RequestBody Faculty faculty){
         if(facultyService.update(faculty)){
@@ -33,6 +35,7 @@ public class FacultyController {
             return Result.error("1","当前记录不存在，无法更新！");
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
     public Result<String> updateController(@RequestParam String facultyCode){
         int r=facultyService.delete(facultyCode);
@@ -57,14 +60,6 @@ public class FacultyController {
         }
     }
 
-    @GetMapping("/list")
-    public Result<List<Faculty>> listController(){
-        List<Faculty> list =facultyService.getList();
-        if(!list.isEmpty()){
-            return Result.success(list,"列表查看成功！");
-        }else{
-            return Result.error("1","当前列表为空！");
-        }
-    }
+
 
 }
