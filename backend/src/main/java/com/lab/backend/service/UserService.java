@@ -1,6 +1,9 @@
 package com.lab.backend.service;
 
+import java.util.Map;
+
 public interface UserService {
 
-    int changePassword(String oldPassword, String newPassword);
+
+    int changePassword(Map<String, String> map);
 }

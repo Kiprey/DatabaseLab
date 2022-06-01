@@ -1,10 +1,6 @@
 package com.lab.backend.service.impl;
 
-import com.lab.backend.repository.StudentDao;
-import com.lab.backend.repository.TeacherDao;
 import com.lab.backend.security.core.dao.SysUserDao;
-import com.lab.backend.security.core.service.SysUserRoleService;
-import com.lab.backend.security.core.service.SysUserService;
 import com.lab.backend.security.entity.SelfUserEntity;
 import com.lab.backend.security.service.SelfUserDetailsService;
 import com.lab.backend.service.UserService;
@@ -31,8 +27,10 @@ public class UserServiceImpl implements UserService {
      * @return 0:成功, 1:失败，原密码错误
      */
     @Override
-    public int changePassword(String oldPassword, String newPassword)
+    public int changePassword(Map<String, String> map)
     {
+        String oldPassword=map.get("oldPassword");
+        String newPassword=map.get("newPassword");
         String userName=getUserName();
         SelfUserEntity userInfo = selfUserDetailsService.loadUserByUsername(userName);
         if (!bCryptPasswordEncoder.matches(oldPassword, userInfo.getPassword())) {
@@ -40,10 +38,10 @@ public class UserServiceImpl implements UserService {
         }
         else
         {
-            Map<String, Object> map = new HashMap<>();
-            map.put("username",userName);
-            map.put("password",bCryptPasswordEncoder.encode(newPassword));
-            sysUserDao.updatePasswordByUsername(map);
+            Map<String, Object> map2 = new HashMap<>();
+            map2.put("username",userName);
+            map2.put("password",bCryptPasswordEncoder.encode(newPassword));
+            sysUserDao.updatePasswordByUsername(map2);
             return 0;
         }
     }
