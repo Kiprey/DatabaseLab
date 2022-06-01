@@ -59,12 +59,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 注册普通用户
+     * 注册学生用户
      *
-     * @return 0:成功, 1:失败，该学生不存在, 2:失败，该教师不存在，3:失败，该用户名已存在, 4:失败，没有该角色
+     * @return 0:成功, 1:失败，该用户名已存在
      */
     @Override
-    public int userRegister(String username, String password, String role) {
+    public int studentRegister(String username,String password)
+    {
         // 注册用户
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setUsername(username);
@@ -73,27 +74,60 @@ public class AdminServiceImpl implements AdminService {
         sysUserEntity.setStatus("NORMAL");
         int num = sysUserDao.selectSysUserByUsername(username).size();
         if (num > 0)
+            return 1;
+        sysUserService.save(sysUserEntity);
+        SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
+        sysUserRoleEntity.setRoleId(2L);
+        sysUserRoleEntity.setUserId(sysUserEntity.getUserId());
+        sysUserRoleService.save(sysUserRoleEntity);
+        return 0;
+    }
+    /**
+     * 注册教师用户
+     *
+     * @return 0:成功, 1:失败，该用户名已存在
+     */
+    @Override
+    public int teacherRegister(String username, String password)
+    {
+        // 注册用户
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setUsername(username);
+        sysUserEntity.setPassword(bCryptPasswordEncoder.encode(password));
+        // 设置用户状态
+        sysUserEntity.setStatus("NORMAL");
+        int num = sysUserDao.selectSysUserByUsername(username).size();
+        if (num > 0)
+            return 1;
+        sysUserService.save(sysUserEntity);
+        SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
+        sysUserRoleEntity.setRoleId(3L);
+        sysUserRoleEntity.setUserId(sysUserEntity.getUserId());
+        sysUserRoleService.save(sysUserRoleEntity);
+        return 0;
+    }
+    /**
+     * 注册普通用户
+     *
+     * @return 0:成功, 1:失败，该学生不存在, 2:失败，该教师不存在，3:失败，该用户名已存在, 4:失败，没有该角色
+     */
+    @Override
+    public int userRegister(String username, String password, String role) {
+        int num = sysUserDao.selectSysUserByUsername(username).size();
+        if (num > 0)
             return 3;
         //查看角色
         if (Objects.equals(role, "STUDENT")) {
             int num2 = studentDao.getByID(username).size();
             if (num2 == 0)
                 return 1;
-            sysUserService.save(sysUserEntity);
-            SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
-            sysUserRoleEntity.setRoleId(2L);
-            sysUserRoleEntity.setUserId(sysUserEntity.getUserId());
-            sysUserRoleService.save(sysUserRoleEntity);
+            studentRegister(username,password);
             return 0;
         } else if (Objects.equals(role, "TEACHER")) {
             int num3 = teacherDao.getByID(username).size();
             if (num3 == 0)
                 return 2;
-            sysUserService.save(sysUserEntity);
-            SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
-            sysUserRoleEntity.setRoleId(3L);
-            sysUserRoleEntity.setUserId(sysUserEntity.getUserId());
-            sysUserRoleService.save(sysUserRoleEntity);
+            teacherRegister(username,password);
             return 0;
         }
         return 4;

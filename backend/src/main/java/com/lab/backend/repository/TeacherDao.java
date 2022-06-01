@@ -59,31 +59,49 @@ public class TeacherDao {
     /**
      * 多条件模糊查询
      *
-     * @param teacher   教师实体
+     * @param map 查询条件
      * @param pageIndex 起始页
      * @param pageSize  每页个数
      * @return result
      */
-    public Map<Object, Object> query(Teacher teacher, int pageIndex, int pageSize) {
+    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize) {
         //给出sql模板,为了便于后面添加sql语句
         StringBuilder sql = new StringBuilder("select teacherID,teacherName,teacher.facultyCode,facultyName from teacher,faculty where 1=1 and teacher.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
-        String teacherName = teacher.getTeacherName();
-        if (teacherName != null && !teacherName.trim().isEmpty()) {
-            sql.append(" and teacherName like ?");
-            params.add("%" + teacherName + "%");
+        if (map.get("teacherName")!=null)
+        {
+            String s = map.get("teacherName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and teacherName like ?");
+                params.add("%" + s + "%");
+            }
         }
-        String teacherID = teacher.getTeacherID();
-        if (teacherID != null && !teacherID.trim().isEmpty()) {
-            sql.append(" and teacherID like ?");
-            params.add("%" + teacherID + "%");
+        if (map.get("teacherID")!=null)
+        {
+            String s = map.get("teacherID").toString();
+            if (s != null && !s.trim().isEmpty()) {
+                sql.append(" and teacherID like ?");
+                params.add("%" + s + "%");
+            }
         }
-        String facultyCode = teacher.getFacultyCode();
-        if (facultyCode != null && !facultyCode.trim().isEmpty()) {
-            sql.append(" and facultyCode like ?");
-            params.add("%" + facultyCode + "%");
+        if (map.get("facultyCode")!=null)
+        {
+            String s = map.get("facultyCode").toString();
+            if (s != null && !s.trim().isEmpty()) {
+                sql.append(" and teacher.facultyCode like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("facultyName")!=null)
+        {
+            String s = map.get("facultyName").toString();
+            if (s != null && !s.trim().isEmpty()) {
+                sql.append(" and facultyName like ?");
+                params.add("%" + s + "%");
+            }
         }
         //统计个数
         String sql2 = "SELECT count(*) as sum from (" + sql + ") as a;";
@@ -93,12 +111,10 @@ public class TeacherDao {
         params.add((pageIndex - 1) * pageSize);
         params.add(pageSize);
 
-
         Map<Object, Object> response = new HashMap<>();
         response.put("total", count);
         response.put("pageIndex", pageIndex);
         response.put("tableData", jdbcTemplate.queryForList(sql.toString(), params.toArray()));
-
         return response;
     }
 

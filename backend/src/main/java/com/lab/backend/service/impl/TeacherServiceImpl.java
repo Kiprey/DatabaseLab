@@ -10,6 +10,7 @@ import com.lab.backend.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -82,12 +83,12 @@ public class TeacherServiceImpl implements TeacherService {
     /**
      * 多条件查询
      *
-     * @param teacher：查询条件
+     * @param map：查询条件
      * @return result list
      */
     @Override
-    public Map<Object, Object> query(Teacher teacher, int pageIndex, int pageSize) {
-            return teacherDao.query(teacher,pageIndex,pageSize);
+    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize) {
+            return teacherDao.query(map,pageIndex,pageSize);
     }
 
     /**
@@ -107,6 +108,11 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public List<Teacher> info() {
-        return teacherDao.getByAttribute("teacherID", SecurityUtil.getUserName());
+        Map<String,Object> map = new HashMap<>();
+        map.put("teacherName",null);
+        map.put("teacherID",SecurityUtil.getUserName());
+        map.put("facultyCode",null);
+        map.put("facultyName",null);
+        return (List<Teacher>) teacherDao.query(map, 1,1).get("tableData");
     }
 }
