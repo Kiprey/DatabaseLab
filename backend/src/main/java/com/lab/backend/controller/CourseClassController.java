@@ -4,6 +4,7 @@ import com.lab.backend.domain.CourseClass;
 import com.lab.backend.domain.Teacher;
 import com.lab.backend.service.CourseClassService;
 import com.lab.backend.utils.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,6 +17,7 @@ public class CourseClassController {
     @Resource
     private CourseClassService courseClassService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/insert")
     public Result<CourseClass> insertController(@RequestBody CourseClass courseClass) {
         int result = courseClassService.insert(courseClass);
@@ -30,6 +32,7 @@ public class CourseClassController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public Result<CourseClass> updateController(@RequestBody CourseClass courseClass) {
         int result = courseClassService.update(courseClass);
@@ -44,6 +47,7 @@ public class CourseClassController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
     public Result<String> deleteController(@RequestParam String courseClassID) {
         int result = courseClassService.delete(courseClassID);
@@ -56,6 +60,7 @@ public class CourseClassController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     public Result<List<CourseClass>> listController() {
         List<CourseClass> list = courseClassService.getList();
@@ -67,6 +72,7 @@ public class CourseClassController {
     }
 
 
+
     @PostMapping("/query")
     public Result<Map<Object, Object>> queryController(@RequestBody CourseClass courseClass, @RequestParam int pageIndex, @RequestParam int pageSize) {
         Map<Object, Object> response = courseClassService.query(courseClass, pageIndex, pageSize);
@@ -74,6 +80,48 @@ public class CourseClassController {
             return Result.success(response, "查询成功");
         } else {
             return Result.error("1", "查询结果为空");
+        }
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/insertByTeacher")
+    public Result<CourseClass> insertByTeacherController(@RequestBody CourseClass courseClass) {
+        int result = courseClassService.insertByTeacher(courseClass);
+        if (result == 0) {
+            return Result.success(courseClass);
+        } else if (result == 1) {
+            return Result.error("1", "对应课程不存在，插入失败！");
+        } else  {
+            return Result.error("2", "当前记录已存在，插入失败！");
+        }
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/updateByTeacher")
+    public Result<CourseClass> updateByTeacherController(@RequestBody CourseClass courseClass) {
+        int result = courseClassService.updateByTeacher(courseClass);
+        if (result == 0) {
+            return Result.success(courseClass);
+        } else if (result == 1) {
+            return Result.error("1", "对应课程不存在，更新失败！");
+        } else  {
+            return Result.error("2", "当前记录不存在，更新失败！");
+        }
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/deleteByTeacher")
+    public Result<String> deleteByTeacherController(@RequestParam String courseClassID) {
+        int result = courseClassService.deleteByTeacher(courseClassID);
+        if (result == 0) {
+            return Result.success(courseClassID);
+        } else if (result == 1) {
+            return Result.error("1", "对应学生选课非空，删除失败！");
+        } else if (result == 2){
+            return Result.error("2", "该课程班级不存在，删除失败！");
+        }else
+        {
+            return Result.error("3","该课程不是你开的！");
         }
     }
 }

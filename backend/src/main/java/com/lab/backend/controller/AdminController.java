@@ -1,5 +1,6 @@
 package com.lab.backend.controller;
 
+import com.lab.backend.security.core.dao.SysUserDao;
 import com.lab.backend.service.AdminService;
 import com.lab.backend.utils.Result;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +23,11 @@ public class AdminController {
      */
     @PostMapping("/adminRegister")
     public Map<String, Object> adminRegister(@RequestParam String username, @RequestParam String password, @RequestParam String code) {
-        if (adminService.adminRegister(username, password, code) == 1) {
+        if(adminService.adminRegister(username, password, code) == 2)
+        {
+            return Result.resultCode("500","该用户名已存在");
+        }
+        else if (adminService.adminRegister(username, password, code) == 1) {
             return Result.resultCode("500", "邀请码不正确");
         } else {
             return Result.resultCode("200", "注册成功");

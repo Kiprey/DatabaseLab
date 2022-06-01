@@ -36,6 +36,10 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public int adminRegister(String username, String password, String code) {
+        if(sysUserDao.selectSysUserByUsername(username).size()>0)
+        {
+            return 2;
+        }
         //验证邀请码
         if (!Objects.equals(code, "hnu123456"))
             return 1;

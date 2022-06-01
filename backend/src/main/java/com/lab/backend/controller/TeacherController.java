@@ -3,6 +3,7 @@ package com.lab.backend.controller;
 import com.lab.backend.domain.Teacher;
 import com.lab.backend.service.TeacherService;
 import com.lab.backend.utils.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,6 +16,7 @@ public class TeacherController {
     @Resource
     private TeacherService teacherService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/insert")
     public Result<Teacher> insertController(@RequestBody Teacher teacher) {
         int result = teacherService.insert(teacher);
@@ -27,6 +29,7 @@ public class TeacherController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public Result<Teacher> updateController(@RequestBody Teacher teacher) {
         int result = teacherService.update(teacher);
@@ -39,6 +42,7 @@ public class TeacherController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
     public Result<String> deleteController(@RequestParam String teacherID) {
         int result = teacherService.delete(teacherID);
@@ -51,6 +55,7 @@ public class TeacherController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
     public Result<List<Teacher>> listController() {
         List<Teacher> list = teacherService.getList();
@@ -70,4 +75,13 @@ public class TeacherController {
             return Result.error("1", "查询结果为空");
         }
     }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/info")
+    public Result<List<Teacher>> infoController() {
+        List<Teacher> list = teacherService.info();
+        return Result.success(list, "查看成功！");
+    }
+
+
 }

@@ -176,7 +176,7 @@ public class CourseDao {
         int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
         //添加页数条目限制
         sql.append(" limit ?,?");
-        params.add((pageIndex-1)*30);
+        params.add((pageIndex-1)*pageSize);
         params.add(pageSize);
 
 

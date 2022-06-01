@@ -149,7 +149,13 @@
 			"name": "当前用户修改密码",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE2NTM1NjA2NDAsImlzcyI6InNhbnMiLCJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsImV4cCI6MTY1MzY0NzA0MH0.rD8k-WLdr1NEXqlgALoKfhzFtufNhv7XxP-D7oUR1VhmRX9l5N9Yg1aLv5Mcrey5__JpYVr_nXpHQ4TFpl2AeQ",
+						"type": "default"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:8081/user/changePassword?oldPassword=123456&newPassword=1234567",
 					"protocol": "http",

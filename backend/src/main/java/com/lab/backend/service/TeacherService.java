@@ -1,6 +1,7 @@
 package com.lab.backend.service;
 
 import com.lab.backend.domain.Teacher;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,9 @@ public interface TeacherService {
 
     Map<Object, Object> query(Teacher teacher, int pageIndex, int pageSize);
 
+
     List<Teacher> getList();
 
 
+    List<Teacher> info();
 }

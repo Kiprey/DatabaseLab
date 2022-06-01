@@ -66,7 +66,7 @@ public class TeacherDao {
      */
     public Map<Object, Object> query(Teacher teacher, int pageIndex, int pageSize) {
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql = new StringBuilder("select * from teacher where 1=1");
+        StringBuilder sql = new StringBuilder("select teacherID,teacherName,teacher.facultyCode,facultyName from teacher,faculty where 1=1 and teacher.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
@@ -97,11 +97,7 @@ public class TeacherDao {
         Map<Object, Object> response = new HashMap<>();
         response.put("total", count);
         response.put("pageIndex", pageIndex);
-        response.put("tableData", jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new Teacher(
-                rs.getString("teacherName"),
-                rs.getString("teacherID"),
-                rs.getString("facultyCode")
-        ), params.toArray()));
+        response.put("tableData", jdbcTemplate.queryForList(sql.toString(), params.toArray()));
 
         return response;
     }

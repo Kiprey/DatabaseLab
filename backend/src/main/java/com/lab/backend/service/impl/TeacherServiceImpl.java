@@ -1,12 +1,12 @@
 package com.lab.backend.service.impl;
 
 
-import com.lab.backend.domain.CourseClass;
 import com.lab.backend.domain.Teacher;
 import com.lab.backend.repository.CourseClassDao;
 import com.lab.backend.repository.FacultyDao;
 import com.lab.backend.repository.TeacherDao;
 import com.lab.backend.service.TeacherService;
+import com.lab.backend.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -82,12 +82,12 @@ public class TeacherServiceImpl implements TeacherService {
     /**
      * 多条件查询
      *
-     * @param teacher 教师实体：查询条件
+     * @param teacher：查询条件
      * @return result list
      */
     @Override
     public Map<Object, Object> query(Teacher teacher, int pageIndex, int pageSize) {
-        return teacherDao.query(teacher,pageIndex,pageSize);
+            return teacherDao.query(teacher,pageIndex,pageSize);
     }
 
     /**
@@ -98,5 +98,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> getList() {
         return teacherDao.getList();
+    }
+
+    /**
+     * 得到自己的信息
+     *
+     * @return result list
+     */
+    @Override
+    public List<Teacher> info() {
+        return teacherDao.getByAttribute("teacherID", SecurityUtil.getUserName());
     }
 }
