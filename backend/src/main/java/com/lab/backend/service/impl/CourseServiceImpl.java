@@ -99,13 +99,13 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 模糊查询course表
-     * @param course 课程实体
+     * @param map 查询条件
      * @param pageIndex 起始页
      * @param pageSize 大小
      * @return 查询结果
      */
     @Override
-    public Map<Object, Object> query(Course course, int pageIndex, int pageSize) {
-        return courseDao.query(course, pageIndex, pageSize);
+    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize) {
+        return courseDao.query(map, pageIndex, pageSize);
     }
 }

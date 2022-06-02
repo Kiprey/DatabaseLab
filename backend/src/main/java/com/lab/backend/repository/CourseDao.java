@@ -120,56 +120,88 @@ public class CourseDao {
 
     /**
      * 多条件模糊查询
-     * @param course 课程实体
+     * @param map 查询条件
      * @param pageIndex 起始页
      * @param pageSize 大小
      * @return 查询结果
      */
-    public Map<Object, Object> query(Course course, int pageIndex, int pageSize){
+    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select * from course where 1=1");
+        StringBuilder sql =new StringBuilder("select facultyName,courseID,courseName,courseNature,courseCategory,courseHours,credit from course,faculty where 1=1 and course.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
-        String courseName = course.getCourseName();
-        if(courseName != null && !courseName.trim().isEmpty()){
-            sql.append(" and courseName like ?");
-            params.add("%" +courseName+ "%");
+        if (map.get("courseName")!=null)
+        {
+            String s = map.get("courseName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and courseName like ?");
+                params.add("%" + s + "%");
+            }
         }
-        String courseNature= course.getCourseNature();
-        if(courseNature != null && !courseNature.trim().isEmpty()){
-            sql.append(" and courseNature like ?");
-            params.add("%" +courseNature+ "%");
+        if (map.get("courseNature")!=null)
+        {
+            String s = map.get("courseNature").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and courseNature like ?");
+                params.add("%" + s + "%");
+            }
         }
-
-        String courseCategory= course.getCourseCategory();
-        if(courseCategory != null && !courseCategory.trim().isEmpty()){
-            sql.append(" and courseCategory like ?");
-            params.add("%" +courseCategory+ "%");
+        if (map.get("courseCategory")!=null)
+        {
+            String s = map.get("courseCategory").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and courseCategory like ?");
+                params.add("%" + s + "%");
+            }
         }
-
-        String courseID= course.getCourseID();
-        if(courseID != null && !courseID.trim().isEmpty()){
-            sql.append(" and courseID like ?");
-            params.add("%" +courseID+ "%");
+        if (map.get("courseID")!=null)
+        {
+            String s = map.get("courseID").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and courseID like ?");
+                params.add("%" + s + "%");
+            }
         }
-
-        String facultyCode= course.getFacultyCode();
-        if(facultyCode != null && !facultyCode.trim().isEmpty()){
-            sql.append(" and facultyCode like ?");
-            params.add("%" +facultyCode+ "%");
+        if (map.get("facultyCode")!=null)
+        {
+            String s = map.get("facultyCode").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and course.facultyCode like ?");
+                params.add("%" + s + "%");
+            }
         }
-
-        Integer courseHours= course.getCourseHours();
-        if(courseHours != null){
-            sql.append(" and courseHours like ?");
-            params.add("%" +courseHours+ "%");
+        if (map.get("courseHours")!=null)
+        {
+            String s = map.get("courseHours").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and course.courseHours like ?");
+                params.add("%" + s + "%");
+            }
         }
-
-        Integer credit= course.getCredit();
-        if(credit != null){
-            sql.append(" and credit like ?");
-            params.add("%" +credit+ "%");
+        if (map.get("credit")!=null)
+        {
+            String s = map.get("credit").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and course.credit like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("facultyName")!=null)
+        {
+            String s = map.get("facultyName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and facultyName like ?");
+                params.add("%" + s + "%");
+            }
         }
         //统计个数
         String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
@@ -180,18 +212,10 @@ public class CourseDao {
         params.add(pageSize);
 
 
-        Map<Object, Object> response=new HashMap<>();
-        response.put("total",count);
-        response.put("pageIndex",pageIndex);
-        response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new Course(
-                rs.getString("coursename"),
-                rs.getString("courseNature"),
-                rs.getString("courseCategory"),
-                rs.getString("courseID"),
-                rs.getString("facultyCode"),
-                rs.getInt("courseHours"),
-                rs.getInt("credit")
-        ),params.toArray()));
+        Map<Object, Object> response = new HashMap<>();
+        response.put("total", count);
+        response.put("pageIndex", pageIndex);
+        response.put("tableData", jdbcTemplate.queryForList(sql.toString(),params.toArray()));
 
         return response;
     }

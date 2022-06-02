@@ -1,9 +1,9 @@
 package com.lab.backend.controller;
 
 import com.lab.backend.domain.Course;
-import com.lab.backend.domain.Faculty;
 import com.lab.backend.service.CourseService;
 import com.lab.backend.utils.Result;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,6 +15,7 @@ import java.util.Map;
 public class CourseController {
     @Resource
     private CourseService courseService;
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/insert")
     public Result<Course> insertController(@RequestBody Course course){
         int res_code = courseService.insert(course);
@@ -26,6 +27,7 @@ public class CourseController {
             return Result.error("2","该课程已存在，插入失败！");
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public Result<Course> deleteController(@RequestBody Course course){
         int res_code = courseService.update(course);
@@ -37,6 +39,7 @@ public class CourseController {
             return Result.error("2","该课程不存在，更新失败！");
         }
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
     public Result<String> updateController(@RequestParam String courseID){
         int res_code =courseService.delete(courseID);
@@ -56,8 +59,8 @@ public class CourseController {
         }
     }
     @PostMapping("/query")
-    public Result<Map<Object, Object>> queryController(@RequestBody Course course, @RequestParam int pageIndex, @RequestParam int pageSize){
-        Map<Object, Object> response = courseService.query(course,pageIndex,pageSize);
+    public Result<Map<Object, Object>> queryController(@RequestBody Map<String,Object> map, @RequestParam int pageIndex, @RequestParam int pageSize){
+        Map<Object, Object> response = courseService.query(map,pageIndex,pageSize);
         if((int)response.get("total")!=0){
             return Result.success(response,"查询成功");
         }else{
