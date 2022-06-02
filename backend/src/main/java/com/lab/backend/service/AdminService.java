@@ -13,5 +13,9 @@ public interface AdminService {
     int userRegister(String username, String password, String role);
 
 
-    Map<Object, Object> selectSysUserRoleByUsername(Map<String, Object> map, int pageIndex, int pageSize);
+    Map<Object, Object> selectSysUserRoleByUsername(Map<Object, Object> map, int pageIndex, int pageSize);
+
+    int deleteRoleByUsername(Map<Object, Object> map);
+
+    int insertRoleByUsername(Map<Object, Object> map);
 }

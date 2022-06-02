@@ -20,11 +20,9 @@ public class AdminController {
      */
     @PostMapping("/adminRegister")
     public Map<String, Object> adminRegister(@RequestParam String username, @RequestParam String password, @RequestParam String code) {
-        if(adminService.adminRegister(username, password, code) == 2)
-        {
-            return Result.resultCode("500","该用户名已存在");
-        }
-        else if (adminService.adminRegister(username, password, code) == 1) {
+        if (adminService.adminRegister(username, password, code) == 2) {
+            return Result.resultCode("500", "该用户名已存在");
+        } else if (adminService.adminRegister(username, password, code) == 1) {
             return Result.resultCode("500", "邀请码不正确");
         } else {
             return Result.resultCode("200", "注册成功");
@@ -41,27 +39,20 @@ public class AdminController {
         int res = adminService.userRegister(username, password, role);
         if (res == 0) {
             return Result.resultCode("200", "注册成功");
-        } else if (res == 1)
-        {
+        } else if (res == 1) {
             return Result.resultCode("1", "该学生不存在");
-        }
-        else if(res==2)
-        {
-            return Result.resultCode("2","该教师不存在");
-        }
-        else if(res==3)
-        {
-            return Result.resultCode("3","该用户名已存在");
-        }
-        else
-        {
-            return Result.resultCode("4","不存在该角色");
+        } else if (res == 2) {
+            return Result.resultCode("2", "该教师不存在");
+        } else if (res == 3) {
+            return Result.resultCode("3", "该用户名已存在");
+        } else {
+            return Result.resultCode("4", "不存在该角色");
         }
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/selectUserRole")
-    public Result<Map<Object, Object>> selectUserRole(@RequestBody Map<String,Object> map,@RequestParam int pageIndex, @RequestParam int pageSize)
-    {
+    public Result<Map<Object, Object>> selectUserRole(@RequestBody Map<Object, Object> map, @RequestParam int pageIndex, @RequestParam int pageSize) {
         Map<Object, Object> response = adminService.selectSysUserRoleByUsername(map, pageIndex, pageSize);
         if ((int) response.get("total") != 0) {
             return Result.success(response, "查询成功");
@@ -69,4 +60,33 @@ public class AdminController {
             return Result.error("1", "查询结果为空");
         }
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/insertRole")
+    public Result<Map<Object, Object>> insertRole(@RequestBody Map<Object, Object> map) {
+        int response = adminService.insertRoleByUsername(map);
+        if (response == 0) {
+            return Result.success(map,"成功授予角色");
+        } else if (response == 1) {
+            return Result.error("1", "该用户已经有该角色，无法授予");
+        } else if(response ==2){
+            return Result.error("2", "超级权限码错误，无法授予ADMIN角色");
+        }else
+        {
+            return Result.error("3","该角色不存在");
+        }
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/deleteRole")
+    public Result<Map<Object, Object>> deleteRole(@RequestBody Map<Object, Object> map) {
+        int response = adminService.deleteRoleByUsername(map);
+        if (response == 0) {
+            return Result.success(map,"成功撤销角色");
+        } else if (response == 1) {
+            return Result.error("1", "该用户只有1个角色，无法撤销");
+        } else if (response == 2) {
+            return Result.error("2", "超级权限码错误，无法撤销ADMIN角色");
+        }else
+            return Result.error("3", "该用户没有该角色，无法撤销");
+        }
 }

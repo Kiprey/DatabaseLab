@@ -29,4 +29,12 @@
 		UPDATE sys_user SET password = #{password}
 		WHERE username = #{username}
 	</update>
+
+	<!-- 根据用户名查询id -->
+	<select id="selectUserIdByUserName" resultType="long" parameterType="string">
+		SELECT user_id FROM sys_user
+		WHERE username = #{username}
+	</select>
+
+
 </mapper>
