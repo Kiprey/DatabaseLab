@@ -77,6 +77,8 @@ public class ClassDao {
     /**
      * 多条件模糊查询
      * @param classes 学生实体
+     * @param majorName 要查询的专业名称
+     * @param facultyName 要查询的院系名称
      * @param pageIndex 起始页
      * @param pageSize  每页个数
      * @return result

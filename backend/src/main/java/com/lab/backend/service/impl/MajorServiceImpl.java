@@ -1,7 +1,5 @@
 package com.lab.backend.service.impl;
 
-
-import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.Major;
 import com.lab.backend.repository.ClassDao;
 import com.lab.backend.repository.FacultyDao;
@@ -10,8 +8,7 @@ import com.lab.backend.service.MajorService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 @Service

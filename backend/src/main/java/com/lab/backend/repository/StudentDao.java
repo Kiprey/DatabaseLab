@@ -127,9 +127,12 @@ public class StudentDao {
     /**
      * 多条件模糊查询
      * @param student 学生实体
+     * @param className 要查询的班级名称
+     * @param majorName 要查询的专业名称
+     * @param facultyName 要查询的院系名称
      * @param pageIndex 起始页
      * @param pageSize  每页个数
-     * @return result
+     * @return 查询结果
      */
     public Map<Object, Object> query(Student student,String className,String majorName,String facultyName,int pageIndex,int pageSize){
         //给出sql模板,为了便于后面添加sql语句

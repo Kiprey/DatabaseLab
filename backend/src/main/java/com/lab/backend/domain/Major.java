@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "Class")
+@Table(name = "Major")
 @Entity
 public class Major {
     private String majorName;

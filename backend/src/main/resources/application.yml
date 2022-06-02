@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/databaselab?serverTimezone=UTC
     username: root
-    password:
+    password: 123456
 # JWT配置
 jwt:
   # 密匙KEY
