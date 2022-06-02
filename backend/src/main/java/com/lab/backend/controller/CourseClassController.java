@@ -73,9 +73,20 @@ public class CourseClassController {
 
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/query")
     public Result<Map<Object, Object>> queryController(@RequestBody Map<String,Object> map, @RequestParam int pageIndex, @RequestParam int pageSize) {
         Map<Object, Object> response = courseClassService.query(map, pageIndex, pageSize);
+        if ((int) response.get("total") != 0) {
+            return Result.success(response, "查询成功");
+        } else {
+            return Result.error("1", "查询结果为空");
+        }
+    }
+    @PreAuthorize("hasAnyRole('STUDENT','TEACHER')")
+    @PostMapping("/queryByUser")
+    public Result<Map<Object, Object>> queryByUserController(@RequestBody Map<String,Object> map, @RequestParam int pageIndex, @RequestParam int pageSize) {
+        Map<Object, Object> response = courseClassService.queryByUser(map, pageIndex, pageSize);
         if ((int) response.get("total") != 0) {
             return Result.success(response, "查询成功");
         } else {

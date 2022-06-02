@@ -15,7 +15,7 @@ import java.util.Map;
  * @CreateTime 2019/9/14 15:57
  */
 @Mapper
-public interface SysUserDao extends BaseMapper<SysUserEntity> {
+public interface  SysUserDao extends BaseMapper<SysUserEntity> {
 
     /**
      * 通过用户ID查询角色集合
@@ -36,6 +36,6 @@ public interface SysUserDao extends BaseMapper<SysUserEntity> {
 
     List<SysUserEntity> selectSysUserByUsername(String username);
 
-    public void updatePasswordByUsername(Map<String, Object> map);
+     void updatePasswordByUsername(Map<String, Object> map);
 
 }

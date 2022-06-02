@@ -1,15 +1,12 @@
 package com.lab.backend.controller;
 
-import com.lab.backend.security.core.dao.SysUserDao;
 import com.lab.backend.service.AdminService;
 import com.lab.backend.utils.Result;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -59,6 +56,17 @@ public class AdminController {
         else
         {
             return Result.resultCode("4","不存在该角色");
+        }
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/selectUserRole")
+    public Result<Map<Object, Object>> selectUserRole(@RequestBody Map<String,Object> map,@RequestParam int pageIndex, @RequestParam int pageSize)
+    {
+        Map<Object, Object> response = adminService.selectSysUserRoleByUsername(map, pageIndex, pageSize);
+        if ((int) response.get("total") != 0) {
+            return Result.success(response, "查询成功");
+        } else {
+            return Result.error("1", "查询结果为空");
         }
     }
 }
