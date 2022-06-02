@@ -106,7 +106,7 @@ public class StudentCourseDao {
      */
     public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select student.studentID,student.studentName,score,course.courseName from studentcourse,student,course,courseclass where 1=1 and student.studentID=studentcourse.studentID and course.courseID=courseclass.courseID and studentcourse.courseClassID=courseclass.courseClassID");
+        StringBuilder sql =new StringBuilder("select studentcourse.courseClassID,student.studentID,student.studentName,score,course.courseName from studentcourse,student,course,courseclass where 1=1 and student.studentID=studentcourse.studentID and course.courseID=courseclass.courseID and studentcourse.courseClassID=courseclass.courseClassID");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
@@ -143,6 +143,15 @@ public class StudentCourseDao {
             if (s != null && !s.trim().isEmpty())
             {
                 sql.append(" and student.studentName like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("courseName")!=null)
+        {
+            String s = map.get("courseName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and course.courseName like ?");
                 params.add("%" + s + "%");
             }
         }
@@ -172,7 +181,7 @@ public class StudentCourseDao {
      */
     public Map<Object, Object> queryByTeacher(Map<String,Object> map, int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select student.studentID,student.studentName,score,course.courseName from studentcourse,student,course,courseclass where 1=1 and student.studentID=studentcourse.studentID and course.courseID=courseclass.courseID and studentcourse.courseClassID=courseclass.courseClassID");
+        StringBuilder sql =new StringBuilder("select studentcourse.courseClassID,course.courseName,student.studentID,student.studentName,score from studentcourse,student,course,courseclass where 1=1 and student.studentID=studentcourse.studentID and course.courseID=courseclass.courseID and studentcourse.courseClassID=courseclass.courseClassID");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
@@ -209,6 +218,15 @@ public class StudentCourseDao {
             if (s != null && !s.trim().isEmpty())
             {
                 sql.append(" and student.studentName like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("courseName")!=null)
+        {
+            String s = map.get("courseName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and course.courseName like ?");
                 params.add("%" + s + "%");
             }
         }
