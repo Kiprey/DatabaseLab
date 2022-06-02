@@ -16,5 +16,6 @@ import java.util.Map;
  */
 @Mapper
 public interface SysUserRoleDao extends BaseMapper<SysUserRoleEntity> {
-
+    void insert(Map<String, Long> map);
+    void delete(Map<String, Long> map);
 }
