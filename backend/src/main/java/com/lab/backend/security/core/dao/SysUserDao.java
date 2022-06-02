@@ -15,27 +15,31 @@ import java.util.Map;
  * @CreateTime 2019/9/14 15:57
  */
 @Mapper
-public interface  SysUserDao extends BaseMapper<SysUserEntity> {
+public interface SysUserDao extends BaseMapper<SysUserEntity> {
 
     /**
      * 通过用户ID查询角色集合
+     *
      * @Author Sans
      * @CreateTime 2019/9/18 18:01
-     * @Param  userId 用户ID
+     * @Param userId 用户ID
      * @Return List<SysRoleEntity> 角色名集合
      */
     List<SysRoleEntity> selectSysRoleByUserId(Long userId);
+
     /**
      * 通过用户ID查询权限集合
+     *
      * @Author Sans
      * @CreateTime 2019/9/18 18:01
-     * @Param  userId 用户ID
+     * @Param userId 用户ID
      * @Return List<SysMenuEntity> 角色名集合
      */
     List<SysMenuEntity> selectSysMenuByUserId(Long userId);
 
     List<SysUserEntity> selectSysUserByUsername(String username);
 
-     void updatePasswordByUsername(Map<String, Object> map);
+    void updatePasswordByUsername(Map<String, Object> map);
 
+    Long selectUserIdByUserName(String username);
 }

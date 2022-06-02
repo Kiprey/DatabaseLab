@@ -18,7 +18,6 @@ import java.util.Map;
 public class MajorDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-//    @Resource
 
     /**
      * 插入
@@ -92,9 +91,10 @@ public class MajorDao {
     /**
      * 多条件模糊查询
      * @param major 专业实体
+     * @param facultyName 要查询的院系名称
      * @param pageIndex 起始页
-     * @param pageSize  每页个数
-     * @return result
+     * @param pageSize 每页个数
+     * @return 查询结果
      */
     public Map<Object, Object> query(Major major,String facultyName,int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
