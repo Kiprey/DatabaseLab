@@ -3,6 +3,7 @@ package com.lab.backend.repository;
 import com.lab.backend.domain.Course;
 import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.StudentCourse;
+import com.lab.backend.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -69,17 +70,18 @@ public class StudentCourseDao {
     }
 
     /**
-     * 按照courseClassid查询
-     * @param code 字段值
+     * 按照主键查询
+     * @param courseClassID 课程班级ID
+     * @param studentID 学生ID
      * @return 返回查询结果
      */
-    public List<StudentCourse> getByCode(String code) {
-        String sql="select * from studentcourse where courseClassID=?";
+    public List<StudentCourse> getByCode(String courseClassID, String studentID) {
+        String sql="select * from studentcourse where courseClassID=? and studentID=?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new StudentCourse(
                         rs.getString("courseClassID"),
                         rs.getString("studentID"),
                         rs.getInt("score")),
-                code);
+                courseClassID,studentID);
     }
 
     /**
@@ -97,33 +99,54 @@ public class StudentCourseDao {
 
     /**
      * 多条件模糊查询
-     * @param studentCourse 学生选课
+     * @param map 查询条件
      * @param pageIndex 起始页
      * @param pageSize 大小
      * @return 查询结果
      */
-    public Map<Object, Object> query(StudentCourse studentCourse, int pageIndex, int pageSize){
+    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select * from studentcourse where 1=1");
+        StringBuilder sql =new StringBuilder("select student.studentID,student.studentName,score,course.courseName from studentcourse,student,course,courseclass where 1=1 and student.studentID=studentcourse.studentID and course.courseID=courseclass.courseID and studentcourse.courseClassID=courseclass.courseClassID");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
-        String courseClassID = studentCourse.getCourseClassID();
-        if(courseClassID != null && !courseClassID.trim().isEmpty()){
-            sql.append(" and courseClassID like ?");
-            params.add("%" +courseClassID+ "%");
+        if (map.get("courseClassID")!=null)
+        {
+            String s = map.get("courseClassID").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and studentcourse.courseClassID like ?");
+                params.add("%" + s + "%");
+            }
         }
-        String studentID= studentCourse.getStudentID();
-        if(studentID != null && !studentID.trim().isEmpty()){
-            sql.append(" and studentID like ?");
-            params.add("%" +studentID+ "%");
+        if (map.get("studentID")!=null)
+        {
+            String s = map.get("studentID").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and studentcourse.studentID like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("score")!=null)
+        {
+            String s = map.get("score").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and studentcourse.score like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("studentName")!=null)
+        {
+            String s = map.get("studentName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and student.studentName like ?");
+                params.add("%" + s + "%");
+            }
         }
 
-        Integer score= studentCourse.getScore();
-        if(score != null){
-            sql.append(" and score like ?");
-            params.add("%" +score+ "%");
-        }
         //统计个数
         String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
         int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
@@ -133,15 +156,88 @@ public class StudentCourseDao {
         params.add(pageSize);
 
 
-        Map<Object, Object> response=new HashMap<>();
-        response.put("total",count);
-        response.put("pageIndex",pageIndex);
-        response.put("tableData",jdbcTemplate.query(sql.toString(), (rs, rowNum) -> new StudentCourse(
-                rs.getString("courseClassID"),
-                rs.getString("studentID"),
-                rs.getInt("score")
-        ),params.toArray()));
+        Map<Object, Object> response = new HashMap<>();
+        response.put("total", count);
+        response.put("pageIndex", pageIndex);
+        response.put("tableData", jdbcTemplate.queryForList(sql.toString(),params.toArray()));
 
         return response;
     }
+    /**
+     * 多条件模糊查询（老师使用）
+     * @param map 查询条件
+     * @param pageIndex 起始页
+     * @param pageSize 大小
+     * @return 查询结果
+     */
+    public Map<Object, Object> queryByTeacher(Map<String,Object> map, int pageIndex, int pageSize){
+        //给出sql模板,为了便于后面添加sql语句
+        StringBuilder sql =new StringBuilder("select student.studentID,student.studentName,score,course.courseName from studentcourse,student,course,courseclass where 1=1 and student.studentID=studentcourse.studentID and course.courseID=courseclass.courseID and studentcourse.courseClassID=courseclass.courseClassID");
+        //给出params
+        List<Object> params = new ArrayList<>();
+        //构造查询语句
+        if (map.get("courseClassID")!=null)
+        {
+            String s = map.get("courseClassID").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and studentcourse.courseClassID like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("studentID")!=null)
+        {
+            String s = map.get("studentID").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and studentcourse.studentID like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("score")!=null)
+        {
+            String s = map.get("score").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and studentcourse.score like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("studentName")!=null)
+        {
+            String s = map.get("studentName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and student.studentName like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("teacherID")!=null)
+        {
+            String s = map.get("teacherID").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and teacherID like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        System.out.println(params);
+
+        //统计个数
+        String sql2="SELECT count(*) as sum from ("+ sql +") as a;";
+        int count=jdbcTemplate.queryForObject(sql2, Integer.class,params.toArray());
+        //添加页数条目限制
+        sql.append(" limit ?,?");
+        params.add((pageIndex-1)*pageSize);
+        params.add(pageSize);
+
+
+        Map<Object, Object> response = new HashMap<>();
+        response.put("total", count);
+        response.put("pageIndex", pageIndex);
+        response.put("tableData", jdbcTemplate.queryForList(sql.toString(),params.toArray()));
+
+        return response;
+    }
+
 }

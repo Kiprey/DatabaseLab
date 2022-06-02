@@ -14,5 +14,5 @@ public interface CourseService {
     List<Course> getByAttribute(String attribute, String name);
     List<Course> getByCode(String code);
     List<Course> getList();
-    Map<Object, Object> query(Course course, int pageIndex, int pageSize);
+    Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize);
 }
