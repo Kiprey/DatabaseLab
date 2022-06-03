@@ -1,6 +1,17 @@
 import axios from 'axios'
 import vue from 'vue'
 
+axios.interceptors.request.use(
+  config => {
+    if (window.sessionStorage.getItem('token')) {
+      config.headers.Authorization = window.sessionStorage.getItem('token')
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  })
+
 const request = function (loadtip, query) {
   let loading
   if (loadtip) {
