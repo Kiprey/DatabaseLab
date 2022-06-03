@@ -122,6 +122,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // 禁用缓存
         http.headers().cacheControl();
+        // 将登录框关闭
+        http.formLogin().disable();
         // 添加JWT过滤器
         http.addFilter(new JWTAuthenticationTokenFilter(authenticationManager()));
     }

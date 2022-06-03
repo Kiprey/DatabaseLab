@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 暂无权限处理类
@@ -17,7 +18,7 @@ public class UserAuthAccessDeniedHandler implements AccessDeniedHandler{
      * 暂无权限返回结果
      */
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception){
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException {
         Result.responseJson(response,Result.resultCode("403","未授权"));
     }
 }

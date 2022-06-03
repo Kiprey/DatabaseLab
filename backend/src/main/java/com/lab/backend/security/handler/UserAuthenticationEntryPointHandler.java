@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 用户未登录处理类
@@ -21,7 +22,7 @@ public class UserAuthenticationEntryPointHandler implements AuthenticationEntryP
      * @CreateTime 2019/10/3 9:01
      */
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception){
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         Result.responseJson(response,Result.resultCode("401","未登录"));
     }
 }
