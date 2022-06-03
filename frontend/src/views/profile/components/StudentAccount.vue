@@ -1,15 +1,35 @@
 <template>
   <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-    <el-form-item label="学生姓名："  prop="studentName" required>
-      <el-input v-model="form.studentName"></el-input>
+    <el-form-item label="学生姓名："  prop="studentName">
+      <el-input v-model="form.studentName" :disabled="'disabled'"></el-input>
     </el-form-item>
 
-    <el-form-item label="学生编号：" prop="studentID" required>
+    <el-form-item label="学生编号：" prop="studentID">
       <el-input v-model="form.studentID" :disabled="'disabled'"></el-input>
     </el-form-item>
 
-    <el-form-item label="班级编号：" prop="classCode" required>
-      <el-input v-model="form.classCode"></el-input>
+    <el-form-item label="班级编号：" prop="classCode">
+      <el-input v-model="form.classCode" :disabled="'disabled'"></el-input>
+    </el-form-item>
+
+    <el-form-item label="班级名称：" prop="className">
+      <el-input v-model="form.className" :disabled="'disabled'"></el-input>
+    </el-form-item>
+
+    <el-form-item label="专业编号：" prop="majorCode">
+      <el-input v-model="form.majorCode" :disabled="'disabled'"></el-input>
+    </el-form-item>
+
+    <el-form-item label="专业名称：" prop="majorName">
+      <el-input v-model="form.majorName" :disabled="'disabled'"></el-input>
+    </el-form-item>
+
+    <el-form-item label="院系编号：" prop="facultyCode">
+      <el-input v-model="form.facultyCode" :disabled="'disabled'"></el-input>
+    </el-form-item>
+
+    <el-form-item label="院系名称：" prop="facultyName">
+      <el-input v-model="form.facultyName" :disabled="'disabled'"></el-input>
     </el-form-item>
 
     <el-form-item label="身份证号：" prop="identifier">
@@ -47,7 +67,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm">提交</el-button>
+      <el-button type="primary" @click="submitForm">修改</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -63,29 +83,36 @@ export default {
       sexEnum: ['男', '女'],
       formLoading: false,
       rules: {
-        studentName: [
-          { required: true, message: '请输入学生姓名', trigger: 'blur' }
-        ],
-        studentID: [
-          { required: true, message: '请输入学生ID', trigger: 'blur' }
-        ],
-        classCode: [
-          { required: true, message: '请输入班级编号', trigger: 'blur' }
-        ],
         teleno: [
           { required: false, message: '手机号格式不正确', trigger: 'blur', pattern: /^1[3456789]\d{9}$/ }
         ],
         identifier: [
           { required: false, message: '身份证号格式不正确', trigger: 'blur', pattern: /^[1-9]\d{17}$/ }
         ]
+      },
+      form: {
+        studentName: null,
+        studentID: null,
+        classCode: null,
+        identifier: null,
+        dormitory: null,
+        address: null,
+        teleno: null,
+        birthday: null,
+        sex: null,
+        grade: null,
+        completedCredits: 0
       }
     }
   },
-  props: {
-    form: {
-      type: Object,
-      default: () => {
-        return {
+  create () {
+    this.listLoading = true
+    API.getStudentInfo().then(data => {
+      let _this = this
+      if (data.code === '0') {
+        this.form = data.data
+      } else {
+        this.form = {
           studentName: null,
           studentID: null,
           classCode: null,
@@ -98,14 +125,15 @@ export default {
           grade: null,
           completedCredits: 0
         }
+        _this.$message.error(data.message)
       }
-    }
+      this.listLoading = false
+    })
   },
   methods: {
     submitForm () {
       let _this = this
-
-      this.$confirm('确定提交 ?', '提示', {
+      _this.$confirm('确定提交 ?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -113,7 +141,7 @@ export default {
         _this.$refs.form.validate((valid) => {
           if (valid) {
             _this.formLoading = true
-            API.saveInfo(_this.form).then(data => {
+            API.saveStudentInfo(_this.form).then(data => {
               if (data.code === '0') {
                 _this.$message.success(data.message)
                 _this.delCurrentView(_this).then(() => {

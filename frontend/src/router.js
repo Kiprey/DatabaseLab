@@ -322,6 +322,19 @@ const router = new Router({
   routes: constantRoutes
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next()
+  } else {
+    let token = window.sessionStorage.getItem('token')
+    if (token === null || token === '') {
+      next('/login')
+    } else {
+      next()
+    }
+  }
+})
+
 export {
   constantRoutes,
   router

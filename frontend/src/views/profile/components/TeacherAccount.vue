@@ -8,18 +8,17 @@
       <el-input v-model="form.teacherID" :disabled="'disabled'"></el-input>
     </el-form-item>
 
-    <el-form-item label="所属院系编号：" prop="facultyCode" required>
-      <el-input v-model="form.facultyCode"></el-input>
+    <el-form-item label="所属院系名称：" prop="facultyName" required>
+      <el-input v-model="form.facultyName"></el-input>
     </el-form-item>
 
-    <el-form-item>
-      <el-button type="primary" @click="submitForm">提交</el-button>
+    <el-form-item label="所属院系编号：" prop="facultyCode" required>
+      <el-input v-model="form.facultyCode"></el-input>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import API from '@/api/login'
 
 export default {
@@ -38,53 +37,32 @@ export default {
         facultyCode: [
           { required: true, message: '请输入所属院系编号', trigger: 'blur' }
         ]
+      },
+      form: {
+        teacherName: null,
+        teacherID: null,
+        facultyCode: null,
+        facultyName: null
       }
     }
   },
-  props: {
-    form: {
-      type: Object,
-      default: () => {
-        return {
+  created () {
+    this.formLoading = true
+    API.getTeacherInfo().then(data => {
+      let _this = this
+      if (data.code === '0') {
+        this.form = data.data[0]
+      } else {
+        this.form = {
           teacherName: null,
           teacherID: null,
-          facultyCode: null
+          facultyCode: null,
+          facultyName: null
         }
+        _this.$message.error(data.message)
       }
-    }
-  },
-  methods: {
-    submitForm () {
-      let _this = this
-
-      this.$confirm('确定提交 ?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        _this.$refs.form.validate((valid) => {
-          if (valid) {
-            _this.formLoading = true
-            API.saveInfo(_this.form).then(data => {
-              if (data.code === '0') {
-                _this.$message.success(data.message)
-                _this.delCurrentView(_this).then(() => {
-                  _this.$router.push('/')
-                })
-              } else {
-                _this.$message.error(data.message)
-                _this.formLoading = false
-              }
-            }).catch(e => {
-              _this.formLoading = false
-            })
-          } else {
-            return false
-          }
-        })
-      }).catch(() => {})
-    },
-    ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
+      this.formLoading = false
+    })
   }
 }
 </script>

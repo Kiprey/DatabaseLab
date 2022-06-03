@@ -45,8 +45,6 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-checkbox v-model="loginForm.remember" style="margin-bottom: 20px;margin-left: 5px;">记住密码</el-checkbox>
-
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
@@ -80,8 +78,7 @@ export default {
     return {
       loginForm: {
         username: '',
-        password: '',
-        remember: false
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -136,8 +133,13 @@ export default {
         if (valid) {
           this.loading = true
           loginApi.login(this.loginForm).then(function (result) {
-            if (result && result.code === 0) {
-              _this.setUserName(_this.loginForm.username)
+            if (result && result.code === '200') {
+              console.log(result.data.role)
+              _this.setUserInfo(result.data)
+              _this.$message({
+                message: '登录成果',
+                type: 'success'
+              })
               _this.$router.push({ path: '/' })
             } else {
               _this.loading = false
@@ -154,7 +156,7 @@ export default {
         }
       })
     },
-    ...mapMutations('user', ['setUserName'])
+    ...mapMutations('user', ['setUserInfo'])
   }
 }
 </script>
