@@ -42,9 +42,16 @@ export default {
 */
 
 // initial state
-const state = {
-  token: '',
-  authorities: []
+const state = {}
+
+const getters = {
+  getUserToken: (_) => {
+    return window.sessionStorage.getItem('token')
+  },
+  getUserAuthorities: (_) => {
+    let auth = window.sessionStorage.getItem('authorities')
+    return auth === null ? null : auth.split(',')
+  }
 }
 
 // actions
@@ -52,35 +59,27 @@ const actions = {}
 
 // mutations
 const mutations = {
-  setUserInfo: (state, obj) => {
+  setUserInfo: (_, obj) => {
     let token = obj.token
     let authorities = obj.role
-    console.log(authorities)
     let auth = []
     for (let i = 0; i < authorities.length; i++) {
       auth.push(authorities[i].authority)
     }
 
-    state.token = token
-    state.authorities = auth
     window.sessionStorage.setItem('token', token)
     window.sessionStorage.setItem('authorities', auth)
   },
-  clearLogin: (state) => {
-    state.token = ''
-    state.authorities = []
-  },
-  getUserToken: (state) => {
-    return state.token
-  },
-  getUserAuthorities: (state) => {
-    return state.authorities
+  clearLogin: (_) => {
+    window.sessionStorage.setItem('token', null)
+    window.sessionStorage.setItem('authorities', null)
   }
 }
 
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
