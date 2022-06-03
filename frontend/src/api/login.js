@@ -1,10 +1,10 @@
 import { post, postWithLoadTip } from '@/utils/request'
 
 export default {
-  login: query => postWithLoadTip(`/api/account/login`, query),
-  logout: () => post(`/api/account/logout`),
-  register: query => post(`/api/account/register`, query),
-  changePass: query => post(`/api/account/changepass`, query),
+  login: query => postWithLoadTip(`/api/user/login`, {}, query),
+  logout: () => post(`/api/user/logout`),
+  register: query => post(`/api/admin/userRegister`, query),
+  changePass: query => post(`/api/user/changePassword`, query),
 
   getInfo: () => postWithLoadTip('/api/account/getinfo'),
   saveInfo: (data) => post('/api/account/saveinfo', data),
