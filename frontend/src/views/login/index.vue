@@ -62,8 +62,8 @@ export default {
   name: 'Login',
   data () {
     const validateUsername = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('用户名不能少于5个字符'))
+      if (value.length < 3) {
+        callback(new Error('用户名不能少于3个字符'))
       } else {
         callback()
       }

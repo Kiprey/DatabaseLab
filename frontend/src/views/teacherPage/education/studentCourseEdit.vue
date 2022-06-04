@@ -91,15 +91,15 @@ export default {
             _this.formLoading = true
             let api = null
             if (_this.isEditMode) {
-              api = API.updateStudentCourse
+              api = API.updateStudentCourseByTeacher
             } else {
-              api = API.createStudentCourse
+              api = API.updateStudentCourseByTeacher
             }
             api(_this.form).then(data => {
               if (data.code === '0') {
                 _this.$message.success(data.message)
                 _this.delCurrentView(_this).then(() => {
-                  _this.$router.push('/curriculum/elective/list')
+                  _this.$router.push('/teacherPage/education/studentCourse')
                 })
               } else {
                 _this.$message.error(data.message)

@@ -439,7 +439,7 @@ const constantRoutesStudent = [
       {
         path: 'studentCourseEdit',
         component: () => import('@/views/studentPage/course/studentCourseEdit'),
-        meta: { title: '已选课程编辑', noCache: true, activeMenu: '/studentPage/course/studentCourseEdit' },
+        meta: { title: '已选课程编辑', noCache: true, activeMenu: '/studentPage/course/studentCourse' },
         hidden: true
       }
     ]
@@ -489,6 +489,73 @@ const constantRoutesTeacher = [
       }
     ]
   },
+  {
+    path: '/teacherPage/school',
+    component: Layout,
+    meta: {
+      title: '校建信息',
+      icon: 'users'
+    },
+    children: [
+      {
+        path: 'class',
+        component: () => import('@/views/teacherPage/school/class'),
+        meta: { title: '班级列表', noCache: true }
+      },
+      {
+        path: 'faculty',
+        component: () => import('@/views/teacherPage/school/faculty'),
+        meta: { title: '学院列表', noCache: true }
+      },
+      {
+        path: 'major',
+        component: () => import('@/views/teacherPage/school/major'),
+        meta: { title: '专业列表', noCache: true }
+      },
+      {
+        path: 'teacher',
+        component: () => import('@/views/teacherPage/school/teacher'),
+        meta: { title: '教师列表', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/teacherPage/education',
+    component: Layout,
+    meta: {
+      title: '教学管理',
+      icon: 'exam'
+    },
+    children: [
+      {
+        path: 'course',
+        component: () => import('@/views/teacherPage/education/course'),
+        meta: { title: '所有课程列表', noCache: true }
+      },
+      {
+        path: 'courseClass',
+        component: () => import('@/views/teacherPage/education/courseClass'),
+        meta: { title: '执教课程列表', noCache: true }
+      },
+      {
+        path: 'courseClassEdit',
+        component: () => import('@/views/teacherPage/education/courseClassEdit'),
+        meta: { title: '执教课程编辑', noCache: true, activeMenu: '/teacherPage/education/courseClass' },
+        hidden: true
+      },
+      {
+        path: 'studentCourse',
+        component: () => import('@/views/teacherPage/education/studentCourse'),
+        meta: { title: '学生成绩查询', noCache: true }
+      },
+      {
+        path: 'studentCourseEdit',
+        component: () => import('@/views/teacherPage/education/studentCourseEdit'),
+        meta: { title: '学生成绩更新', noCache: true, activeMenu: '/teacherPage/education/studentCourse' },
+        hidden: true
+      }
+    ]
+  },
   { path: '*',
     hidden: true,
     component: () => import('@/views/error-page/404'),
@@ -501,7 +568,7 @@ console.log(constantRoutesAdmin)
 console.log(constantRoutesTeacher)
 console.log(constantRoutesStudent)
 
-const constantRoutes = constantRoutesStudent
+const constantRoutes = constantRoutesTeacher
 
 const router = new Router({
   routes: constantRoutes
