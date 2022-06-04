@@ -20,13 +20,12 @@
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="courseClassID" label="开课号" />
       <el-table-column prop="studentID" label="学生编号" />
+      <el-table-column prop="studentName" label="学生姓名" />
       <el-table-column prop="score" label="课程分数"/>
+      <el-table-column prop="courseName" label="课程名称" />
 
       <el-table-column width="270px" label="操作" align="center">
         <template slot-scope="{row}">
-          <router-link :to="{path:'/curriculum/elective/edit', query:{studentID:row.studentID}}" class="link-left">
-            <el-button size="mini" >编辑</el-button>
-          </router-link>
           <el-button  size="mini" type="danger" @click="deleteStudentCourse(row)" class="link-left">删除</el-button>
         </template>
       </el-table-column>
@@ -66,7 +65,7 @@ export default {
         'pageIndex': this.queryData.pageIndex,
         'pageSize': this.queryData.pageSize
       }
-      API.queryStudentCourse(this.queryData, queryParam).then(data => {
+      API.queryStudentCourseByStudent(this.queryData, queryParam).then(data => {
         let _this = this
         if (data.code === '0') {
           const re = data.data
@@ -86,14 +85,13 @@ export default {
       let _this = this
       var QParam = {
         'courseClassID': row.courseClassID,
-        'studentID': row.studentID
       }
       this.$confirm('确定删除 ?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        API.deleteStudentCourse(QParam).then(re => {
+        API.deleteStudentCourseByStudent(QParam).then(re => {
           if (re.code === '0') {
             _this.search()
             _this.$message.success(re.message)

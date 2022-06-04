@@ -9,6 +9,14 @@
         <el-input v-model="queryData.courseID"></el-input>
       </el-form-item>
 
+      <el-form-item label="课程名称">
+        <el-input v-model="queryData.courseName"></el-input>
+      </el-form-item>
+
+      <el-form-item label="教师姓名">
+        <el-input v-model="queryData.teacherName"></el-input>
+      </el-form-item>
+
       <el-form-item label="开课时间">
         <el-input v-model="queryData.courseClassTime"></el-input>
       </el-form-item>
@@ -29,6 +37,8 @@
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="courseClassID" label="开课号" />
       <el-table-column prop="courseID" label="课程编号" />
+      <el-table-column prop="courseName" label="课程名称" />
+      <el-table-column prop="teacherName" label="教师姓名"/>
       <el-table-column prop="courseClassTime" label="开课时间" width="160px"/>
       <el-table-column prop="courseClassAddress" label="开课地点" />
       <el-table-column prop="courseClassWeek" label="开课周"/>
@@ -49,6 +59,8 @@ export default {
       queryData: {
         courseClassID: '',
         courseID: '',
+        courseName: '',
+        teacherName: '',
         courseClassTime: '',
         courseClassAddress: '',
         courseClassWeek: '',

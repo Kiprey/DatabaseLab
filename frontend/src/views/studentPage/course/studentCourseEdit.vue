@@ -11,6 +11,10 @@
         <el-input v-model="form.studentID" :disabled="isEditMode ? 'disabled' : false"></el-input>
       </el-form-item>
 
+      <el-form-item label="课程名称："  prop="courseName" required>
+        <el-input v-model="form.courseName"></el-input>
+      </el-form-item>
+
       <el-form-item label="课程分数："  prop="score" required>
         <el-input v-model="form.score"></el-input>
       </el-form-item>
@@ -33,6 +37,7 @@ export default {
       form: {
         courseClassID: null,
         studentID: null,
+        courseName: null,
         score: null
       },
       formLoading: false,
@@ -51,31 +56,31 @@ export default {
     }
   },
   created () {
-    let studentID = this.$route.query.studentID
-    let _this = this
-    if (studentID && studentID !== '') {
-      _this.isEditMode = true
-      _this.formLoading = true
+    // let studentID = this.$route.query.studentID
+    // let _this = this
+    // if (studentID && studentID !== '') {
+    //   _this.isEditMode = true
+    //   _this.formLoading = true
 
-      var queryData = {
-        'studentID': studentID
-      }
-      var queryParam = {
-        'pageIndex': 1,
-        'pageSize': 1
-      }
+    //   var queryData = {
+    //     'studentID': studentID
+    //   }
+    //   var queryParam = {
+    //     'pageIndex': 1,
+    //     'pageSize': 1
+    //   }
 
-      API.queryStudentCourse(queryData, queryParam).then(re => {
-        if (re.code === '0') {
-          _this.form = re.data.tableData[0]
-        } else {
-          _this.$message.error(re.message)
-        }
-        _this.formLoading = false
-      }).catch(e => {
-        _this.formLoading = false
-      })
-    }
+    //   API.queryStudentCourse(queryData, queryParam).then(re => {
+    //     if (re.code === '0') {
+    //       _this.form = re.data.tableData[0]
+    //     } else {
+    //       _this.$message.error(re.message)
+    //     }
+    //     _this.formLoading = false
+    //   }).catch(e => {
+    //     _this.formLoading = false
+    //   })
+    // }
   },
   methods: {
     submitForm () {
@@ -91,15 +96,15 @@ export default {
             _this.formLoading = true
             let api = null
             if (_this.isEditMode) {
-              api = API.updateStudentCourse
+              api = API.createStudentCourseByStudent
             } else {
-              api = API.updateStudentCourse
+              api = API.createStudentCourseByStudent
             }
             api(_this.form).then(data => {
               if (data.code === '0') {
                 _this.$message.success(data.message)
                 _this.delCurrentView(_this).then(() => {
-                  _this.$router.push('/curriculum/elective/list')
+                  _this.$router.push('/studentPage/course/studentCourse')
                 })
               } else {
                 _this.$message.error(data.message)
