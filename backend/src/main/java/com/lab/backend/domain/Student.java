@@ -18,13 +18,13 @@ public class Student {
     private String birthday;
     private String sex;
     private String grade;
-    private String completedCredits;
+    private Integer completedCredits;
 
     public Student() {
 
     }
 
-    public Student(String studentName, String studentID, String classCode, String identifier, String dormitory, String address, String teleno, String birthday, String sex, String grade, String completedCredits) {
+    public Student(String studentName, String studentID, String classCode, String identifier, String dormitory, String address, String teleno, String birthday, String sex, String grade, Integer completedCredits) {
         this.studentName = studentName;
         this.studentID = studentID;
         this.classCode = classCode;
@@ -78,7 +78,7 @@ public class Student {
         return grade;
     }
 
-    public String getCompletedCredits() {
+    public Integer getCompletedCredits() {
         return completedCredits;
     }
 
@@ -122,7 +122,7 @@ public class Student {
         this.grade = grade;
     }
 
-    public void setCompletedCredits(String completedCredits) {
+    public void setCompletedCredits(Integer completedCredits) {
         this.completedCredits = completedCredits;
     }
 }

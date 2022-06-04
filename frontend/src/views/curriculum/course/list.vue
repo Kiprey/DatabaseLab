@@ -21,6 +21,10 @@
         <el-input v-model="queryData.facultyCode"></el-input>
       </el-form-item>
 
+      <el-form-item label="院系名称">
+        <el-input v-model="queryData.facultyName"></el-input>
+      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
         <router-link :to="{path:'/curriculum/course/edit'}" class="link-left">
@@ -34,6 +38,7 @@
       <el-table-column prop="courseNature" label="课程性质" />
       <el-table-column prop="courseCategory" label="课程类别"/>
       <el-table-column prop="courseID" label="课程编号" />
+      <el-table-column prop="facultyName" label="院系名称" />
       <el-table-column prop="facultyCode" label="院系代码" />
       <el-table-column prop="courseHours" label="学时"/>
       <el-table-column prop="credit" label="学分"/>
@@ -109,7 +114,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        API.deleteTeacher(row.courseID).then(re => {
+        API.deleteCourse(row.courseID).then(re => {
           if (re.code === '0') {
             _this.search()
             _this.$message.success(re.message)
