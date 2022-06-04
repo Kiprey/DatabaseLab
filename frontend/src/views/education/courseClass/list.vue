@@ -36,7 +36,15 @@
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="courseClassID" label="开课号" />
       <el-table-column prop="courseID" label="课程编号" />
+      <el-table-column prop="courseName" label="课程名称"/>
       <el-table-column prop="teacherID" label="教师编号"/>
+      <el-table-column prop="teacherName" label="教师名称"/>
+
+      <el-table-column prop="facultyName" label="院系名称"/>
+      <el-table-column prop="courseCategory" label="课程类别"/>
+      <el-table-column prop="courseNature" label="课程性质"/>
+      <el-table-column prop="courseHours" label="学时"/>
+
       <el-table-column prop="courseClassTime" label="开课时间" width="160px"/>
       <el-table-column prop="courseClassAddress" label="开课地点" />
       <el-table-column prop="courseClassWeek" label="开课周"/>
@@ -112,7 +120,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        API.deleteTeacher(row.courseClassID).then(re => {
+        API.deleteCourseClass(row.courseClassID).then(re => {
           if (re.code === '0') {
             _this.search()
             _this.$message.success(re.message)

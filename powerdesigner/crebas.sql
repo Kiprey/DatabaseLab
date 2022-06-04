@@ -163,7 +163,7 @@ BEGIN
 	UPDATE student SET completedCredits=
 	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=new.studentID and 
-	studentcourse.score>60 and 
+	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
 	course.courseID=courseclass.courseID);
 END;
@@ -175,7 +175,7 @@ BEGIN
 	UPDATE student SET completedCredits=
 	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=new.studentID and 
-	studentcourse.score>60 and 
+	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
 	course.courseID=courseclass.courseID);
 END;
@@ -187,7 +187,7 @@ BEGIN
 	UPDATE student SET completedCredits=
 	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=old.studentID and 
-	studentcourse.score>60 and 
+	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
 	course.courseID=courseclass.courseID);
 END;
