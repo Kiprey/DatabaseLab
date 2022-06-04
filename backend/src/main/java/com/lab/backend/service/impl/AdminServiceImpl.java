@@ -188,7 +188,7 @@ public class AdminServiceImpl implements AdminService {
         List<Map<String, Object>> list = (List<Map<String, Object>>) cur.get("tableData");
         Map<String, Long> mapId = new HashMap<>();
         Long userId=sysUserDao.selectUserIdByUserName(map.get("username").toString());
-        Long roleId=sysUserDao.selectUserIdByUserName(map.get("roleName").toString());
+        Long roleId=sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString());
         mapId.put("userId", userId);
         mapId.put("roleId", roleId);
         int flag = 1;

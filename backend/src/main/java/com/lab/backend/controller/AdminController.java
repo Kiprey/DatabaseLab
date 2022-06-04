@@ -25,7 +25,7 @@ public class AdminController {
         } else if (adminService.adminRegister(username, password, code) == 1) {
             return Result.resultCode("500", "邀请码不正确");
         } else {
-            return Result.resultCode("200", "注册成功");
+            return Result.resultCode("0", "注册成功");
         }
     }
 
@@ -38,7 +38,7 @@ public class AdminController {
     public Map<String, Object> userRegister(@RequestParam String username, @RequestParam String password, @RequestParam String role) {
         int res = adminService.userRegister(username, password, role);
         if (res == 0) {
-            return Result.resultCode("200", "注册成功");
+            return Result.resultCode("0", "注册成功");
         } else if (res == 1) {
             return Result.resultCode("1", "该学生不存在");
         } else if (res == 2) {
@@ -83,7 +83,7 @@ public class AdminController {
         if (response == 0) {
             return Result.success(map, "成功撤销角色");
         } else if (response == 1) {
-            return Result.error("1", "撤销了该用户唯一的角色，该用户被删除");
+            return Result.success(map, "撤销了该用户唯一的角色，该用户被删除");
         } else if (response == 2) {
             return Result.error("2", "超级权限码错误，无法撤销ADMIN角色");
         } else if (response == 3) {
