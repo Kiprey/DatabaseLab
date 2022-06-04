@@ -71,8 +71,12 @@ public class AdminController {
             return Result.error("1", "该用户已经有该角色，无法授予");
         } else if (response == 2) {
             return Result.error("2", "超级权限码错误，无法授予ADMIN角色");
-        } else {
+        } else if(response==3){
             return Result.error("3", "该角色不存在");
+        }
+        else
+        {
+            return Result.error("4", "无法授予学生和管理员额外的角色");
         }
     }
 
