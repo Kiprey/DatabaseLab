@@ -1,9 +1,6 @@
 package com.lab.backend.repository;
 
-import com.lab.backend.domain.Course;
-import com.lab.backend.domain.Faculty;
 import com.lab.backend.domain.StudentCourse;
-import com.lab.backend.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -71,17 +68,14 @@ public class StudentCourseDao {
 
     /**
      * 按照主键查询
+     *
      * @param courseClassID 课程班级ID
-     * @param studentID 学生ID
+     * @param studentID     学生ID
      * @return 返回查询结果
      */
-    public List<StudentCourse> getByCode(String courseClassID, String studentID) {
+    public List<Map<String, Object>> getByCode(String courseClassID, String studentID) {
         String sql="select * from studentcourse where courseClassID=? and studentID=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new StudentCourse(
-                        rs.getString("courseClassID"),
-                        rs.getString("studentID"),
-                        rs.getInt("score")),
-                courseClassID,studentID);
+        return jdbcTemplate.queryForList(sql, courseClassID,studentID);
     }
 
     /**

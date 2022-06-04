@@ -115,8 +115,10 @@ public class StudentCourseController {
             return Result.success(courseClassID+" "+ SecurityUtil.getUserName());
         } else if (res_code == 1){
             return Result.error("1","没有找到要删除的班级课程，删除失败！");
+        } else if (res_code == 2){
+            return Result.error("2","没有权限，删除失败！");
         } else {
-            return Result.error("2","没有找到对应的学生，删除失败！");
+            return Result.error("3","已经结课，删除失败！");
         }
     }
     @PreAuthorize("hasRole('TEACHER')")

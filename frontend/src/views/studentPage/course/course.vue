@@ -21,6 +21,10 @@
         <el-input v-model="queryData.facultyCode"></el-input>
       </el-form-item>
 
+      <el-form-item label="院系名称">
+        <el-input v-model="queryData.facultyName"></el-input>
+      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
       </el-form-item>
@@ -32,6 +36,7 @@
       <el-table-column prop="courseCategory" label="课程类别"/>
       <el-table-column prop="courseID" label="课程编号" />
       <el-table-column prop="facultyCode" label="院系代码" />
+      <el-table-column prop="facultyName" label="院系名称" />
       <el-table-column prop="courseHours" label="学时"/>
       <el-table-column prop="credit" label="学分"/>
     </el-table>
@@ -54,6 +59,7 @@ export default {
         courseCategory: '',
         courseID: '',
         facultyCode: '',
+        facultyName: '',
 
         pageIndex: 1,
         pageSize: 10
