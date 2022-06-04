@@ -109,29 +109,23 @@ export default {
       this.queryData.pageIndex = 1
       this.search()
     },
-    selectStudentCourse () {
+    selectStudentCourse (row) {
       let _this = this
       this.$confirm('确定选课 ?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        _this.$refs.queryForm.validate((valid) => {
-          if (valid) {
-            curriculumAPI.createStudentCourseByStudent(_this.form).then(data => {
-              if (data.code === '0') {
-                _this.$message.success(data.message)
-              } else {
-                _this.$message.error(data.message)
-              }
-            }).catch(e => {
-              _this.$message.error(e)
-            })
+        curriculumAPI.createStudentCourseByStudent(row.courseClassID).then(data => {
+          if (data.code === '0') {
+            _this.$message.success(data.message)
           } else {
-            return false
+            _this.$message.error(data.message)
           }
+        }).catch(e => {
+          _this.$message.error(e)
         })
-      }).catch(() => {})
+      })
     }
   }
 }
