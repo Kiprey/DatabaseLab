@@ -83,7 +83,7 @@ public class AdminController {
         if (response == 0) {
             return Result.success(map, "成功撤销角色");
         } else if (response == 1) {
-            return Result.error("1", "撤销了该用户唯一的角色，该用户被删除");
+            return Result.success(map, "撤销了该用户唯一的角色，该用户被删除");
         } else if (response == 2) {
             return Result.error("2", "超级权限码错误，无法撤销ADMIN角色");
         } else if (response == 3) {
