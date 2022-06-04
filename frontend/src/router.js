@@ -580,7 +580,7 @@ console.log(constantRoutesTeacher)
 console.log(constantRoutesStudent)
 
 // 选择用哪个角色的前端
-const constantRoutes = constantRoutesStudent
+const constantRoutes = constantRoutesTeacher
 
 const router = new Router({
   routes: constantRoutes
