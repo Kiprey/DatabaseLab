@@ -18,9 +18,13 @@
       <el-table-column prop="role_name" label="权限" />
       <el-table-column width="270px" label="操作" align="center">
         <template slot-scope="{row}">
-          <router-link :to="{path:'/account/edit', query:{username:row.username}}" class="link-left">
-            <el-button size="mini" >添加授权</el-button>
-          </router-link>
+          <el-button
+            size="mini"
+            @click="grantAdminRole(row)"
+            class="link-left"
+            v-if="row.role_name === 'TEACHER'">
+            添加管理员权限
+          </el-button>
           <el-button  size="mini" type="danger" @click="revokeRole(row)" class="link-left">撤销权限</el-button>
         </template>
       </el-table-column>
@@ -74,6 +78,46 @@ export default {
         }
         this.listLoading = false
       })
+    },
+    grantAdminRole (row) {
+      let _this = this
+
+      this.$confirm('确定授予管理员权限 ?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let data = {
+          username: row.username,
+          roleName: 'ADMIN',
+          superCode: ''
+        }
+        let insertRole = (data) => {
+          API.insertRole(data).then(re => {
+            if (re.code === '0') {
+              _this.search()
+              _this.$message.success(re.message)
+            } else {
+              _this.$message.error(re.message)
+            }
+          })
+        }
+        if (data.roleName === 'ADMIN') {
+          this.$prompt(
+            '请输入超级权限码：',
+            '撤销管理员权限',
+            {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(({ value }) => {
+            data.superCode = value
+            insertRole(data)
+          }).catch(() => {})
+        } else {
+          insertRole(data)
+        }
+      }).catch(() => {})
     },
     revokeRole (row) {
       let _this = this
