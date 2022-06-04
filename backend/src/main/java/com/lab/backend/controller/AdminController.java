@@ -66,27 +66,30 @@ public class AdminController {
     public Result<Map<Object, Object>> insertRole(@RequestBody Map<Object, Object> map) {
         int response = adminService.insertRoleByUsername(map);
         if (response == 0) {
-            return Result.success(map,"成功授予角色");
+            return Result.success(map, "成功授予角色");
         } else if (response == 1) {
             return Result.error("1", "该用户已经有该角色，无法授予");
-        } else if(response ==2){
+        } else if (response == 2) {
             return Result.error("2", "超级权限码错误，无法授予ADMIN角色");
-        }else
-        {
-            return Result.error("3","该角色不存在");
+        } else {
+            return Result.error("3", "该角色不存在");
         }
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/deleteRole")
     public Result<Map<Object, Object>> deleteRole(@RequestBody Map<Object, Object> map) {
         int response = adminService.deleteRoleByUsername(map);
         if (response == 0) {
-            return Result.success(map,"成功撤销角色");
+            return Result.success(map, "成功撤销角色");
         } else if (response == 1) {
-            return Result.error("1", "该用户只有1个角色，无法撤销");
+            return Result.error("1", "撤销了该用户唯一的角色，该用户被删除");
         } else if (response == 2) {
             return Result.error("2", "超级权限码错误，无法撤销ADMIN角色");
-        }else
+        } else if (response == 3) {
             return Result.error("3", "该用户没有该角色，无法撤销");
+        } else {
+            return Result.error("4", "不能撤销自己的管理员角色");
         }
+    }
 }

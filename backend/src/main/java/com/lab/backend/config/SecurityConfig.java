@@ -98,9 +98,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 配置登录地址
                 .formLogin()
+                .loginProcessingUrl("/user/login")
                 //若未登录，则向前端返回401
                 .loginPage("/user/loginRequire")
-                .loginProcessingUrl("/user/login")
                 // 配置登录成功自定义处理类
                 .successHandler(userLoginSuccessHandler)
                 // 配置登录失败自定义处理类

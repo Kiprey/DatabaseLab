@@ -42,4 +42,6 @@ public interface SysUserDao extends BaseMapper<SysUserEntity> {
     void updatePasswordByUsername(Map<String, Object> map);
 
     Long selectUserIdByUserName(String username);
+
+    void deleteUserByUserId(Long userId);
 }
