@@ -137,7 +137,7 @@ export default {
               console.log(result.data.role)
               _this.setUserInfo(result.data)
               _this.$message({
-                message: '登录成果',
+                message: '登录成功',
                 type: 'success'
               })
               _this.$router.push({ path: '/' })

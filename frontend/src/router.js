@@ -382,7 +382,7 @@ const constantRoutesStudent = [
     ]
   },
   {
-    path: '/studentPage',
+    path: '/studentPage/school',
     component: Layout,
     name: 'studentSchoolPage',
     meta: {
@@ -391,29 +391,29 @@ const constantRoutesStudent = [
     },
     children: [
       {
-        path: 'school/class',
+        path: 'class',
         component: () => import('@/views/studentPage/school/class'),
         meta: { title: '班级列表', noCache: true }
       },
       {
-        path: 'school/faculty',
+        path: 'faculty',
         component: () => import('@/views/studentPage/school/faculty'),
         meta: { title: '学院列表', noCache: true }
       },
       {
-        path: 'school/major',
+        path: 'major',
         component: () => import('@/views/studentPage/school/major'),
         meta: { title: '专业列表', noCache: true }
       },
       {
-        path: 'school/teacher',
+        path: 'teacher',
         component: () => import('@/views/studentPage/school/teacher'),
         meta: { title: '教师列表', noCache: true }
       }
     ]
   },
   {
-    path: '/studentPage',
+    path: '/studentPage/course',
     component: Layout,
     name: 'studentCoursePage',
     meta: {
@@ -422,22 +422,22 @@ const constantRoutesStudent = [
     },
     children: [
       {
-        path: 'course/course',
+        path: 'course',
         component: () => import('@/views/studentPage/course/course'),
         meta: { title: '所有课程列表', noCache: true }
       },
       {
-        path: 'course/courseClass',
+        path: 'courseClass',
         component: () => import('@/views/studentPage/course/courseClass'),
         meta: { title: '可选课程列表', noCache: true }
       },
       {
-        path: 'course/studentCourse',
+        path: 'studentCourse',
         component: () => import('@/views/studentPage/course/studentCourse'),
         meta: { title: '已选课程列表', noCache: true }
       },
       {
-        path: 'course/studentCourseEdit',
+        path: 'studentCourseEdit',
         component: () => import('@/views/studentPage/course/studentCourseEdit'),
         meta: { title: '已选课程编辑', noCache: true, activeMenu: '/studentPage/course/studentCourseEdit' },
         hidden: true
