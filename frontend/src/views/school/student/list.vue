@@ -17,6 +17,14 @@
         <el-input v-model="queryData.className"></el-input>
       </el-form-item>
 
+      <el-form-item label="专业名称：">
+        <el-input v-model="queryData.majorName"></el-input>
+      </el-form-item>
+
+      <el-form-item label="院系名称：">
+        <el-input v-model="queryData.facultyName"></el-input>
+      </el-form-item>
+
       <el-form-item label="身份证号:">
         <el-input v-model="queryData.identifier"></el-input>
       </el-form-item>
@@ -36,7 +44,12 @@
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="studentName" label="学生姓名" />
       <el-table-column prop="studentID" label="学生编号"/>
+      <el-table-column prop="facultyCode" label="院系编号" />
+      <el-table-column prop="facultyName" label="院系名称" />
+      <el-table-column prop="majorCode" label="专业编号" />
+      <el-table-column prop="majorName" label="专业名称" />
       <el-table-column prop="classCode" label="班级编号" />
+      <el-table-column prop="className" label="班级名称" />
       <el-table-column prop="identifier" label="身份证号" />
       <el-table-column prop="dormitory" label="宿舍" />
       <el-table-column prop="address" label="家庭住址" />
@@ -72,6 +85,8 @@ export default {
         studentID: '',
         classCode: '',
         className: '',
+        majorName: '',
+        facultyName: '',
         identifier: '',
         grade: '',
 
@@ -91,6 +106,8 @@ export default {
       this.listLoading = true
       var queryParam = {
         'className': this.queryData.className,
+        'majorName': this.queryData.majorName,
+        'facultyName': this.queryData.facultyName,
         'pageIndex': this.queryData.pageIndex,
         'pageSize': this.queryData.pageSize
       }
