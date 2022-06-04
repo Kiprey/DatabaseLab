@@ -18,8 +18,6 @@ import java.io.IOException;
 public class UserAuthenticationEntryPointHandler implements AuthenticationEntryPoint {
     /**
      * 用户未登录返回结果
-     * @Author Sans
-     * @CreateTime 2019/10/3 9:01
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {

@@ -3,11 +3,11 @@
 
 <mapper namespace="com.lab.backend.security.core.dao.SysUserRoleDao">
     <!-- 插入 -->
-    <insert id="insert"  parameterType="map">
+    <insert id="myInsert"  parameterType="map">
         INSERT INTO sys_user_role(user_id,role_id) values (#{userId},#{roleId});
     </insert>
     <!-- 删除 -->
-    <delete id="delete"  parameterType="map">
+    <delete id="myDelete"  parameterType="map">
         DELETE FROM sys_user_role WHERE user_id=#{userId} and role_id=#{roleId};
     </delete>
 </mapper>

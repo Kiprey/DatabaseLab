@@ -5,6 +5,8 @@ import com.lab.backend.utils.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -24,6 +26,15 @@ public class UserController {
         } else {
             return Result.resultCode("200", "修改成功");
         }
+    }
+
+    /**
+     *  需要登录时返回http状态码401，由前端重定向至登录页面
+     */
+    @PostMapping("/loginRequire")
+    public void loginRequire(HttpServletResponse response) throws IOException {
+        Result.responseJson(response,Result.resultCode("401","未登录"));
+        response.setStatus(401);
     }
 
 }

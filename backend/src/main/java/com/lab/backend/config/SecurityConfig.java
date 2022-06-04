@@ -98,6 +98,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 配置登录地址
                 .formLogin()
+                //若未登录，则向前端返回401
+                .loginPage("/user/loginRequire")
                 .loginProcessingUrl("/user/login")
                 // 配置登录成功自定义处理类
                 .successHandler(userLoginSuccessHandler)
@@ -122,8 +124,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // 禁用缓存
         http.headers().cacheControl();
-        // 将登录框关闭
-        http.formLogin().disable();
         // 添加JWT过滤器
         http.addFilter(new JWTAuthenticationTokenFilter(authenticationManager()));
     }

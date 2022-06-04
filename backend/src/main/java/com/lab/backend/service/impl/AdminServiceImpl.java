@@ -211,7 +211,7 @@ public class AdminServiceImpl implements AdminService {
         Map<String, Long> mapId = new HashMap<>();
         mapId.put("userId", sysUserDao.selectUserIdByUserName(map.get("username").toString()));
         mapId.put("roleId", sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString()));
-        sysUserRoleDao.delete(mapId);
+        sysUserRoleDao.myDelete(mapId);
         return 0;
     }
 
@@ -245,7 +245,7 @@ public class AdminServiceImpl implements AdminService {
         Map<String, Long> mapId = new HashMap<>();
         mapId.put("userId", sysUserDao.selectUserIdByUserName(map.get("username").toString()));
         mapId.put("roleId", sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString()));
-        sysUserRoleDao.insert(mapId);
+        sysUserRoleDao.myInsert(mapId);
         return 0;
     }
 
