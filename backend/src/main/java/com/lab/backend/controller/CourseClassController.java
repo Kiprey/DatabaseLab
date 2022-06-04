@@ -96,8 +96,7 @@ public class CourseClassController {
     }
     @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/queryByTeacher")
-    public Result<Map<Object, Object>> queryByTeacherController(@RequestParam int pageIndex, @RequestParam int pageSize) {
-        Map<String, Object> map = new HashMap<>();
+    public Result<Map<Object, Object>> queryByTeacherController(@RequestBody Map<String,Object> map,@RequestParam int pageIndex, @RequestParam int pageSize) {
         map.put("teacherID", SecurityUtil.getUserName());
         Map<Object, Object> response = courseClassService.query(map, pageIndex, pageSize);
         if ((int) response.get("total") != 0) {
