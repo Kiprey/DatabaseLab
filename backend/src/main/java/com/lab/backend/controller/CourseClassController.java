@@ -3,10 +3,12 @@ package com.lab.backend.controller;
 import com.lab.backend.domain.CourseClass;
 import com.lab.backend.service.CourseClassService;
 import com.lab.backend.utils.Result;
+import com.lab.backend.utils.SecurityUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +88,18 @@ public class CourseClassController {
     @PostMapping("/queryByUser")
     public Result<Map<Object, Object>> queryByUserController(@RequestBody Map<String,Object> map, @RequestParam int pageIndex, @RequestParam int pageSize) {
         Map<Object, Object> response = courseClassService.queryByUser(map, pageIndex, pageSize);
+        if ((int) response.get("total") != 0) {
+            return Result.success(response, "查询成功");
+        } else {
+            return Result.error("1", "查询结果为空");
+        }
+    }
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/queryByTeacher")
+    public Result<Map<Object, Object>> queryByTeacherController(@RequestParam int pageIndex, @RequestParam int pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("teacherID", SecurityUtil.getUserName());
+        Map<Object, Object> response = courseClassService.query(map, pageIndex, pageSize);
         if ((int) response.get("total") != 0) {
             return Result.success(response, "查询成功");
         } else {
