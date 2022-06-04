@@ -533,6 +533,17 @@ const constantRoutesTeacher = [
         meta: { title: '所有课程列表', noCache: true }
       },
       {
+        path: 'MyCourseClass',
+        component: () => import('@/views/teacherPage/education/MyCourseClass'),
+        meta: { title: '我的执教课程', noCache: true }
+      },
+      {
+        path: 'MyCourseClassEdit',
+        component: () => import('@/views/teacherPage/education/MyCourseClassEdit'),
+        meta: { title: '我的课程编辑', noCache: true, activeMenu: '/teacherPage/education/MyCourseClass' },
+        hidden: true
+      },
+      {
         path: 'courseClass',
         component: () => import('@/views/teacherPage/education/courseClass'),
         meta: { title: '执教课程列表', noCache: true }
@@ -568,7 +579,7 @@ console.log(constantRoutesAdmin)
 console.log(constantRoutesTeacher)
 console.log(constantRoutesStudent)
 
-const constantRoutes = constantRoutesStudent
+const constantRoutes = constantRoutesTeacher
 
 const router = new Router({
   routes: constantRoutes

@@ -11,10 +11,6 @@
         <el-input v-model="form.courseID"></el-input>
       </el-form-item>
 
-      <el-form-item label="教师编号：" prop="teacherID" required>
-        <el-input v-model="form.teacherID"></el-input>
-      </el-form-item>
-
       <el-form-item label="开课时间："  prop="courseClassTime" >
         <el-date-picker v-model="form.courseClassTime" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" />
       </el-form-item>
@@ -45,7 +41,6 @@ export default {
       form: {
         courseClassID: null,
         courseID: null,
-        teacherID: null,
         courseClassTime: null,
         courseClassAddress: null,
         courseClassWeek: null
@@ -57,9 +52,6 @@ export default {
         ],
         courseID: [
           { required: true, message: '请输入课程编号', trigger: 'blur' }
-        ],
-        teacherID: [
-          { required: true, message: '请输入教师编号', trigger: 'blur' }
         ]
       },
       isEditMode: false
@@ -144,7 +136,6 @@ export default {
         _this.form = {
           courseClassID: null,
           courseID: null,
-          teacherID: null,
           courseClassTime: null,
           courseClassAddress: null,
           courseClassWeek: null
