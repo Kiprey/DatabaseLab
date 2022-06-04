@@ -14,7 +14,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="新密码：" prop="passoword" v-if="!isEditMode" required>
+      <el-form-item label="新密码：" prop="password" v-if="!isEditMode" required>
         <el-input
             ref="password"
             v-model="form.password"
@@ -26,7 +26,7 @@
       </el-form-item>
 
       <el-form-item label="新增权限：" prop="roleName" required>
-        <el-select v-model="form.roleName" clearable>
+        <el-select v-model="form.roleName" clearable name="roleName">
           <el-option v-for="item in authEnum" :key="item" :value="item" :label="item"></el-option>
         </el-select>
       </el-form-item>
@@ -46,14 +46,14 @@ export default {
   data () {
     let _this = this
     const validateUsername = (rule, value, callback) => {
-      if (value.length < 5) {
+      if (value == null || value.length < 5) {
         callback(new Error('用户名不能少于5个字符'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (!_this.isEditMode && value.length < 5) {
+      if (!_this.isEditMode && (value == null || value.length < 5)) {
         console.log('validatePassword,' + _this.isEditMode)
         callback(new Error('密码不能少于5个字符'))
       } else {
@@ -118,13 +118,21 @@ export default {
           }).then(() => {
             let req = () => {
               _this.formLoading = true
-              let api = null
+              let prom = null
               if (_this.isEditMode) {
-                api = API.userRegister
+                prom = API.insertRole({
+                  username: _this.form.username,
+                  superCode: _this.form.superCode,
+                  roleName: _this.form.roleName
+                })
               } else {
-                api = API.insertRole
+                prom = API.userRegister({
+                  username: _this.form.username,
+                  password: _this.form.password,
+                  role: _this.form.roleName
+                })
               }
-              api(_this.form).then(data => {
+              prom.then(data => {
                 if (data.code === '0') {
                   _this.$message.success(data.message)
                   _this.delCurrentView(_this).then(() => {
