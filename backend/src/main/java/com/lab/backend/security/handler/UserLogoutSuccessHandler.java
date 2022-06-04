@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +22,9 @@ public class UserLogoutSuccessHandler implements LogoutSuccessHandler {
     /**
      * 用户登出返回结果
      * 这里应该让前端清除掉Token
-     * @Author Sans
-     * @CreateTime 2019/10/3 9:50
      */
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         SecurityContextHolder.clearContext();
         Result.responseJson(response, Result.resultCode("200","登出成功"));
     }

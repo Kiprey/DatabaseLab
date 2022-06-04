@@ -1,10 +1,10 @@
 <template>
   <el-form :model="userInfo" ref="form" :rules="rules">
-    <el-form-item label="旧密码" prop="oldpass" required>
-      <el-input v-model.trim="userInfo.oldpass" />
+    <el-form-item label="旧密码" prop="oldPassword" required>
+      <el-input v-model.trim="userInfo.oldPassword" :type="'password'" />
     </el-form-item>
-    <el-form-item label="新密码" prop="newpass" required>
-      <el-input v-model.trim="userInfo.newpass" :type="'password'" />
+    <el-form-item label="新密码" prop="newPassword" required>
+      <el-input v-model.trim="userInfo.newPassword" :type="'password'" />
     </el-form-item>
     <el-form-item label="确认密码" prop="confirmnewpass" required>
       <el-input v-model.trim="userInfo.confirmnewpass" :type="'password'" />
@@ -28,7 +28,7 @@ export default {
       }
     }
     const validateConfirmPass = (rule, value, callback) => {
-      if (value === '' || value !== this.userInfo.newpass) {
+      if (value === '' || value !== this.userInfo.newPassword) {
         callback(new Error(rule.message))
       } else {
         callback()
@@ -36,15 +36,15 @@ export default {
     }
     return {
       userInfo: {
-        oldpass: '',
-        newpass: '',
+        oldPassword: '',
+        newPassword: '',
         confirmnewpass: ''
       },
       rules: {
-        oldpass: [
+        oldPassword: [
           { required: true, message: '密码不能少于5个字符', trigger: 'blur', validator: validatePassword }
         ],
-        newpass: [
+        newPassword: [
           { required: true, message: '密码不能少于5个字符', trigger: 'blur', validator: validatePassword }
         ],
         confirmnewpass: [
@@ -64,7 +64,7 @@ export default {
             type: 'warning'
           }).then(() => {
             API.changePass(_this.userInfo).then(re => {
-              if (re.code === 0) {
+              if (re.code === '0' || re.code === '200') {
                 _this.$message.success(re.message)
               } else {
                 _this.$message.error(re.message)

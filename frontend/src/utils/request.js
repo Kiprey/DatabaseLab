@@ -1,6 +1,17 @@
 import axios from 'axios'
 import vue from 'vue'
 
+axios.interceptors.request.use(
+  config => {
+    if (window.sessionStorage.getItem('token')) {
+      config.headers.Authorization = window.sessionStorage.getItem('token')
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  })
+
 const request = function (loadtip, query) {
   let loading
   if (loadtip) {
@@ -53,14 +64,15 @@ const post = function (url, data, params = null) {
   return request(false, query)
 }
 
-const postWithLoadTip = function (url, params) {
+const postWithLoadTip = function (url, data, params = null) {
   const query = {
     baseURL: process.env.VUE_APP_URL,
     url: url,
     method: 'post',
     withCredentials: true,
     timeout: 30000,
-    data: params,
+    data: data,
+    params: params,
     headers: { 'Content-Type': 'application/json', 'request-ajax': true }
   }
   return request(true, query)

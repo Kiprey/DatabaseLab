@@ -163,7 +163,7 @@ BEGIN
 	UPDATE student SET completedCredits=
 	(SELECT IFNULL(sum(credit), 0) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=new.studentID and 
-	studentcourse.score>60 and 
+	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
 	course.courseID=courseclass.courseID) WHERE 
 	student.studentID=new.studentID;
@@ -176,7 +176,7 @@ BEGIN
 	UPDATE student SET completedCredits=
 	(SELECT IFNULL(sum(credit), 0) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=new.studentID and 
-	studentcourse.score>60 and 
+	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
 	course.courseID=courseclass.courseID ) WHERE 
 	student.studentID=new.studentID;
@@ -189,7 +189,7 @@ BEGIN
 	UPDATE student SET completedCredits=
 	(SELECT IFNULL(sum(credit), 0) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=old.studentID and 
-	studentcourse.score>60 and 
+	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
 	course.courseID=courseclass.courseID) WHERE
 	student.studentID=old.studentID;

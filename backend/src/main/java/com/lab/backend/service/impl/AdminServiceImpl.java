@@ -10,6 +10,7 @@ import com.lab.backend.security.core.entity.SysUserRoleEntity;
 import com.lab.backend.security.core.service.SysUserRoleService;
 import com.lab.backend.security.core.service.SysUserService;
 import com.lab.backend.service.AdminService;
+import com.lab.backend.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -178,17 +179,18 @@ public class AdminServiceImpl implements AdminService {
      * 撤销某用户对应的某角色
      *
      * @param : username,roleName,superCode
-     * @return: 0:成功，1:该用户只有1个角色，无法撤销，2:授予的权限为“ADMIN”时,超级权限码不正确，3:该用户并无拥有该角色，无法撤销
+     * @return: 0:成功，1:撤销了该用户唯一的角色，该用户被删除，2:授予的角色为“ADMIN”时,超级权限码不正确，3:该用户并无拥有该角色，无法撤销，4:不能撤销自己的管理员权限
      */
     @Override
     public int deleteRoleByUsername(Map<Object, Object> map) {
         String roleName = map.get("roleName").toString();
         Map<Object, Object> cur = selectSysUserRoleByUsername(map, 1, 3);
         List<Map<String, Object>> list = (List<Map<String, Object>>) cur.get("tableData");
-        int total = (int) cur.get("total");
-        if (total == 1) {
-            return 1;
-        }
+        Map<String, Long> mapId = new HashMap<>();
+        Long userId=sysUserDao.selectUserIdByUserName(map.get("username").toString());
+        Long roleId=sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString());
+        mapId.put("userId", userId);
+        mapId.put("roleId", roleId);
         int flag = 1;
         for (Map<String, Object> stringObjectMap : list) {
             String roleName1 = stringObjectMap.get("role_name").toString();
@@ -200,6 +202,10 @@ public class AdminServiceImpl implements AdminService {
         if (flag == 1)
             return 3;
         if (Objects.equals(roleName, "ADMIN")) {
+            if(Objects.equals(userId, SecurityUtil.getUserId()))
+            {
+                return 4;
+            }
             if (map.get("superCode") == null)
                 return 2;
             String superCode = map.get("superCode").toString();
@@ -207,28 +213,35 @@ public class AdminServiceImpl implements AdminService {
                 return 2;
             }
         }
-
-        Map<String, Long> mapId = new HashMap<>();
-        mapId.put("userId", sysUserDao.selectUserIdByUserName(map.get("username").toString()));
-        mapId.put("roleId", sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString()));
-        sysUserRoleDao.delete(mapId);
+        sysUserRoleDao.myDelete(mapId);
+        int total = (int) cur.get("total");
+        if (total == 1) {
+            sysUserDao.deleteUserByUserId(userId);
+            return 1;
+        }
         return 0;
     }
 
     /**
-     * 授予某用户某角色
+     * 授予教师管理员角色
      *
      * @param : map(username,roleName,superCode)
-     * @return: 0:成功，1:该用户已经有该角色，无法授予，2:授予的权限为“ADMIN”时,超级权限码不正确，3:该角色不存在
+     * @return: 0:成功，1:该用户已经有该角色，无法授予，2:授予的权限为“ADMIN”时,超级权限码不正确，3:无法授予非管理员角色，4:无法授予学生和管理员额外的角色
      */
     @Override
     public int insertRoleByUsername(Map<Object, Object> map) {
         String roleName = map.get("roleName").toString();
+        Long userId=sysUserDao.selectUserIdByUserName(map.get("username").toString());
+        Long roleId=sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString());
         List<Map<String, Object>> list = (List<Map<String, Object>>) selectSysUserRoleByUsername(map, 1, 3).get("tableData");
         for (Map<String, Object> stringObjectMap : list) {
             String roleName1 = stringObjectMap.get("role_name").toString();
             if (Objects.equals(roleName, roleName1)) {
                 return 1;
+            }
+            else if(Objects.equals(roleName1, "ADMIN") || Objects.equals(roleName1, "STUDENT"))
+            {
+                return 4;
             }
         }
         if (Objects.equals(roleName, "ADMIN")) {
@@ -239,13 +252,13 @@ public class AdminServiceImpl implements AdminService {
                 return 2;
             }
         }
-        if (!Objects.equals(roleName, "ADMIN") && !Objects.equals(roleName, "TEACHER") && !Objects.equals(roleName, "STUDENT")) {
+        if (!Objects.equals(roleName, "ADMIN")) {
             return 3;
         }
         Map<String, Long> mapId = new HashMap<>();
-        mapId.put("userId", sysUserDao.selectUserIdByUserName(map.get("username").toString()));
-        mapId.put("roleId", sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString()));
-        sysUserRoleDao.insert(mapId);
+        mapId.put("userId", userId);
+        mapId.put("roleId", roleId);
+        sysUserRoleDao.myInsert(mapId);
         return 0;
     }
 

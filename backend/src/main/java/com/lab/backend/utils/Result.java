@@ -3,8 +3,12 @@ package com.lab.backend.utils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 @Slf4j
@@ -77,13 +81,12 @@ public class Result<T> {
      * @Param  resultMap 数据
      * @Return void
      */
-    public static void responseJson(ServletResponse response, Map<String, Object> resultMap){
-        PrintWriter out = null;
+    public static void responseJson(ServletResponse response, Map<String, Object> resultMap) throws IOException {
+        ServletOutputStream out = response.getOutputStream();
         try {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
-            out = response.getWriter();
-            out.println(JSON.toJSONString(resultMap));
+            out.write(JSON.toJSONString(resultMap).getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
             log.error("【JSON输出异常】"+e);
         }finally{

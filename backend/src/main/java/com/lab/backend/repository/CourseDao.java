@@ -127,7 +127,7 @@ public class CourseDao {
      */
     public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize){
         //给出sql模板,为了便于后面添加sql语句
-        StringBuilder sql =new StringBuilder("select facultyName,courseID,courseName,courseNature,courseCategory,courseHours,credit from course,faculty where 1=1 and course.facultyCode=faculty.facultyCode");
+        StringBuilder sql =new StringBuilder("select faculty.facultyName,course.facultyCode,courseID,courseName,courseNature,courseCategory,courseHours,credit from course,faculty where 1=1 and course.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
@@ -164,6 +164,15 @@ public class CourseDao {
             if (s != null && !s.trim().isEmpty())
             {
                 sql.append(" and courseID like ?");
+                params.add("%" + s + "%");
+            }
+        }
+        if (map.get("facultyName")!=null)
+        {
+            String s = map.get("facultyName").toString();
+            if (s != null && !s.trim().isEmpty())
+            {
+                sql.append(" and faculty.facultyName like ?");
                 params.add("%" + s + "%");
             }
         }

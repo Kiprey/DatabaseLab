@@ -36,5 +36,11 @@
 		WHERE username = #{username}
 	</select>
 
+	<!-- 根据用户id删除用户 -->
+	<delete id="deleteUserByUserId" parameterType="long">
+		delete FROM sys_user
+		WHERE user_id = #{userId}
+	</delete>
+
 
 </mapper>

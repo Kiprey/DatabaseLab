@@ -93,7 +93,7 @@ export default {
             if (_this.isEditMode) {
               api = API.updateStudentCourse
             } else {
-              api = API.updateStudentCourse
+              api = API.createStudentCourse
             }
             api(_this.form).then(data => {
               if (data.code === '0') {

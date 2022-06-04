@@ -14,9 +14,9 @@
           <router-link to="/profile/index">
             <el-dropdown-item>个人信息</el-dropdown-item>
           </router-link>
-          <router-link to="/">
+          <!-- <router-link to="/">
             <el-dropdown-item>主页</el-dropdown-item>
-          </router-link>
+          </router-link> -->
           <el-dropdown-item  @click.native="logout"  divided>退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -49,7 +49,7 @@ export default {
     logout () {
       let _this = this
       loginApi.logout().then(function (result) {
-        if (result && result.code === 0) {
+        if (result && result.code === '200') {
           _this.clearLogin()
           _this.$router.push({ path: '/login' })
         }

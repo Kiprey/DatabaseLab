@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
      * 登录成功返回结果
      */
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication){
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         // 组装JWT
         SelfUserEntity selfUserEntity =  (SelfUserEntity) authentication.getPrincipal();
         String token = JWTTokenUtil.createAccessToken(selfUserEntity);

@@ -4,7 +4,7 @@ import Layout from '@/layout'
 
 Vue.use(Router)
 
-const constantRoutes = [
+const constantRoutesAdmin = [
   {
     path: '/redirect',
     component: Layout,
@@ -256,6 +256,31 @@ const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/account',
+    component: Layout,
+    name: 'AccountPage',
+    meta: {
+      title: '权限管理',
+      icon: 'education'
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/account/list'),
+        name: 'AccountListPage',
+        meta: { title: '账号列表', noCache: true }
+      },
+      {
+        path: 'edit',
+        component: () => import('@/views/account/edit'),
+        name: 'AccountEditPage',
+        meta: { title: '账号编辑', noCache: true, activeMenu: '/account/list' },
+        hidden: true
+      }
+    ]
+  },
   // {
   //   path: '/message',
   //   component: Layout,
@@ -318,8 +343,248 @@ const constantRoutes = [
   }
 ]
 
+const constantRoutesStudent = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    hidden: true,
+    component: () => import('@/views/login/index'),
+    meta: { title: '登录' }
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/profile/index'
+  },
+  // todo
+  {
+    path: '/profile',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: '个人简介', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/studentPage/school',
+    component: Layout,
+    name: 'studentSchoolPage',
+    meta: {
+      title: '校建信息',
+      icon: 'users'
+    },
+    children: [
+      {
+        path: 'class',
+        component: () => import('@/views/studentPage/school/class'),
+        meta: { title: '班级列表', noCache: true }
+      },
+      {
+        path: 'faculty',
+        component: () => import('@/views/studentPage/school/faculty'),
+        meta: { title: '学院列表', noCache: true }
+      },
+      {
+        path: 'major',
+        component: () => import('@/views/studentPage/school/major'),
+        meta: { title: '专业列表', noCache: true }
+      },
+      {
+        path: 'teacher',
+        component: () => import('@/views/studentPage/school/teacher'),
+        meta: { title: '教师列表', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/studentPage/course',
+    component: Layout,
+    name: 'studentCoursePage',
+    meta: {
+      title: '课程操作',
+      icon: 'exam'
+    },
+    children: [
+      {
+        path: 'course',
+        component: () => import('@/views/studentPage/course/course'),
+        meta: { title: '所有课程列表', noCache: true }
+      },
+      {
+        path: 'courseClass',
+        component: () => import('@/views/studentPage/course/courseClass'),
+        meta: { title: '可选课程列表', noCache: true }
+      },
+      {
+        path: 'studentCourse',
+        component: () => import('@/views/studentPage/course/studentCourse'),
+        meta: { title: '已选课程列表', noCache: true }
+      },
+      {
+        path: 'studentCourseEdit',
+        component: () => import('@/views/studentPage/course/studentCourseEdit'),
+        meta: { title: '已选课程编辑', noCache: true, activeMenu: '/studentPage/course/studentCourse' },
+        hidden: true
+      }
+    ]
+  },
+  { path: '*',
+    hidden: true,
+    component: () => import('@/views/error-page/404'),
+    meta: { title: '404', noCache: true }
+  }
+]
+
+const constantRoutesTeacher = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    hidden: true,
+    component: () => import('@/views/login/index'),
+    meta: { title: '登录' }
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/profile/index'
+  },
+  // todo
+  {
+    path: '/profile',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: '个人简介', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/teacherPage/school',
+    component: Layout,
+    meta: {
+      title: '校建信息',
+      icon: 'users'
+    },
+    children: [
+      {
+        path: 'class',
+        component: () => import('@/views/teacherPage/school/class'),
+        meta: { title: '班级列表', noCache: true }
+      },
+      {
+        path: 'faculty',
+        component: () => import('@/views/teacherPage/school/faculty'),
+        meta: { title: '学院列表', noCache: true }
+      },
+      {
+        path: 'major',
+        component: () => import('@/views/teacherPage/school/major'),
+        meta: { title: '专业列表', noCache: true }
+      },
+      {
+        path: 'teacher',
+        component: () => import('@/views/teacherPage/school/teacher'),
+        meta: { title: '教师列表', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/teacherPage/education',
+    component: Layout,
+    meta: {
+      title: '教学管理',
+      icon: 'exam'
+    },
+    children: [
+      {
+        path: 'course',
+        component: () => import('@/views/teacherPage/education/course'),
+        meta: { title: '所有课程列表', noCache: true }
+      },
+      {
+        path: 'courseClass',
+        component: () => import('@/views/teacherPage/education/courseClass'),
+        meta: { title: '执教课程列表', noCache: true }
+      },
+      {
+        path: 'courseClassEdit',
+        component: () => import('@/views/teacherPage/education/courseClassEdit'),
+        meta: { title: '执教课程编辑', noCache: true, activeMenu: '/teacherPage/education/courseClass' },
+        hidden: true
+      },
+      {
+        path: 'studentCourse',
+        component: () => import('@/views/teacherPage/education/studentCourse'),
+        meta: { title: '学生成绩查询', noCache: true }
+      },
+      {
+        path: 'studentCourseEdit',
+        component: () => import('@/views/teacherPage/education/studentCourseEdit'),
+        meta: { title: '学生成绩更新', noCache: true, activeMenu: '/teacherPage/education/studentCourse' },
+        hidden: true
+      }
+    ]
+  },
+  { path: '*',
+    hidden: true,
+    component: () => import('@/views/error-page/404'),
+    meta: { title: '404', noCache: true }
+  }
+]
+
+// 以消除警告
+console.log(constantRoutesAdmin)
+console.log(constantRoutesTeacher)
+console.log(constantRoutesStudent)
+
+const constantRoutes = constantRoutesStudent
+
 const router = new Router({
   routes: constantRoutes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next()
+  } else {
+    let token = window.sessionStorage.getItem('token')
+    if (token === null || token === '') {
+      next('/login')
+    } else {
+      next()
+    }
+  }
 })
 
 export {

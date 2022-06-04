@@ -82,23 +82,10 @@ export default {
     this.search()
   },
   methods: {
-    async getFacultyName (i) {
-      let _this = this
-
-      var tmpqueryData = {
-        'facultyCode': _this.tableData[i].facultyCode
-      }
-      var queryParam = {
-        'pageIndex': 1,
-        'pageSize': 1
-      }
-
-      return API.queryFaculty(tmpqueryData, queryParam)
-    },
     search () {
       this.listLoading = true
       var queryParam = {
-        'majorName': this.queryData.majorName,
+        'facultyName': this.queryData.facultyName,
         'pageIndex': this.queryData.pageIndex,
         'pageSize': this.queryData.pageSize
       }
@@ -107,20 +94,6 @@ export default {
         if (data.code === '0') {
           const re = data.data
           this.tableData = re.tableData
-          for (let i = 0; i < this.tableData.length; i++) {
-            try {
-              let re = await _this.getFacultyName(i)
-              if (re.code === '0') {
-                _this.tableData[i].facultyName = re.data.tableData[0].facultyName
-              } else {
-                _this.$message.error('未获取到院系名称', _this.tableData[i].majorCode)
-              }
-            } catch (e) {
-              console.log('getFacultyName fail: ', e)
-            }
-          }
-          _this.tableData = JSON.parse(JSON.stringify(_this.tableData))
-
           this.total = re.total
           this.queryData.pageIndex = re.pageIndex
         } else {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @Description 登录失败处理类
@@ -26,7 +27,7 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
      * @CreateTime 2019/10/3 9:12
      */
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception){
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         // 这些对于操作的处理类可以根据不同异常进行不同处理
         if (exception instanceof UsernameNotFoundException){
             log.info("【登录失败】"+exception.getMessage());
