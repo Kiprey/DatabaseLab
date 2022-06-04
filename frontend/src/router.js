@@ -381,10 +381,68 @@ const constantRoutesStudent = [
       }
     ]
   },
-  { path: '*',
-    hidden: true,
-    component: () => import('@/views/error-page/404'),
-    meta: { title: '404', noCache: true }
+  {
+    path: '/studentPage',
+    component: Layout,
+    name: 'studentSchoolPage',
+    meta: {
+      title: '校建信息',
+      icon: 'users'
+    },
+    children: [
+      {
+        path: 'school/class',
+        component: () => import('@/views/studentPage/school/class'),
+        meta: { title: '班级列表', noCache: true }
+      },
+      {
+        path: 'school/faculty',
+        component: () => import('@/views/studentPage/school/faculty'),
+        meta: { title: '学院列表', noCache: true }
+      },
+      {
+        path: 'school/major',
+        component: () => import('@/views/studentPage/school/major'),
+        meta: { title: '专业列表', noCache: true }
+      },
+      {
+        path: 'school/teacher',
+        component: () => import('@/views/studentPage/school/teacher'),
+        meta: { title: '教师列表', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/studentPage',
+    component: Layout,
+    name: 'studentCoursePage',
+    meta: {
+      title: '课程操作',
+      icon: 'exam'
+    },
+    children: [
+      {
+        path: 'course/course',
+        component: () => import('@/views/studentPage/course/course'),
+        meta: { title: '所有课程列表', noCache: true }
+      },
+      {
+        path: 'course/courseClass',
+        component: () => import('@/views/studentPage/course/courseClass'),
+        meta: { title: '可选课程列表', noCache: true }
+      },
+      {
+        path: 'course/studentCourse',
+        component: () => import('@/views/studentPage/course/studentCourse'),
+        meta: { title: '已选课程列表', noCache: true }
+      },
+      {
+        path: 'course/studentCourseEdit',
+        component: () => import('@/views/studentPage/course/studentCourseEdit'),
+        meta: { title: '已选课程编辑', noCache: true, activeMenu: '/studentPage/course/studentCourseEdit' },
+        hidden: true
+      }
+    ]
   }
 ]
 
@@ -438,7 +496,7 @@ console.log(constantRoutesAdmin)
 console.log(constantRoutesTeacher)
 console.log(constantRoutesStudent)
 
-const constantRoutes = constantRoutesAdmin
+const constantRoutes = constantRoutesStudent
 
 const router = new Router({
   routes: constantRoutes
