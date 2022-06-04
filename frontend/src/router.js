@@ -4,7 +4,7 @@ import Layout from '@/layout'
 
 Vue.use(Router)
 
-const constantRoutes = [
+const constantRoutesAdmin = [
   {
     path: '/redirect',
     component: Layout,
@@ -256,6 +256,31 @@ const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/account',
+    component: Layout,
+    name: 'AccountPage',
+    meta: {
+      title: '权限管理',
+      icon: 'education'
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/account/list'),
+        name: 'AccountListPage',
+        meta: { title: '账号列表', noCache: true }
+      },
+      {
+        path: 'edit',
+        component: () => import('@/views/account/edit'),
+        name: 'AccountEditPage',
+        meta: { title: '账号编辑', noCache: true, activeMenu: '/account/list' },
+        hidden: true
+      }
+    ]
+  },
   // {
   //   path: '/message',
   //   component: Layout,
@@ -317,6 +342,8 @@ const constantRoutes = [
     meta: { title: '404', noCache: true }
   }
 ]
+
+const constantRoutes = constantRoutesAdmin
 
 const router = new Router({
   routes: constantRoutes
