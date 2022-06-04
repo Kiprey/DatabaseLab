@@ -568,7 +568,7 @@ console.log(constantRoutesAdmin)
 console.log(constantRoutesTeacher)
 console.log(constantRoutesStudent)
 
-const constantRoutes = constantRoutesTeacher
+const constantRoutes = constantRoutesAdmin
 
 const router = new Router({
   routes: constantRoutes
