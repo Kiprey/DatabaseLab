@@ -3,7 +3,6 @@ package com.lab.backend.service.impl;
 import com.lab.backend.domain.CourseClass;
 import com.lab.backend.domain.StudentCourse;
 import com.lab.backend.repository.CourseClassDao;
-import com.lab.backend.repository.CourseDao;
 import com.lab.backend.repository.StudentCourseDao;
 import com.lab.backend.repository.StudentDao;
 import com.lab.backend.service.StudentCourseService;
@@ -95,12 +94,13 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
     /**
      * 查询指定课程班级ID的数据
+     *
      * @param courseClassID 班级课程ID
-     * @param studentID 学生ID
+     * @param studentID     学生ID
      * @return 查询结果
      */
     @Override
-    public List<StudentCourse> getByCode(String courseClassID, String studentID){
+    public List<Map<String, Object>> getByCode(String courseClassID, String studentID){
         return studentcourseDao.getByCode(courseClassID,studentID);
     }
 
@@ -159,7 +159,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
             StudentCourse studentcourse = new StudentCourse();
             studentcourse.setStudentID(SecurityUtil.getUserName());
             studentcourse.setCourseClassID(courseClassID);
-            studentcourse.setScore(0);
+            studentcourse.setScore(null);
             studentcourseDao.insert(studentcourse);
             return 0;
         } else if (student_num == 0) {
@@ -174,13 +174,16 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     /**
      * 删除（学生使用）
      * @param courseClassID 课程班级ID
-     * @return 结果码 0：成功删除；1：没有找到要删除的班级课程；2：没有权限
+     * @return 结果码 0：成功删除；1：没有找到要删除的班级课程；2：没有权限；3：已经结课
      */
     @Override
     public int deleteByStudent(String courseClassID){
         String studentID=SecurityUtil.getUserName();
-        int course_num = studentcourseDao.getByCode(courseClassID,studentID).size();
-        if(course_num != 0){
+        List<Map<String, Object>> list = studentcourseDao.getByCode(courseClassID,studentID);
+        Integer score = (Integer) list.get(0).get("score");
+//        System.out.println(score + list.get(0).get(""));
+        int course_num = list.size();
+        if(course_num != 0 && score == null){
             String teacherID = courseClassDao.getByCode(courseClassID).get(0).getTeacherID();
             if(!Objects.equals(teacherID, SecurityUtil.getUserName())){
                 studentcourseDao.delete(courseClassID,studentID);
@@ -188,8 +191,10 @@ public class StudentCourseServiceImpl implements StudentCourseService {
             } else{
                 return 2;
             }
+        } else if (score != null){
+            return 3;
         } else {
-            return 1;
+            return 2;
         }
     }
 
