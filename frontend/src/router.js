@@ -343,6 +343,101 @@ const constantRoutesAdmin = [
   }
 ]
 
+const constantRoutesStudent = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    hidden: true,
+    component: () => import('@/views/login/index'),
+    meta: { title: '登录' }
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/profile/index'
+  },
+  // todo
+  {
+    path: '/profile',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: '个人简介', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  { path: '*',
+    hidden: true,
+    component: () => import('@/views/error-page/404'),
+    meta: { title: '404', noCache: true }
+  }
+]
+
+const constantRoutesTeacher = [
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    hidden: true,
+    component: () => import('@/views/login/index'),
+    meta: { title: '登录' }
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/profile/index'
+  },
+  // todo
+  {
+    path: '/profile',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: '个人简介', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  { path: '*',
+    hidden: true,
+    component: () => import('@/views/error-page/404'),
+    meta: { title: '404', noCache: true }
+  }
+]
+
+// 以消除警告
+console.log(constantRoutesAdmin)
+console.log(constantRoutesTeacher)
+console.log(constantRoutesStudent)
+
 const constantRoutes = constantRoutesAdmin
 
 const router = new Router({
