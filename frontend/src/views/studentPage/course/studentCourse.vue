@@ -5,8 +5,8 @@
         <el-input v-model="queryData.courseClassID"></el-input>
       </el-form-item>
 
-      <el-form-item label="学生编号">
-        <el-input v-model="queryData.studentID"></el-input>
+      <el-form-item label="课程名称">
+        <el-input v-model="queryData.courseName"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -45,7 +45,7 @@ export default {
     return {
       queryData: {
         courseClassID: '',
-        studentID: '',
+        courseName: '',
 
         pageIndex: 1,
         pageSize: 10
