@@ -42,6 +42,11 @@
       <el-table-column prop="courseClassTime" label="开课时间" width="160px"/>
       <el-table-column prop="courseClassAddress" label="开课地点" />
       <el-table-column prop="courseClassWeek" label="开课周"/>
+      <el-table-column width="270px" label="操作" align="center">
+        <template slot-scope="{row}">
+          <el-button  size="mini" type="danger" @click="selectStudentCourse(row)" class="link-left">选课</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="queryData.pageIndex" :limit.sync="queryData.pageSize"
                 @pagination="search"/>
@@ -51,6 +56,7 @@
 <script>
 import Pagination from '@/components/Pagination'
 import API from '@/api/education'
+import curriculumAPI from '@/api/curriculum'
 
 export default {
   components: { Pagination },
@@ -102,6 +108,30 @@ export default {
     submitForm () {
       this.queryData.pageIndex = 1
       this.search()
+    },
+    selectStudentCourse () {
+      let _this = this
+      this.$confirm('确定选课 ?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        _this.$refs.queryForm.validate((valid) => {
+          if (valid) {
+            curriculumAPI.createStudentCourseByStudent(_this.form).then(data => {
+              if (data.code === '0') {
+                _this.$message.success(data.message)
+              } else {
+                _this.$message.error(data.message)
+              }
+            }).catch(e => {
+              _this.$message.error(e)
+            })
+          } else {
+            return false
+          }
+        })
+      }).catch(() => {})
     }
   }
 }
