@@ -161,11 +161,12 @@ AFTER INSERT  ON studentcourse  -- 在插入后修改对应已修学分
 FOR EACH ROW
 BEGIN
 	UPDATE student SET completedCredits=
-	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
+	(SELECT IFNULL(sum(credit), 0) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=new.studentID and 
 	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
-	course.courseID=courseclass.courseID);
+	course.courseID=courseclass.courseID) WHERE 
+	student.studentID=new.studentID;
 END;
 
 CREATE TRIGGER credit2
@@ -173,11 +174,12 @@ AFTER UPDATE  ON studentcourse  -- 在更新后修改对应已修学分
 FOR EACH ROW
 BEGIN
 	UPDATE student SET completedCredits=
-	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
+	(SELECT IFNULL(sum(credit), 0) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=new.studentID and 
 	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
-	course.courseID=courseclass.courseID);
+	course.courseID=courseclass.courseID ) WHERE 
+	student.studentID=new.studentID;
 END;
 
 CREATE TRIGGER credit3
@@ -185,9 +187,10 @@ AFTER DELETE  ON studentcourse  -- 在删除后修改对应已修学分
 FOR EACH ROW
 BEGIN
 	UPDATE student SET completedCredits=
-	(SELECT sum(credit) as sum FROM course,courseclass,studentcourse WHERE
+	(SELECT IFNULL(sum(credit), 0) as sum FROM course,courseclass,studentcourse WHERE
 	studentcourse.studentID=old.studentID and 
 	studentcourse.score>=60 and 
 	studentcourse.courseClassID=courseclass.courseClassID and 
-	course.courseID=courseclass.courseID);
+	course.courseID=courseclass.courseID) WHERE
+	student.studentID=old.studentID;
 END;

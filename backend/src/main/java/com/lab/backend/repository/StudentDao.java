@@ -108,7 +108,7 @@ public class StudentDao {
                 "WHERE studentId = ?";
         jdbcTemplate.update(sql,
                 student.getStudentName(),
-                student.getStudentID(),
+                student.getIdentifier(),
                 student.getDormitory(),
                 student.getAddress(),
                 student.getTeleno(),

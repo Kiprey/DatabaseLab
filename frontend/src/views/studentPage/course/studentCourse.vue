@@ -5,15 +5,12 @@
         <el-input v-model="queryData.courseClassID"></el-input>
       </el-form-item>
 
-      <el-form-item label="学生编号">
-        <el-input v-model="queryData.studentID"></el-input>
+      <el-form-item label="课程名称">
+        <el-input v-model="queryData.courseName"></el-input>
       </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
-        <router-link :to="{path:'/studentPage/course/studentCourseEdit'}" class="link-left">
-          <el-button type="primary">添加</el-button>
-        </router-link>
       </el-form-item>
     </el-form>
 
@@ -26,7 +23,14 @@
 
       <el-table-column width="270px" label="操作" align="center">
         <template slot-scope="{row}">
-          <el-button  size="mini" type="danger" @click="deleteStudentCourse(row)" class="link-left">删除</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="deleteStudentCourse(row)"
+            class="link-left"
+            :disabled="row.score === null ? false : 'disabled'">
+          退选
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +49,7 @@ export default {
     return {
       queryData: {
         courseClassID: '',
-        studentID: '',
+        courseName: '',
 
         pageIndex: 1,
         pageSize: 10
@@ -84,7 +88,7 @@ export default {
     deleteStudentCourse (row) {
       let _this = this
       var QParam = {
-        'courseClassID': row.courseClassID,
+        'courseClassID': row.courseClassID
       }
       this.$confirm('确定删除 ?', '提示', {
         confirmButtonText: '确定',

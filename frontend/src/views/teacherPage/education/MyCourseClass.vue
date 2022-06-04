@@ -31,6 +31,9 @@
 
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
+        <router-link :to="{path:'/teacherPage/education/MyCourseClassEdit'}" class="link-left">
+          <el-button type="primary">添加</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
 
@@ -44,7 +47,10 @@
       <el-table-column prop="courseClassWeek" label="开课周"/>
       <el-table-column width="270px" label="操作" align="center">
         <template slot-scope="{row}">
-          <el-button  size="mini" type="danger" @click="selectStudentCourse(row)" class="link-left">选课</el-button>
+          <router-link :to="{path:'/teacherPage/education/MyCourseClassEdit', query:{courseClassID:row.courseClassID}}" class="link-left">
+            <el-button size="mini" >编辑</el-button>
+          </router-link>
+          <el-button  size="mini" type="danger" @click="deleteCourseClassByTeacher(row)" class="link-left">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -56,7 +62,6 @@
 <script>
 import Pagination from '@/components/Pagination'
 import API from '@/api/education'
-import curriculumAPI from '@/api/curriculum'
 
 export default {
   components: { Pagination },
@@ -89,7 +94,7 @@ export default {
         'pageIndex': this.queryData.pageIndex,
         'pageSize': this.queryData.pageSize
       }
-      API.queryCourseClassByUser(this.queryData, queryParam).then(data => {
+      API.queryCourseClassByTeacher(this.queryData, queryParam).then(data => {
         let _this = this
         if (data.code === '0') {
           const re = data.data
@@ -105,27 +110,27 @@ export default {
         this.listLoading = false
       })
     },
-    submitForm () {
-      this.queryData.pageIndex = 1
-      this.search()
-    },
-    selectStudentCourse (row) {
+    deleteCourseClassByTeacher (row) {
       let _this = this
-      this.$confirm('确定选课 ?', '提示', {
+
+      this.$confirm('确定删除 ?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        curriculumAPI.createStudentCourseByStudent(row.courseClassID).then(data => {
-          if (data.code === '0') {
-            _this.$message.success(data.message)
+        API.deleteCourseClassByTeacher(row.courseClassID).then(re => {
+          if (re.code === '0') {
+            _this.search()
+            _this.$message.success(re.message)
           } else {
-            _this.$message.error(data.message)
+            _this.$message.error(re.message)
           }
-        }).catch(e => {
-          _this.$message.error(e)
         })
-      })
+      }).catch(() => {})
+    },
+    submitForm () {
+      this.queryData.pageIndex = 1
+      this.search()
     }
   }
 }

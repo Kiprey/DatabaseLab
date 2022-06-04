@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import API from '@/api/login'
 
 export default {
@@ -105,12 +104,12 @@ export default {
       }
     }
   },
-  create () {
+  created () {
     this.listLoading = true
     API.getStudentInfo().then(data => {
       let _this = this
       if (data.code === '0') {
-        this.form = data.data
+        this.form = data.data[0]
       } else {
         this.form = {
           studentName: null,
@@ -144,13 +143,10 @@ export default {
             API.saveStudentInfo(_this.form).then(data => {
               if (data.code === '0') {
                 _this.$message.success(data.message)
-                _this.delCurrentView(_this).then(() => {
-                  _this.$router.push('/')
-                })
               } else {
                 _this.$message.error(data.message)
-                _this.formLoading = false
               }
+              _this.formLoading = false
             }).catch(e => {
               _this.formLoading = false
             })
@@ -159,8 +155,7 @@ export default {
           }
         })
       }).catch(() => {})
-    },
-    ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
+    }
   }
 }
 </script>
