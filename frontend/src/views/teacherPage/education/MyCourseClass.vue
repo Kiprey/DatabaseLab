@@ -5,13 +5,33 @@
         <el-input v-model="queryData.courseClassID"></el-input>
       </el-form-item>
 
-      <el-form-item label="学生编号">
-        <el-input v-model="queryData.studentID"></el-input>
+      <el-form-item label="课程编号">
+        <el-input v-model="queryData.courseID"></el-input>
+      </el-form-item>
+
+      <el-form-item label="课程名称">
+        <el-input v-model="queryData.courseName"></el-input>
+      </el-form-item>
+
+      <el-form-item label="教师姓名">
+        <el-input v-model="queryData.teacherName"></el-input>
+      </el-form-item>
+
+      <el-form-item label="开课时间">
+        <el-input v-model="queryData.courseClassTime"></el-input>
+      </el-form-item>
+
+      <el-form-item label="开课地点">
+        <el-input v-model="queryData.courseClassAddress"></el-input>
+      </el-form-item>
+
+      <el-form-item label="开课周">
+        <el-input v-model="queryData.courseClassWeek"></el-input>
       </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
-        <router-link :to="{path:'/studentPage/course/studentCourseEdit'}" class="link-left">
+        <router-link :to="{path:'/teacherPage/education/MyCourseClassEdit'}" class="link-left">
           <el-button type="primary">添加</el-button>
         </router-link>
       </el-form-item>
@@ -19,14 +39,18 @@
 
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="courseClassID" label="开课号" />
-      <el-table-column prop="studentID" label="学生编号" />
-      <el-table-column prop="studentName" label="学生姓名" />
-      <el-table-column prop="score" label="课程分数"/>
+      <el-table-column prop="courseID" label="课程编号" />
       <el-table-column prop="courseName" label="课程名称" />
-
+      <el-table-column prop="teacherName" label="教师姓名"/>
+      <el-table-column prop="courseClassTime" label="开课时间" width="160px"/>
+      <el-table-column prop="courseClassAddress" label="开课地点" />
+      <el-table-column prop="courseClassWeek" label="开课周"/>
       <el-table-column width="270px" label="操作" align="center">
         <template slot-scope="{row}">
-          <el-button  size="mini" type="danger" @click="deleteStudentCourse(row)" class="link-left">删除</el-button>
+          <router-link :to="{path:'/teacherPage/education/MyCourseClassEdit', query:{courseClassID:row.courseClassID}}" class="link-left">
+            <el-button size="mini" >编辑</el-button>
+          </router-link>
+          <el-button  size="mini" type="danger" @click="deleteCourseClassByTeacher(row)" class="link-left">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -37,7 +61,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import API from '@/api/curriculum'
+import API from '@/api/education'
 
 export default {
   components: { Pagination },
@@ -45,7 +69,12 @@ export default {
     return {
       queryData: {
         courseClassID: '',
-        studentID: '',
+        courseID: '',
+        courseName: '',
+        teacherName: '',
+        courseClassTime: '',
+        courseClassAddress: '',
+        courseClassWeek: '',
 
         pageIndex: 1,
         pageSize: 10
@@ -65,7 +94,7 @@ export default {
         'pageIndex': this.queryData.pageIndex,
         'pageSize': this.queryData.pageSize
       }
-      API.queryStudentCourseByStudent(this.queryData, queryParam).then(data => {
+      API.queryCourseClassByTeacher(this.queryData, queryParam).then(data => {
         let _this = this
         if (data.code === '0') {
           const re = data.data
@@ -81,17 +110,15 @@ export default {
         this.listLoading = false
       })
     },
-    deleteStudentCourse (row) {
+    deleteCourseClassByTeacher (row) {
       let _this = this
-      var QParam = {
-        'courseClassID': row.courseClassID
-      }
+
       this.$confirm('确定删除 ?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        API.deleteStudentCourseByStudent(QParam).then(re => {
+        API.deleteCourseClassByTeacher(row.courseClassID).then(re => {
           if (re.code === '0') {
             _this.search()
             _this.$message.success(re.message)

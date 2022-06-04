@@ -3,6 +3,7 @@ import { post } from '@/utils/request'
 export default {
   queryCourseClass: (data, params) => post('/api/courseClass/query', data, params),
   queryCourseClassByUser: (data, params) => post('/api/courseClass/queryByUser', data, params),
+  queryCourseClassByTeacher: (data, params) => post('/api/courseClass/queryByTeacher', data, params),
   deleteCourseClass: id => post('/api/courseClass/delete', null, { 'courseClassID': id }),
   deleteCourseClassByTeacher: id => post('/api/courseClass/deleteByTeacher', null, { 'courseClassID': id }),
   createCourseClass: data => post('/api/courseClass/insert', data),

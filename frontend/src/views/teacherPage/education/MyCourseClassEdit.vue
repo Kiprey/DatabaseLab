@@ -7,12 +7,20 @@
         <el-input v-model="form.courseClassID" :disabled="isEditMode ? 'disabled' : false"></el-input>
       </el-form-item>
 
-      <el-form-item label="学生编号：" prop="studentID" >
-        <el-input v-model="form.studentID" :disabled="isEditMode ? 'disabled' : false"></el-input>
+      <el-form-item label="课程编号：" prop="courseID" required>
+        <el-input v-model="form.courseID"></el-input>
       </el-form-item>
 
-      <el-form-item label="课程分数："  prop="score" required>
-        <el-input v-model="form.score"></el-input>
+      <el-form-item label="开课时间："  prop="courseClassTime" >
+        <el-date-picker v-model="form.courseClassTime" type="date" value-format="yyyy-MM-dd" placeholder="选择日期" />
+      </el-form-item>
+
+      <el-form-item label="开课地点：" prop="courseClassAddress" >
+        <el-input v-model="form.courseClassAddress"></el-input>
+      </el-form-item>
+
+      <el-form-item label="开课周：" prop="courseClassWeek" >
+        <el-input v-model="form.courseClassWeek"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -25,47 +33,46 @@
 
 <script>
 import { mapActions } from 'vuex'
-import API from '@/api/curriculum'
+import API from '@/api/education'
 
 export default {
   data () {
     return {
       form: {
         courseClassID: null,
-        studentID: null,
-        score: null
+        courseID: null,
+        courseClassTime: null,
+        courseClassAddress: null,
+        courseClassWeek: null
       },
       formLoading: false,
       rules: {
         courseClassID: [
           { required: true, message: '请输入开课号', trigger: 'blur' }
         ],
-        studentID: [
-          { required: true, message: '请输入学生编号', trigger: 'blur' }
-        ],
-        score: [
-          { required: true, message: '请输入课程分数', trigger: 'blur' }
+        courseID: [
+          { required: true, message: '请输入课程编号', trigger: 'blur' }
         ]
       },
       isEditMode: false
     }
   },
   created () {
-    let studentID = this.$route.query.studentID
+    let courseClassID = this.$route.query.courseClassID
     let _this = this
-    if (studentID && studentID !== '') {
+    if (courseClassID && courseClassID !== '') {
       _this.isEditMode = true
       _this.formLoading = true
 
       var queryData = {
-        'studentID': studentID
+        'courseClassID': courseClassID
       }
       var queryParam = {
         'pageIndex': 1,
         'pageSize': 1
       }
 
-      API.queryStudentCourseByTeacher(queryData, queryParam).then(re => {
+      API.queryCourseClassByUser(queryData, queryParam).then(re => {
         if (re.code === '0') {
           _this.form = re.data.tableData[0]
         } else {
@@ -91,15 +98,15 @@ export default {
             _this.formLoading = true
             let api = null
             if (_this.isEditMode) {
-              api = API.updateStudentCourseByTeacher
+              api = API.updateCourseClassByTeacher
             } else {
-              api = API.updateStudentCourseByTeacher
+              api = API.createCourseClassByTeacher
             }
             api(_this.form).then(data => {
               if (data.code === '0') {
                 _this.$message.success(data.message)
                 _this.delCurrentView(_this).then(() => {
-                  _this.$router.push('/teacherPage/education/studentCourse')
+                  _this.$router.push('/teacherPage/education/MyCourseClass')
                 })
               } else {
                 _this.$message.error(data.message)
@@ -122,17 +129,17 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let laststudentID = _this.form.studentID
         let lastcourseClassID = _this.form.courseClassID
 
         _this.$refs['form'].resetFields()
 
         _this.form = {
           courseClassID: null,
-          studentID: null,
-          score: null
+          courseID: null,
+          courseClassTime: null,
+          courseClassAddress: null,
+          courseClassWeek: null
         }
-        _this.form.studentID = laststudentID
         _this.form.courseClassID = lastcourseClassID
       }).catch(() => {})
     },
