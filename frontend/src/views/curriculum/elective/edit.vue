@@ -11,7 +11,7 @@
         <el-input v-model="form.studentID" :disabled="isEditMode ? 'disabled' : false"></el-input>
       </el-form-item>
 
-      <el-form-item label="课程分数："  prop="score" required>
+      <el-form-item label="课程分数："  prop="score">
         <el-input v-model="form.score"></el-input>
       </el-form-item>
 
@@ -42,9 +42,6 @@ export default {
         ],
         studentID: [
           { required: true, message: '请输入学生编号', trigger: 'blur' }
-        ],
-        score: [
-          { required: true, message: '请输入课程分数', trigger: 'blur' }
         ]
       },
       isEditMode: false

@@ -5,9 +5,9 @@ export default {
   queryStudentCourseByTeacher: (data, params) => post('/api/studentcourse/queryByTeacher', data, params),
   queryStudentCourseByStudent: (data, params) => post('/api/studentcourse/queryByStudent', data, params),
   deleteStudentCourse: params => post('/api/studentcourse/delete', null, params),
-  deleteStudentCourseByStudent: params => post('/api/studentcourse/deleteByStuden', null, params),
+  deleteStudentCourseByStudent: params => post('/api/studentcourse/deleteByStudent', null, params),
   createStudentCourse: data => post('/api/studentcourse/insert', data),
-  createStudentCourseByStudent: data => post('/api/studentcourse/insertByStudent', data),
+  createStudentCourseByStudent: data => post('/api/studentcourse/insertByStudent', null, { 'courseClassID': data }),
   updateStudentCourse: data => post('/api/studentcourse/update', data),
   updateStudentCourseByTeacher: data => post('/api/studentcourse/updateByTeacher', data),
 

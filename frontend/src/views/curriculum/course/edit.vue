@@ -7,11 +7,11 @@
         <el-input v-model="form.courseName"></el-input>
       </el-form-item>
 
-      <el-form-item label="课程性质：" prop="courseNature" >
+      <el-form-item label="课程性质：" prop="courseNature" required>
         <el-input v-model="form.courseNature"></el-input>
       </el-form-item>
 
-      <el-form-item label="课程类别：" prop="courseCategory" >
+      <el-form-item label="课程类别：" prop="courseCategory" required>
         <el-input v-model="form.courseCategory"></el-input>
       </el-form-item>
 
@@ -59,6 +59,12 @@ export default {
       rules: {
         courseName: [
           { required: true, message: '请输入课程名', trigger: 'blur' }
+        ],
+        courseNature: [
+          { required: true, message: '请输入课程性质', trigger: 'blur' }
+        ],
+        courseCategory: [
+          { required: true, message: '请输入课程类别', trigger: 'blur' }
         ],
         courseID: [
           { required: true, message: '请输入课程编号', trigger: 'blur' }
