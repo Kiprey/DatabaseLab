@@ -187,8 +187,8 @@ public class AdminServiceImpl implements AdminService {
         Map<Object, Object> cur = selectSysUserRoleByUsername(map, 1, 3);
         List<Map<String, Object>> list = (List<Map<String, Object>>) cur.get("tableData");
         Map<String, Long> mapId = new HashMap<>();
-        Long userId=sysUserDao.selectUserIdByUserName(map.get("username").toString());
-        Long roleId=sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString());
+        Long userId = sysUserDao.selectUserIdByUserName(map.get("username").toString());
+        Long roleId = sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString());
         mapId.put("userId", userId);
         mapId.put("roleId", roleId);
         int flag = 1;
@@ -202,8 +202,7 @@ public class AdminServiceImpl implements AdminService {
         if (flag == 1)
             return 3;
         if (Objects.equals(roleName, "ADMIN")) {
-            if(Objects.equals(userId, SecurityUtil.getUserId()))
-            {
+            if (Objects.equals(userId, SecurityUtil.getUserId())) {
                 return 4;
             }
             if (map.get("superCode") == null)
@@ -231,16 +230,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int insertRoleByUsername(Map<Object, Object> map) {
         String roleName = map.get("roleName").toString();
-        Long userId=sysUserDao.selectUserIdByUserName(map.get("username").toString());
-        Long roleId=sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString());
+        Long userId = sysUserDao.selectUserIdByUserName(map.get("username").toString());
+        Long roleId = sysRoleDao.selectRoleIdByRoleName(map.get("roleName").toString());
         List<Map<String, Object>> list = (List<Map<String, Object>>) selectSysUserRoleByUsername(map, 1, 3).get("tableData");
         for (Map<String, Object> stringObjectMap : list) {
             String roleName1 = stringObjectMap.get("role_name").toString();
             if (Objects.equals(roleName, roleName1)) {
                 return 1;
-            }
-            else if(Objects.equals(roleName1, "ADMIN") || Objects.equals(roleName1, "STUDENT"))
-            {
+            } else if (Objects.equals(roleName1, "ADMIN") || Objects.equals(roleName1, "STUDENT")) {
                 return 4;
             }
         }
@@ -261,6 +258,4 @@ public class AdminServiceImpl implements AdminService {
         sysUserRoleDao.myInsert(mapId);
         return 0;
     }
-
-
 }

@@ -27,8 +27,6 @@ import java.util.Map;
 /**
  * JWT接口请求校验拦截器
  * 请求接口时会进入这里验证Token是否合法和过期
- * @Author Sans
- * @CreateTime 2019/10/5 16:41
  */
 @Slf4j
 public class JWTAuthenticationTokenFilter extends BasicAuthenticationFilter {

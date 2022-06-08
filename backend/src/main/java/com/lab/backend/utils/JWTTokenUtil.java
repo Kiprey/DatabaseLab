@@ -10,8 +10,6 @@ import java.util.Date;
 
 /**
  * JWT工具类
- * @Author Sans
- * @CreateTime 2019/10/2 7:42
  */
 @Slf4j
 public class JWTTokenUtil {
@@ -23,10 +21,6 @@ public class JWTTokenUtil {
 
     /**
      * 生成Token
-     * @Author Sans
-     * @CreateTime 2019/10/2 12:16
-     * @Param  selfUserEntity 用户安全实体
-     * @Return Token
      */
     public static String createAccessToken(SelfUserEntity selfUserEntity){
         // 登陆成功生成JWT
@@ -38,7 +32,7 @@ public class JWTTokenUtil {
                 // 签发时间
                 .setIssuedAt(new Date())
                 // 签发者
-                .setIssuer("sans")
+                .setIssuer("HNU")
                 // 自定义属性 放入用户拥有权限
                 .claim("authorities", JSON.toJSONString(selfUserEntity.getAuthorities()))
                 // 失效时间

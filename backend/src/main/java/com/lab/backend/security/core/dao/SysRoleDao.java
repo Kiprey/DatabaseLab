@@ -5,12 +5,13 @@ import com.lab.backend.security.core.entity.SysRoleEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Description 角色DAO
- * @Author Sans
- * @CreateTime 2019/9/14 15:57
+ * 角色DAO
  */
 @Mapper
 public interface SysRoleDao extends BaseMapper<SysRoleEntity> {
 
+    /**
+     * 根据角色名查找角色ID
+     */
     Long selectRoleIdByRoleName(String username);
 }

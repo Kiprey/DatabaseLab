@@ -7,9 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.Map;
 
 /**
- * @Description 用户与角色关系DAO
- * @Author Sans
- * @CreateTime 2019/9/14 15:57
+ * 用户与角色关系DAO
  */
 @Mapper
 public interface SysUserRoleDao extends BaseMapper<SysUserRoleEntity> {
