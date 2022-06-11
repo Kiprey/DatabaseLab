@@ -17,9 +17,9 @@ public class Teacher {
     }
 
     public Teacher(String teacherName, String teacherID, String facultyCode) {
-        this.teacherName=teacherName;
-        this.teacherID=teacherID;
-        this.facultyCode=facultyCode;
+        this.teacherName = teacherName;
+        this.teacherID = teacherID;
+        this.facultyCode = facultyCode;
     }
 
     public String getTeacherName() {

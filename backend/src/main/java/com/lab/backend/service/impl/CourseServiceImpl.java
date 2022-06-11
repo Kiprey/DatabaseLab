@@ -19,6 +19,7 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 插入课程
+     *
      * @param course 课程实体
      * @return 结果码 0:成功插入；1:院系不存在；2:该课程已存在
      */
@@ -38,13 +39,14 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 根据课程id删除课程
+     *
      * @param courseID 课程id值
      * @return 结果码 0：删除成功；1：没有所要删除的课程
      */
     @Override
-    public int delete(String courseID){
+    public int delete(String courseID) {
         int course_num = courseDao.getByCode(courseID).size();
-        if(course_num != 0){
+        if (course_num != 0) {
             courseDao.delete(courseID);
             return 0;
         } else {
@@ -54,6 +56,7 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 更新
+     *
      * @param course 课程实体
      * @return 结果码 0:成功更新；1:院系不存在；2:该课程不存在
      */
@@ -72,40 +75,44 @@ public class CourseServiceImpl implements CourseService {
 
     /**
      * 查询指定字段指定值的数据
+     *
      * @param attribute 字段名
-     * @param name 字段值
+     * @param name      字段值
      * @return 查询结果
      */
-    public List<Course> getByAttribute(String attribute, String name){
-        return courseDao.getByAttribute(attribute,name);
+    public List<Course> getByAttribute(String attribute, String name) {
+        return courseDao.getByAttribute(attribute, name);
     }
 
     /**
      * 返回指定课程id的查询结果
+     *
      * @param code 课程id值
      * @return 查询结果
      */
-    public List<Course> getByCode(String code){
+    public List<Course> getByCode(String code) {
         return courseDao.getByCode(code);
     }
 
     /**
      * 查询course表所有数据
+     *
      * @return 查询结果
      */
-    public List<Course> getList(){
+    public List<Course> getList() {
         return courseDao.getList();
     }
 
     /**
      * 模糊查询course表
-     * @param map 查询条件
+     *
+     * @param map       查询条件
      * @param pageIndex 起始页
-     * @param pageSize 大小
+     * @param pageSize  大小
      * @return 查询结果
      */
     @Override
-    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize) {
+    public Map<Object, Object> query(Map<String, Object> map, int pageIndex, int pageSize) {
         return courseDao.query(map, pageIndex, pageSize);
     }
 }

@@ -15,16 +15,12 @@ import java.io.IOException;
 
 /**
  * @Description 登录失败处理类
- * @Author Sans
- * @CreateTime 2019/10/3 9:06
  */
 @Slf4j
 @Component
 public class UserLoginFailureHandler implements AuthenticationFailureHandler {
     /**
      * 登录失败返回结果
-     * @Author Sans
-     * @CreateTime 2019/10/3 9:12
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {

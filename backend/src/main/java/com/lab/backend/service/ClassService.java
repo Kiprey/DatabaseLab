@@ -14,5 +14,5 @@ public interface ClassService {
 
     int update(Classes classes);
 
-    Map<Object, Object> query(Classes classes, String majorName, String facultyName,int pageIndex, int pageSize);
+    Map<Object, Object> query(Classes classes, String majorName, String facultyName, int pageIndex, int pageSize);
 }

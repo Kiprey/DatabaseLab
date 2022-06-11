@@ -29,13 +29,7 @@ public class CourseClassDao {
      */
     public void insert(CourseClass courseClass) {
         String sql = "insert into CourseClass values (?,?,?,?,?,?)";
-        jdbcTemplate.update(sql,
-                courseClass.getCourseClassID(),
-                courseClass.getCourseID(),
-                courseClass.getTeacherID(),
-                courseClass.getCourseClassTime(),
-                courseClass.getCourseClassAddress(),
-                courseClass.getCourseClassWeek());
+        jdbcTemplate.update(sql, courseClass.getCourseClassID(), courseClass.getCourseID(), courseClass.getTeacherID(), courseClass.getCourseClassTime(), courseClass.getCourseClassAddress(), courseClass.getCourseClassWeek());
     }
 
     /**
@@ -55,134 +49,102 @@ public class CourseClassDao {
      */
     public void update(CourseClass courseClass) {
         String sql = "UPDATE CourseClass SET courseID=?,teacherID=?,courseClassTime=?,courseClassAddress=?,courseClassWeek=? WHERE courseClassID=?";
-        jdbcTemplate.update(sql,
-                courseClass.getCourseID(),
-                courseClass.getTeacherID(),
-                courseClass.getCourseClassTime(),
-                courseClass.getCourseClassAddress(),
-                courseClass.getCourseClassWeek(),
-                courseClass.getCourseClassID());
+        jdbcTemplate.update(sql, courseClass.getCourseID(), courseClass.getTeacherID(), courseClass.getCourseClassTime(), courseClass.getCourseClassAddress(), courseClass.getCourseClassWeek(), courseClass.getCourseClassID());
     }
 
-    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize) {
+    public Map<Object, Object> query(Map<String, Object> map, int pageIndex, int pageSize) {
         //给出sql模板,为了便于后面添加sql语句
         StringBuilder sql = new StringBuilder("select courseClassID,courseclass.courseID,courseName,courseclass.teacherID,teacherName,facultyName,courseClassTime,courseClassAddress,courseClassWeek,courseNature,courseCategory,courseHours,credit from courseClass,teacher,course,faculty  where 1=1 and courseclass.teacherID=teacher.teacherID and courseclass.courseID=course.courseID and course.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
-        if (map.get("courseClassID")!=null)
-        {
+        if (map.get("courseClassID") != null) {
             String s = map.get("courseClassID").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassID like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseID")!=null)
-        {
+        if (map.get("courseID") != null) {
             String s = map.get("courseID").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseclass.courseID like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseName")!=null)
-        {
+        if (map.get("courseName") != null) {
             String s = map.get("courseName").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseName like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("teacherID")!=null)
-        {
+        if (map.get("teacherID") != null) {
             String s = map.get("teacherID").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseclass.teacherID like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("teacherName")!=null)
-        {
+        if (map.get("teacherName") != null) {
             String s = map.get("teacherName").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and teacherName like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("facultyName")!=null)
-        {
+        if (map.get("facultyName") != null) {
             String s = map.get("facultyName").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and facultyName like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseClassTime")!=null)
-        {
+        if (map.get("courseClassTime") != null) {
             String s = map.get("courseClassTime").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassTime like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseClassAddress")!=null)
-        {
+        if (map.get("courseClassAddress") != null) {
             String s = map.get("courseClassAddress").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassAddress like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseClassWeek")!=null)
-        {
+        if (map.get("courseClassWeek") != null) {
             String s = map.get("courseClassWeek").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassWeek like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseNature")!=null)
-        {
+        if (map.get("courseNature") != null) {
             String s = map.get("courseNature").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseNature like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseCategory")!=null)
-        {
+        if (map.get("courseCategory") != null) {
             String s = map.get("courseCategory").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseCategory like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseHours")!=null)
-        {
+        if (map.get("courseHours") != null) {
             Integer s = (Integer) map.get("credit");
-            if (s != null)
-            {
+            if (s != null) {
                 sql.append(" and courseHours like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("credit")!=null)
-        {
+        if (map.get("credit") != null) {
             Integer s = (Integer) map.get("credit");
-            if (s != null)
-            {
+            if (s != null) {
                 sql.append(" and credit like ?");
                 params.add("%" + s + "%");
             }
@@ -201,120 +163,97 @@ public class CourseClassDao {
         Map<Object, Object> response = new HashMap<>();
         response.put("total", count);
         response.put("pageIndex", pageIndex);
-        response.put("tableData", jdbcTemplate.queryForList(sql.toString(),params.toArray()));
+        response.put("tableData", jdbcTemplate.queryForList(sql.toString(), params.toArray()));
 
         return response;
     }
-    public Map<Object, Object> queryByUser(Map<String,Object> map, int pageIndex, int pageSize) {
+
+    public Map<Object, Object> queryByUser(Map<String, Object> map, int pageIndex, int pageSize) {
         //给出sql模板,为了便于后面添加sql语句
         StringBuilder sql = new StringBuilder("select courseClassID,courseclass.courseID,courseName,teacherName,facultyName,courseClassTime,courseClassAddress,courseClassWeek,courseNature,courseCategory,courseHours,credit from courseClass,teacher,course,faculty  where 1=1 and courseclass.teacherID=teacher.teacherID and courseclass.courseID=course.courseID and course.facultyCode=faculty.facultyCode");
         //给出params
         List<Object> params = new ArrayList<>();
         //构造查询语句
-        if (map.get("courseClassID")!=null)
-        {
+        if (map.get("courseClassID") != null) {
             String s = map.get("courseClassID").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassID like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseID")!=null)
-        {
+        if (map.get("courseID") != null) {
             String s = map.get("courseID").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseclass.courseID like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseName")!=null)
-        {
+        if (map.get("courseName") != null) {
             String s = map.get("courseName").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseName like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("teacherName")!=null)
-        {
+        if (map.get("teacherName") != null) {
             String s = map.get("teacherName").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and teacherName like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("facultyName")!=null)
-        {
+        if (map.get("facultyName") != null) {
             String s = map.get("facultyName").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and facultyName like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseClassTime")!=null)
-        {
+        if (map.get("courseClassTime") != null) {
             String s = map.get("courseClassTime").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassTime like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseClassAddress")!=null)
-        {
+        if (map.get("courseClassAddress") != null) {
             String s = map.get("courseClassAddress").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassAddress like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseClassWeek")!=null)
-        {
+        if (map.get("courseClassWeek") != null) {
             String s = map.get("courseClassWeek").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseClassWeek like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseNature")!=null)
-        {
+        if (map.get("courseNature") != null) {
             String s = map.get("courseNature").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseNature like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseCategory")!=null)
-        {
+        if (map.get("courseCategory") != null) {
             String s = map.get("courseCategory").toString();
-            if (s != null && !s.trim().isEmpty())
-            {
+            if (s != null && !s.trim().isEmpty()) {
                 sql.append(" and courseCategory like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("courseHours")!=null)
-        {
+        if (map.get("courseHours") != null) {
             Integer s = (Integer) map.get("credit");
-            if (s != null)
-            {
+            if (s != null) {
                 sql.append(" and courseHours like ?");
                 params.add("%" + s + "%");
             }
         }
-        if (map.get("credit")!=null)
-        {
+        if (map.get("credit") != null) {
             Integer s = (Integer) map.get("credit");
-            if (s != null)
-            {
+            if (s != null) {
                 sql.append(" and credit like ?");
                 params.add("%" + s + "%");
             }
@@ -333,10 +272,11 @@ public class CourseClassDao {
         Map<Object, Object> response = new HashMap<>();
         response.put("total", count);
         response.put("pageIndex", pageIndex);
-        response.put("tableData", jdbcTemplate.queryForList(sql.toString(),params.toArray()));
+        response.put("tableData", jdbcTemplate.queryForList(sql.toString(), params.toArray()));
 
         return response;
     }
+
     /**
      * 按courseClassID字段查询
      *
@@ -345,14 +285,7 @@ public class CourseClassDao {
      */
     public List<CourseClass> getByCode(String code) {
         String sql = "select * from courseclass where courseClassID=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
-                        rs.getString("courseClassID"),
-                        rs.getString("courseID"),
-                        rs.getString("teacherID"),
-                        rs.getString("courseClassTime"),
-                        rs.getString("courseClassAddress"),
-                        rs.getString("courseClassWeek"))
-                , code);
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(rs.getString("courseClassID"), rs.getString("courseID"), rs.getString("teacherID"), rs.getString("courseClassTime"), rs.getString("courseClassAddress"), rs.getString("courseClassWeek")), code);
     }
 
     /**
@@ -364,14 +297,7 @@ public class CourseClassDao {
      */
     public List<CourseClass> getByAttribute(String attribute, String name) {
         String sql = "select * from courseClass where " + attribute + "=?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
-                        rs.getString("courseClassID"),
-                        rs.getString("courseID"),
-                        rs.getString("teacherID"),
-                        rs.getString("courseClassTime"),
-                        rs.getString("courseClassAddress"),
-                        rs.getString("courseClassWeek"))
-                , name);
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(rs.getString("courseClassID"), rs.getString("courseID"), rs.getString("teacherID"), rs.getString("courseClassTime"), rs.getString("courseClassAddress"), rs.getString("courseClassWeek")), name);
     }
 
     /**
@@ -379,14 +305,7 @@ public class CourseClassDao {
      */
     public List<CourseClass> getList() {
         String sql = "select * from CourseClass";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(
-                rs.getString("courseClassID"),
-                rs.getString("courseID"),
-                rs.getString("teacherID"),
-                rs.getString("courseClassTime"),
-                rs.getString("courseClassAddress"),
-                rs.getString("courseClassWeek")
-        ));
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new CourseClass(rs.getString("courseClassID"), rs.getString("courseID"), rs.getString("teacherID"), rs.getString("courseClassTime"), rs.getString("courseClassAddress"), rs.getString("courseClassWeek")));
     }
 }
 

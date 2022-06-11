@@ -31,7 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int insert(Teacher teacher) {
-        int num = teacherDao.getByAttribute("teacherID",teacher.getTeacherID()).size();
+        int num = teacherDao.getByAttribute("teacherID", teacher.getTeacherID()).size();
         if ((facultyDao.getByCode(teacher.getFacultyCode()).size() == 0)) {
             return 1;
         } else if (num == 0) {
@@ -50,8 +50,8 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int delete(String teacherID) {
-        int num = teacherDao.getByAttribute("teacherID",teacherID).size();
-        if (courseClassDao.getByAttribute("teacherID",teacherID).size() != 0) {
+        int num = teacherDao.getByAttribute("teacherID", teacherID).size();
+        if (courseClassDao.getByAttribute("teacherID", teacherID).size() != 0) {
             return 1;
         } else if (num != 0) {
             teacherDao.delete(teacherID);
@@ -69,7 +69,7 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public int update(Teacher teacher) {
-        int num = teacherDao.getByAttribute("teacherID",teacher.getTeacherID()).size();
+        int num = teacherDao.getByAttribute("teacherID", teacher.getTeacherID()).size();
         if ((facultyDao.getByCode(teacher.getFacultyCode()).size() == 0)) {
             return 1;
         } else if (num != 0) {
@@ -87,8 +87,8 @@ public class TeacherServiceImpl implements TeacherService {
      * @return result list
      */
     @Override
-    public Map<Object, Object> query(Map<String,Object> map, int pageIndex, int pageSize) {
-            return teacherDao.query(map,pageIndex,pageSize);
+    public Map<Object, Object> query(Map<String, Object> map, int pageIndex, int pageSize) {
+        return teacherDao.query(map, pageIndex, pageSize);
     }
 
     /**
@@ -98,8 +98,8 @@ public class TeacherServiceImpl implements TeacherService {
      * @return result list
      */
     @Override
-    public Map<Object, Object> queryWithoutID(Map<String,Object> map, int pageIndex, int pageSize) {
-        return teacherDao.queryWithoutID(map,pageIndex,pageSize);
+    public Map<Object, Object> queryWithoutID(Map<String, Object> map, int pageIndex, int pageSize) {
+        return teacherDao.queryWithoutID(map, pageIndex, pageSize);
     }
 
     /**
@@ -119,11 +119,11 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public List<Teacher> info() {
-        Map<String,Object> map = new HashMap<>();
-        map.put("teacherName",null);
-        map.put("teacherID",SecurityUtil.getUserName());
-        map.put("facultyCode",null);
-        map.put("facultyName",null);
-        return (List<Teacher>) teacherDao.query(map, 1,1).get("tableData");
+        Map<String, Object> map = new HashMap<>();
+        map.put("teacherName", null);
+        map.put("teacherID", SecurityUtil.getUserName());
+        map.put("facultyCode", null);
+        map.put("facultyName", null);
+        return (List<Teacher>) teacherDao.query(map, 1, 1).get("tableData");
     }
 }

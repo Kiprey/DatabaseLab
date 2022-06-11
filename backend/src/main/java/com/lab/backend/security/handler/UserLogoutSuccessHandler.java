@@ -14,8 +14,6 @@ import java.util.Map;
 
 /**
  * 登出成功处理类
- * @Author Sans
- * @CreateTime 2019/10/3 9:42
  */
 @Component
 public class UserLogoutSuccessHandler implements LogoutSuccessHandler {

@@ -70,7 +70,7 @@ public class TeacherController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasPermission('/teacher/query','teacherQuery')")
     @PostMapping("/query")
     public Result<Map<Object, Object>> queryController(@RequestBody Map<String,Object> map, @RequestParam int pageIndex, @RequestParam int pageSize) {
         Map<Object, Object> response = teacherService.query(map, pageIndex, pageSize);
@@ -96,6 +96,4 @@ public class TeacherController {
         List<Teacher> list = teacherService.info();
         return Result.success(list, "查看成功！");
     }
-
-
 }
